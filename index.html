@@ -888,7 +888,9 @@
         return;
       }
 
-      const medals = fromStation ? [] : ['🥇', '🥈', '🥉'];
+      const medals = fromStation && typeof fromStation === 'object'
+        ? ['', '🥇', '🥈']
+        : ['🥇', '🥈', '🥉'];
       picks.forEach((r, i) => {
         const key    = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
         const marker = markerByKey[key];
