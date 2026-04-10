@@ -134,6 +134,13 @@ A developer-only page for manually verifying station geocoordinates.
 - Dims and desaturates Voyager tiles, then hue-rotates warm beige/green tones toward cool blue-grey — similar feel to Google Maps dark mode
 - No tile URL change, no API key, works offline; one CSS rule
 
+### Step 17 — Licensing, theme detection, about dialog polish
+
+- **MIT License** added (`LICENSE` file in repo root); GitHub auto-detected and displays it in the repo sidebar.
+- **System theme detection** — first-time visitors no longer default to dark mode unconditionally; `window.matchMedia('(prefers-color-scheme: dark)')` is used when no `degaline-theme` key exists in localStorage. Returning visitors still get their last manually chosen theme.
+- **Geocoding accuracy note** added to the about dialog — explains that coordinates are Photon-generated and may occasionally be imprecise; notes the verification tool exists to address this over time.
+- **Company list collapsed by default** — the list of gas station networks in the about dialog is now hidden under a `<details>`/`<summary>` spoiler block to reduce visual noise on open.
+
 ---
 
 ## Pending
