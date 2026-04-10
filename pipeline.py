@@ -25,6 +25,8 @@ DATA          = ROOT / 'data'
 GEOCACHE_PATH = DATA / 'geocache.json'
 STATIONS_PATH = DATA / 'stations.json'
 XLSX_PATH     = DATA / 'latest.xlsx'
+HISTORY_DIR   = DATA / 'history'
+LOGS_DIR      = DATA / 'logs'
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 USER_AGENT    = 'degaline-map/1.0 (LtLukoziuz+degaline@gmail.com)'
@@ -205,6 +207,96 @@ def geocode_stations(stations: list[dict], cache: dict):
         for a in failures:
             print(f'  {a}')
 
+# ── History & change log ──────────────────────────────────────────────────────
+def load_previous_stations() -> dict:
+    """Load current stations.json keyed by (company, address). Returns {} if missing."""
+    if not STATIONS_PATH.exists():
+        return {}
+    data = json.loads(STATIONS_PATH.read_text(encoding='utf-8'))
+    return {(s['company'], s['address']): s for s in data.get('stations', [])}
+
+def fmt_price(v) -> str:
+    return f'{v:.3f} €/L' if v is not None else '–'
+
+def compare_and_log(prev: dict, output: dict):
+    """Diff previous vs new stations and write a dated log + history snapshot."""
+    HISTORY_DIR.mkdir(exist_ok=True)
+    LOGS_DIR.mkdir(exist_ok=True)
+
+    date_str = output['date']
+    curr = {(s['company'], s['address']): s for s in output['stations']}
+
+    new_stations     = [s for key, s in curr.items() if key not in prev]
+    removed_stations = [s for key, s in prev.items() if key not in curr]
+    changed_prices   = []
+
+    for key, s in curr.items():
+        if key not in prev:
+            continue
+        p = prev[key]
+        diffs = [
+            (label, p[field], s[field])
+            for field, label in [('p95', '95 benzinas'), ('diesel', 'Dyzelinas'), ('lpg', 'Dujos')]
+            if p[field] != s[field]
+        ]
+        if diffs:
+            changed_prices.append((s, diffs))
+
+    lines = [f'=== {date_str} ===\n\n']
+
+    if not prev:
+        lines.append('First run — no previous data to compare.\n')
+    else:
+        # New stations
+        if new_stations:
+            lines.append(f'New stations ({len(new_stations)}):\n')
+            for s in new_stations:
+                lines.append(
+                    f"  + {s['company']} — {s['address']}, {s['municipality']}\n"
+                    f"    Coords: {s['lat']:.5f}, {s['lng']:.5f}\n"
+                    f"    95: {fmt_price(s['p95'])}  |  "
+                    f"Dyzelinas: {fmt_price(s['diesel'])}  |  "
+                    f"Dujos: {fmt_price(s['lpg'])}\n"
+                )
+        else:
+            lines.append('New stations: none.\n')
+
+        # Removed stations
+        if removed_stations:
+            lines.append(f'\nRemoved stations ({len(removed_stations)}):\n')
+            for s in removed_stations:
+                lines.append(f"  - {s['company']} — {s['address']}\n")
+        else:
+            lines.append('Removed stations: none.\n')
+
+        # Changed prices
+        if changed_prices:
+            lines.append(f'\nPrice changes ({len(changed_prices)}):\n')
+            for s, diffs in changed_prices:
+                lines.append(f"  ~ {s['company']} — {s['address']}\n")
+                for label, old, new in diffs:
+                    lines.append(f"      {label}: {fmt_price(old)} → {fmt_price(new)}\n")
+        else:
+            lines.append('Price changes: none.\n')
+
+        unchanged = len(output['stations']) - len(new_stations) - len(changed_prices)
+        lines.append(f'\nUnchanged: {unchanged} station(s).\n')
+
+    log_path = LOGS_DIR / f'{date_str}.log'
+    log_path.write_text(''.join(lines), encoding='utf-8')
+    print(
+        f'Log: {log_path.name} — '
+        f'{len(new_stations)} new, {len(removed_stations)} removed, '
+        f'{len(changed_prices)} price change(s).'
+    )
+
+    # History snapshot
+    history_path = HISTORY_DIR / f'{date_str}.json'
+    history_path.write_text(
+        json.dumps(output, ensure_ascii=False, indent=2), encoding='utf-8'
+    )
+    print(f'History snapshot: {history_path.name}')
+
 # ── stations.json output ───────────────────────────────────────────────────────
 def build_output(stations: list[dict], cache: dict, date_str: str) -> dict:
     """
@@ -245,7 +337,11 @@ def main():
 
     geocode_stations(stations, cache)
 
+    prev = load_previous_stations()
     output = build_output(stations, cache, date_str)
+
+    compare_and_log(prev, output)
+
     STATIONS_PATH.write_text(
         json.dumps(output, ensure_ascii=False, indent=2), encoding='utf-8'
     )
