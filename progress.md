@@ -101,6 +101,14 @@ A developer-only page for manually verifying station geocoordinates.
   - ✕ closes and cleans up all map overlays; Escape key also closes on desktop
 - **1.75× oversized non-clustered markers** placed directly on map for the 3 result stations — always visible regardless of zoom/clustering; clicking them opens the station popup
 - **Collapsible panel on mobile** — tapping anywhere on the header bar (except ✕) collapses/expands the controls and results; chevron indicator (▾/▸) hidden on desktop
+- **Bug fix:** collapse click handler now checks `getComputedStyle` on `#rp-chevron` — no-ops on desktop where chevron is `display:none`
+- **Bug fix:** map click in pick mode now always passes `null` as `fromStation` — manual repositioning always produces generic top-3, never company-biased results
+
+### Step 15 — Dark mode tile filter
+
+- CSS `filter` applied to `.leaflet-tile-pane` in `html.dark`: `brightness(0.65) saturate(0.6) hue-rotate(190deg) contrast(1.1)`
+- Dims and desaturates Voyager tiles, then hue-rotates warm beige/green tones toward cool blue-grey — similar feel to Google Maps dark mode
+- No tile URL change, no API key, works offline; one CSS rule
 
 ---
 
@@ -111,6 +119,6 @@ A developer-only page for manually verifying station geocoordinates.
 ## Known Issues / Decisions
 
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
-- **Light/dark mode refinement:** Map tiles stay on Voyager in both modes; only UI chrome switches. Could be further polished (popup contrast, cluster colours, etc.) but deferred.
+- **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.
 - **Node.js 20 deprecation warning** in the deploy job — caused by `actions/upload-pages-artifact@v4` using `actions/upload-artifact@v7` internally. Cannot be fixed from our side; upstream will update before September 2026.
