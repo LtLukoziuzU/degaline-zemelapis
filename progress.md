@@ -94,7 +94,7 @@ A developer-only page for manually verifying station geocoordinates.
 - **"📍 Rasti pigesnes netoliese"** button injected into every station popup — uses that station as center with company-first rule (same-company cheapest shown first with ⭐ tag, no medals in this mode; plain radius search uses 🥇🥈🥉); price tiebreak by distance
 - **Results panel** — bottom sheet on mobile, floating card bottom-right on desktop (media query `pointer: fine` + `min-width: 600px`)
   - Fuel type pills (95 / Dyzelis / Dujos), default 95, persisted in localStorage
-  - Radius slider 1–50 km, persisted in localStorage
+  - Radius slider 1–50 km (resets to 5 km on each new center — see Step 16)
   - "Rodyti tikrinamą plotą žemėlapyje" checkbox — toggles dashed filled radius circle on map
   - 3 result rows: colored dot, company, address, distance, price; click zooms to station and opens popup
   - 🎯 reposition button inside panel to re-enter pick mode without closing
@@ -103,6 +103,28 @@ A developer-only page for manually verifying station geocoordinates.
 - **Collapsible panel on mobile** — tapping anywhere on the header bar (except ✕) collapses/expands the controls and results; chevron indicator (▾/▸) hidden on desktop
 - **Bug fix:** collapse click handler now checks `getComputedStyle` on `#rp-chevron` — no-ops on desktop where chevron is `display:none`
 - **Bug fix:** map click in pick mode now always passes `null` as `fromStation` — manual repositioning always produces generic top-3, never company-biased results
+
+### Step 16 — GPS locate-me button + radius UX polish
+
+- **📍 locate-me button** — fixed bottom-left corner, circular, accent-coloured; visually distinct from all other controls
+  - Tries `navigator.geolocation` first (GPS, zoom 14, no toast); on any failure falls back to `ipwho.is` was tried but requires paid CORS plan → switched to **`ipinfo.io`** (free, HTTPS, CORS, 50k req/month); parses `loc` field (`"lat,lng"` string)
+  - IP fallback zooms to 11 and shows toast "Apytikslė vieta (pagal IP adresą.)"
+  - Spinner SVG shown while waiting; button re-enables on success or error
+  - Button always present (ipinfo.io fallback means even browsers without Geolocation API benefit)
+- **Mobile panel-push** — button slides up by `panel.offsetHeight + 12px` whenever panel has `open` class (covers both expanded and collapsed-header states); desktop unaffected; `syncLocateBtn()` called after source tag appears to account for its added height
+- **Mobile centering fix** — projects `latlng` to pixel space, shifts south by `panel.offsetHeight / 2`, unprojects back to `setView` target; avoids the animation-override bug of the earlier `panBy` approach
+- **Radius resets to 5 km** on every new center pick (map click, popup button, or locate-me); localStorage persistence for radius removed — user decides each time
+- **Medal fixes:**
+  - Locate-me was getting no medals (bug: `fromStation = 'gps'` is truthy); fixed by checking `typeof fromStation === 'object'`
+  - Station-popup mode now shows 🥇🥈 for positions 2 and 3 (same-company first result keeps its ⭐ tag, no medal)
+- **Source tag** — thin muted line between panel header and controls; always shown when panel is open:
+  - Map click → "Pagal pasirinktą tašką"
+  - Popup button → "Pagal pasirinktą degalinę"
+  - Locate GPS → "Tiksli vieta (GPS)"
+  - Locate IP → "Apytikslė vieta (pagal IP adresą)"
+  - Hidden when panel is collapsed; cleared on each new center pick then overridden by source
+- **Icon consistency** — toolbar radius button and in-panel reposition button now use the same pin+arcs SVG; locate-me uses GPS crosshair SVG; all three are visually distinct to first-time visitors
+- **Mobile close UX** — ✕ button gets larger padding/font on touch screens; reposition button pushed left with `margin-right` to avoid accidental close taps
 
 ### Step 15 — Dark mode tile filter
 
