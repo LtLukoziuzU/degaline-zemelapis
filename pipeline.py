@@ -15,7 +15,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import openpyxl
@@ -331,7 +331,8 @@ def build_output(stations: list[dict], cache: dict, date_str: str) -> dict:
             'diesel':       s['diesel'],
             'lpg':          s['lpg'],
         })
-    return {'date': date_str, 'stations': out}
+    fetched_at = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M')
+    return {'date': date_str, 'fetched_at': fetched_at, 'stations': out}
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 def main():
