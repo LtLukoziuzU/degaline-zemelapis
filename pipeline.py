@@ -61,14 +61,26 @@ def download_xlsx() -> str:
                     'Referer': 'https://www.ena.lt/degalu-kainos-degalinese/',
                 })
                 with urllib.request.urlopen(req, timeout=30) as resp:
-                    XLSX_PATH.write_bytes(resp.read())
+                    status  = resp.status
+                    headers = dict(resp.headers)
+                    data    = resp.read()
+                print(f'  → {status} OK, {len(data)} bytes')
+                print(f'  Headers: {headers}')
+                XLSX_PATH.write_bytes(data)
                 date_str = d.isoformat()
                 print(f'Downloaded ({date_str}): {url}')
                 return date_str
             except urllib.error.HTTPError as e:
+                body = e.read(512).decode('utf-8', errors='replace')
+                print(f'  → HTTP {e.code} {e.reason}')
+                print(f'  Headers: {dict(e.headers)}')
+                print(f'  Body snippet: {body!r}')
                 if e.code == 404:
                     continue
                 raise
+            except urllib.error.URLError as e:
+                print(f'  → URLError: {e.reason}')
+                continue
     raise RuntimeError(
         'Nepavyko atsisiųsti xlsx failo — bandyta 5 dienos, abi rašybos.'
     )
