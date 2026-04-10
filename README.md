@@ -1,4 +1,4 @@
-# Degalinė — Lietuvos degalų kainų žemėlapis
+# Lietuvos degalų kainų žemėlapis
 
 ## Išbandyk: https://ltlukoziuzu.github.io/degaline-zemelapis/
 
