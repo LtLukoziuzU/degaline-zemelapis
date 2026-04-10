@@ -228,8 +228,19 @@
       padding: 0.6rem 0.75rem 0.5rem;
       border-bottom: 1px solid var(--border);
       position: sticky; top: 0; background: var(--bg);
+      cursor: pointer;
+    }
+    @media (min-width: 600px) and (pointer: fine) {
+      .rp-header { cursor: default; }
     }
     .rp-title { font-size: 0.9rem; font-weight: 600; flex: 1; }
+    #rp-chevron { font-size: 0.85rem; color: var(--text-muted); flex-shrink: 0; line-height: 1; }
+    @media (min-width: 600px) and (pointer: fine) {
+      #rp-chevron { display: none; }
+    }
+    #radius-panel.collapsed .rp-controls,
+    #radius-panel.collapsed #rp-results { display: none; }
+    #radius-panel.collapsed .rp-header { border-bottom: none; }
     .rp-icon-btn {
       background: none; border: none; color: var(--text-muted);
       font-size: 0.95rem; cursor: pointer; padding: 0.2rem 0.35rem;
@@ -289,6 +300,8 @@
     .rp-result-meta { font-size: 0.8rem; color: var(--text); margin-top: 0.2rem; }
     .rp-result-meta strong { color: var(--popup-price); }
 
+    .rp-big-pin { filter: drop-shadow(0 3px 8px rgba(0,0,0,0.45)); cursor: pointer; }
+
     .dp-find-nearby {
       display: block; width: 100%; margin-top: 0.5rem;
       padding: 0.3rem 0.5rem;
@@ -326,6 +339,7 @@
 
   <div id="radius-panel">
     <div class="rp-header">
+      <span id="rp-chevron">▾</span>
       <span class="rp-title">Pigiausi netoliese</span>
       <button id="rp-reposition" class="rp-icon-btn" title="Pakeisti vietą">🎯</button>
       <button id="rp-close" class="rp-icon-btn" title="Uždaryti">✕</button>
@@ -640,6 +654,8 @@
     let centerMarker  = null;
     let radiusCircle  = null;
     let circleVisible = true;
+    let resultMarkers = [];
+    let collapsed     = false;
 
     const panel        = document.getElementById('radius-panel');
     const hint         = document.getElementById('pick-hint');
@@ -716,9 +732,58 @@
       }).addTo(map);
     }
 
-// ── Results ───────────────────────────────────────────────────────────────
+    // ── Collapse ──────────────────────────────────────────────────────────────
+    function setCollapsed(val) {
+      collapsed = val;
+      panel.classList.toggle('collapsed', collapsed);
+      document.getElementById('rp-chevron').textContent = collapsed ? '▸' : '▾';
+    }
+
+    document.querySelector('.rp-header').addEventListener('click', e => {
+      if (e.target.closest('.rp-icon-btn')) return;
+      setCollapsed(!collapsed);
+    });
+
+    // ── Oversized result markers ──────────────────────────────────────────────
+    function clearResultMarkers() {
+      for (const m of resultMarkers) m.remove();
+      resultMarkers = [];
+    }
+
+    function drawResultMarkers(picks) {
+      clearResultMarkers();
+      picks.forEach(r => {
+        const color = getCompanyColor(r.company);
+        const key   = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
+        const orig  = markerByKey[key];
+        const svg   = `<svg xmlns="http://www.w3.org/2000/svg" width="72" height="108" viewBox="0 0 24 36">
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}" stroke="white" stroke-width="2"/>
+          <circle cx="12" cy="12" r="5" fill="white" fill-opacity="0.45"/>
+        </svg>`;
+        const m = L.marker([r.lat, r.lng], {
+          icon: L.divIcon({
+            className: 'rp-big-pin',
+            html: svg,
+            iconSize: [72, 108],
+            iconAnchor: [36, 108],
+            popupAnchor: [0, -112],
+          }),
+          zIndexOffset: 1500,
+        }).addTo(map);
+        if (orig) {
+          m.on('click', () => {
+            if (collapsed) setCollapsed(false);
+            cluster.zoomToShowLayer(orig, () => orig.openPopup());
+          });
+        }
+        resultMarkers.push(m);
+      });
+    }
+
+    // ── Results ───────────────────────────────────────────────────────────────
     function updateResults() {
       if (!centerLatLng) return;
+      clearResultMarkers();
       const candidates = [];
       for (const s of stations) {
         const price = s[fuelType];
@@ -776,12 +841,15 @@
 
         resultsDiv.appendChild(div);
       });
+
+      drawResultMarkers(picks);
     }
 
     // ── Open / close ──────────────────────────────────────────────────────────
     function setCenter(latlng, source) {
       centerLatLng = latlng;
       fromStation  = source || null;
+      setCollapsed(false);
       drawCenterMarker(latlng);
       drawRadiusCircle(latlng);
       panel.classList.add('open');
@@ -791,8 +859,10 @@
     function closePanel() {
       panel.classList.remove('open');
       exitPickMode();
+      setCollapsed(false);
       if (centerMarker) { centerMarker.remove(); centerMarker = null; }
       if (radiusCircle) { radiusCircle.remove(); radiusCircle = null; }
+      clearResultMarkers();
       centerLatLng = null;
       fromStation  = null;
     }
