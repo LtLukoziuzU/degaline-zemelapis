@@ -10,6 +10,7 @@ Run in CI:    same command — GitHub Actions installs openpyxl first.
 """
 
 import json
+import os
 import time
 import urllib.error
 import urllib.parse
@@ -296,6 +297,18 @@ def compare_and_log(prev: dict, output: dict):
         json.dumps(output, ensure_ascii=False, indent=2), encoding='utf-8'
     )
     print(f'History snapshot: {history_path.name}')
+
+    # Write outputs for GitHub Actions (no-op when running locally)
+    has_changes = bool(prev and (new_stations or removed_stations or changed_prices))
+    github_output = os.environ.get('GITHUB_OUTPUT')
+    if github_output:
+        with open(github_output, 'a') as f:
+            f.write(f'has_changes={str(has_changes).lower()}\n')
+            f.write(f'new_count={len(new_stations)}\n')
+            f.write(f'removed_count={len(removed_stations)}\n')
+            f.write(f'changed_count={len(changed_prices)}\n')
+            f.write(f'log_path={log_path}\n')
+            f.write(f'date={date_str}\n')
 
 # ── stations.json output ───────────────────────────────────────────────────────
 def build_output(stations: list[dict], cache: dict, date_str: str) -> dict:
