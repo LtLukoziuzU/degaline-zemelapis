@@ -24,7 +24,7 @@
       --error-color:  #dc2626;
       --popup-price:  #2563eb;
     }
-    html.dark {
+    html.dark, html.dark-a, html.dark-b {
       --bg:           #1e1e2e;
       --bg-raised:    #313244;
       --border:       #313244;
@@ -39,6 +39,14 @@
       --btn-hover-fg: #1e1e2e;
       --error-color:  #f38ba8;
       --popup-price:  #89b4fa;
+    }
+    /* Option A: muted/dimmed — closest to Google Maps dark */
+    html.dark-a .leaflet-tile-pane {
+      filter: brightness(0.72) saturate(0.45) contrast(1.05);
+    }
+    /* Option B: invert + hue correction — classic night mode */
+    html.dark-b .leaflet-tile-pane {
+      filter: invert(1) hue-rotate(180deg) saturate(0.5) brightness(0.85);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -412,10 +420,15 @@
 
   let onRadiusThemeChange = null;
 
-  function applyTheme(dark) {
-    document.documentElement.classList.toggle('dark', dark);
-    document.getElementById('theme-btn').textContent = dark ? '☀️' : '🌙';
-    localStorage.setItem('degaline-theme', dark ? 'dark' : 'light');
+  const THEMES = ['light', 'dark-a', 'dark-b'];
+  const THEME_ICONS = { 'light': '🌙', 'dark-a': '🅱', 'dark-b': '☀️' };
+
+  function applyTheme(theme) {
+    document.documentElement.classList.remove('dark', 'dark-a', 'dark-b');
+    if (theme !== 'light') document.documentElement.classList.add(theme);
+    document.getElementById('theme-btn').textContent = THEME_ICONS[theme];
+    document.getElementById('theme-btn').title = theme === 'light' ? 'Tamsi tema A' : theme === 'dark-a' ? 'Tamsi tema B' : 'Šviesi tema';
+    localStorage.setItem('degaline-theme', theme);
     if (onRadiusThemeChange) onRadiusThemeChange();
   }
 
@@ -448,10 +461,11 @@
 
   L.tileLayer(TILE_URL, { attribution: TILE_ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
 
-  applyTheme(localStorage.getItem('degaline-theme') !== 'light');
+  applyTheme(THEMES.includes(localStorage.getItem('degaline-theme')) ? localStorage.getItem('degaline-theme') : 'dark-a');
 
   document.getElementById('theme-btn').addEventListener('click', () => {
-    applyTheme(!document.documentElement.classList.contains('dark'));
+    const current = THEMES.find(t => document.documentElement.classList.contains(t)) || 'light';
+    applyTheme(THEMES[(THEMES.indexOf(current) + 1) % THEMES.length]);
   });
 
   // ─── Company colours ──────────────────────────────────────────────────────
