@@ -40,6 +40,16 @@ Project moved to a public GitHub repo (`LtLukoziuzU/degaline-zemelapis`). Hosted
 
 See [plan-github-migration.md](plan-github-migration.md) for full migration plan.
 
+### Step 10 — Dev verification tool (`dev.html`)
+
+A developer-only page for manually verifying station geocoordinates.
+
+- `dev.html` — same map as `index.html` but with "Teisinga / Neteisinga" buttons in each popup. Marker inner circle turns green/red to reflect per-station verdict. "Kita netikrinta →" toolbar button cycles through unverified groups in order, panning and zooming to each.
+- `data/verifications.json` — stores verification state: `"company|||address"` → `"correct" | "incorrect"`. Tracked in git; absent key = unchecked.
+- **Save mechanism:** on localhost, POSTs to `server.py` (which now also accepts `POST /data/verifications.json`). On GitHub Pages, PUTs via GitHub Contents API using a fine-grained PAT stored in localStorage. PAT prompt shown on first load; `🔑` toolbar button to update/clear it.
+- **CI deploy on push:** `update.yml` now also triggers on `push` to main. `update-data` job is skipped on push events; `deploy` job runs regardless, so any commit to main deploys immediately.
+- Verification work is ongoing / deferred to a later date.
+
 ---
 
 ## Pending
