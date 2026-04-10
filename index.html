@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <title>Degalinių kainos</title>
+  <link rel="stylesheet" href="lib/leaflet/leaflet.min.css">
+  <link rel="stylesheet" href="lib/leaflet.markercluster/MarkerCluster.css">
+  <link rel="stylesheet" href="lib/leaflet.markercluster/MarkerCluster.Default.css">
+  <style>
+    :root {
+      --bg:           #ffffff;
+      --bg-raised:    #f5f5f4;
+      --border:       #e7e5e4;
+      --text:         #1c1917;
+      --text-muted:   #78716c;
+      --text-subtle:  #a8a29e;
+      --accent:       #2563eb;
+      --btn-bg:       #eff6ff;
+      --btn-border:   #2563eb;
+      --btn-color:    #2563eb;
+      --btn-hover-bg: #2563eb;
+      --btn-hover-fg: #ffffff;
+      --error-color:  #dc2626;
+      --popup-price:  #2563eb;
+    }
+    html.dark {
+      --bg:           #1e1e2e;
+      --bg-raised:    #313244;
+      --border:       #313244;
+      --text:         #cdd6f4;
+      --text-muted:   #a6adc8;
+      --text-subtle:  #7f849c;
+      --accent:       #89b4fa;
+      --btn-bg:       #313244;
+      --btn-border:   #89b4fa;
+      --btn-color:    #89b4fa;
+      --btn-hover-bg: #89b4fa;
+      --btn-hover-fg: #1e1e2e;
+      --error-color:  #f38ba8;
+      --popup-price:  #89b4fa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    #toolbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--bg); color: var(--text);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.5rem 1rem; font-family: sans-serif; font-size: 0.9rem;
+    }
+    #toolbar h1 { font-size: 1rem; font-weight: 600; }
+    #status { margin-left: auto; font-size: 0.8rem; color: var(--text-muted); }
+
+    #map { position: fixed; top: 2.5rem; left: 0; right: 0; bottom: 0; }
+
+    #error-screen {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg); color: var(--text);
+      font-family: sans-serif;
+      align-items: center; justify-content: center; flex-direction: column;
+      gap: 1rem; padding: 2rem; text-align: center;
+    }
+    #error-screen h2 { color: var(--error-color); font-size: 1.2rem; }
+    #error-screen p  { color: var(--text-muted); max-width: 480px; line-height: 1.6; }
+    #error-screen code { background: var(--bg-raised); padding: 0.2rem 0.4rem; border-radius: 3px; }
+
+    .toolbar-btn {
+      background: var(--btn-bg); border: 1.5px solid var(--btn-border); color: var(--btn-color);
+      border-radius: 50%; width: 1.6rem; height: 1.6rem;
+      font-size: 0.85rem; cursor: pointer; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.15s, color 0.15s;
+    }
+    .toolbar-btn:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
+
+    #about-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.6);
+      align-items: center; justify-content: center;
+    }
+    #about-overlay.open { display: flex; }
+    #about-card {
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border);
+      font-family: sans-serif; font-size: 0.9rem;
+      border-radius: 8px; padding: 1.5rem;
+      max-width: 480px; width: 90%; max-height: 80vh;
+      overflow-y: auto; position: relative;
+    }
+    #about-card h2 { font-size: 1rem; margin-bottom: 0.75rem; }
+    #about-card p  { color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+    #about-card a  { color: var(--accent); }
+    #about-card h3 { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    #about-card ul { list-style: none; columns: 2; gap: 0.5rem; }
+    #about-card ul li { color: var(--text); padding: 0.15rem 0; font-size: 0.85rem; }
+    #about-close {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1rem; cursor: pointer; line-height: 1;
+    }
+    #about-close:hover { color: var(--text); }
+
+    .leaflet-popup-content-wrapper {
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      padding: 0;
+    }
+    .leaflet-popup-tip { background: var(--bg); }
+    .leaflet-popup-content { margin: 0; }
+    .dp-station { padding: 0.65rem 0.85rem; }
+    .dp-station + .dp-station { border-top: 1px solid var(--border); }
+    .dp-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .dp-address { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .dp-prices { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .dp-prices td { padding: 0.1rem 0; }
+    .dp-prices td:last-child { text-align: right; padding-left: 1.5rem; color: var(--popup-price); }
+    .dp-na { color: var(--text-subtle) !important; }
+  </style>
+</head>
+<body>
+
+  <div id="error-screen">
+    <h2>Nepavyko paleisti programos</h2>
+    <p id="error-msg"></p>
+  </div>
+
+  <div id="toolbar">
+    <h1>Degalinių kainos</h1>
+    <span id="status">Kraunama...</span>
+    <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
+    <button id="info-btn" class="toolbar-btn" title="Apie">ℹ</button>
+  </div>
+
+  <div id="about-overlay">
+    <div id="about-card">
+      <button id="about-close">✕</button>
+      <h2>Duomenų šaltinis</h2>
+      <p>Kainų duomenys: <a href="https://www.ena.lt/degalu-kainos-degalinese/" target="_blank">Lietuvos Energetikos Agentūra (LEA)</a></p>
+      <p>Jeigu nematote degalinės, ji nepateikė duomenų į LEA, arba <a href="https://photon.komoot.io/" target="_blank">Photon API</a> nerado šios degalinės koordinačių.</p>
+      <h3>Degalinių tinklai, pateikę kainas:</h3>
+      <ul id="company-list"></ul>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <script src="lib/xlsx.full.min.js"></script>
+  <script src="lib/leaflet/leaflet.min.js"></script>
+  <script src="lib/leaflet.markercluster/leaflet.markercluster.js"></script>
+  <script>
+  'use strict';
+
+  // ─── Guard: must run via local server, not file:// ───────────────────────
+  if (location.protocol === 'file:') {
+    const el = document.getElementById('error-screen');
+    el.style.display = 'flex';
+    document.getElementById('error-msg').innerHTML =
+      'Ši programa turi būti paleista per <code>update.bat</code> (Windows) arba ' +
+      '<code>./update.sh</code> (Linux), o ne tiesiogiai atidarius HTML failą.';
+    throw new Error('file:// not supported');
+  }
+
+  // ─── Theme ────────────────────────────────────────────────────────────────
+  const TILE_LIGHT = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+  const TILE_ATTR  = '© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors © <a href="https://carto.com">CARTO</a>';
+
+  function applyTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    document.getElementById('theme-btn').textContent = dark ? '☀️' : '🌙';
+    localStorage.setItem('degaline-theme', dark ? 'dark' : 'light');
+  }
+
+  // ─── Leaflet setup ────────────────────────────────────────────────────────
+  L.Icon.Default.prototype.options.iconUrl       = 'lib/leaflet/images/marker-icon.png';
+  L.Icon.Default.prototype.options.iconRetinaUrl = 'lib/leaflet/images/marker-icon-2x.png';
+  L.Icon.Default.prototype.options.shadowUrl     = 'lib/leaflet/images/marker-shadow.png';
+  delete L.Icon.Default.prototype._getIconUrl;
+
+  const savedView = (() => {
+    try {
+      const v = JSON.parse(localStorage.getItem('degaline-view'));
+      if (v && isFinite(v.lat) && isFinite(v.lng) && isFinite(v.zoom)) return v;
+    } catch (_) {}
+    return null;
+  })();
+
+  const map = L.map('map', {
+    maxBounds: [[50.5, 16.5], [60.0, 31.0]],
+    maxBoundsViscosity: 1.0,
+  }).setView(
+    savedView ? [savedView.lat, savedView.lng] : [55.913, 23.913],
+    savedView ? savedView.zoom : 7
+  );
+
+  map.on('moveend zoomend', () => {
+    const c = map.getCenter();
+    localStorage.setItem('degaline-view', JSON.stringify({ lat: c.lat, lng: c.lng, zoom: map.getZoom() }));
+  });
+
+  L.tileLayer(TILE_LIGHT, { attribution: TILE_ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+
+  // Apply saved or default (light) theme
+  applyTheme(localStorage.getItem('degaline-theme') !== 'light');
+
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    applyTheme(!document.documentElement.classList.contains('dark'));
+  });
+
+  // ─── Company colours ──────────────────────────────────────────────────────
+  const COMPANY_COLORS = {
+    'Alauša':         '#2dd4bf', // teal
+    'Apsaga':         '#1d4ed8', // deep blue
+    'Baltic Petroleum': '#f59e0b', // amber (orange accent)
+    'Boost Petrol':   '#4ade80', // bright lime green
+    'Circle K':       '#dc2626', // red
+    'Emsi':           '#16a34a', // green
+    'Eniris':         '#3b82f6', // medium blue
+    'GM Circle K':    '#dc2626', // same as Circle K
+    'Gelvybė':        '#fbbf24', // bright yellow
+    'Jozita':         '#166534', // dark green
+    'Naftrus':        '#65a30d', // olive/lime
+    'Narjanta':       '#f97316', // orange
+    'Neste Lietuva':  '#0284c7', // sky blue
+    'Orlen':          '#b91c1c', // dark red
+    'Regusa':         '#4338ca', // indigo
+    'Saurida':        '#ca8a04', // gold
+    'Skulas':         '#1f2937', // dark charcoal
+    'Stateta':        '#fb923c', // light orange
+    'Trevena':        '#7c3aed', // purple
+    'Viada':          '#e11d48', // rose red
+  };
+  const SMALL_COLOR = '#9ca3af'; // grey for all small/unknown operators
+
+  function getMarkerIcon(company) {
+    const color = COMPANY_COLORS[company] || SMALL_COLOR;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="36" viewBox="0 0 24 36">
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}" stroke="white" stroke-width="1.5"/>
+      <circle cx="12" cy="12" r="5" fill="white" fill-opacity="0.35"/>
+    </svg>`;
+    return L.divIcon({
+      className: '',
+      html: svg,
+      iconSize: [24, 36],
+      iconAnchor: [12, 36],
+      popupAnchor: [0, -36],
+    });
+  }
+
+  // ─── Marker placement ─────────────────────────────────────────────────────
+  function placeMarkers(stations) {
+    const groups = {};
+    for (const s of stations) {
+      const entry = geocache.get(s.address);
+      if (!entry || entry.source === 'failed' || entry.lat === null) continue;
+      const key = `${entry.lat.toFixed(5)},${entry.lng.toFixed(5)}`;
+      if (!groups[key]) groups[key] = { lat: entry.lat, lng: entry.lng, stations: [] };
+      groups[key].stations.push(s);
+    }
+
+    const cluster = L.markerClusterGroup({
+      maxClusterRadius: zoom => zoom <= 9 ? 50 : zoom <= 12 ? 35 : 20,
+    });
+
+    for (const { lat, lng, stations } of Object.values(groups)) {
+      const popupHtml = stations.map(s => {
+        const row = (label, val) => val !== null
+          ? `<tr><td>${label}</td><td>${val.toFixed(3)} €/L</td></tr>`
+          : `<tr><td>${label}</td><td class="dp-na">neprekiaujama</td></tr>`;
+        return `<div class="dp-station">
+          <div class="dp-name">${s.company}</div>
+          <div class="dp-address">${s.address}</div>
+          <table class="dp-prices">
+            ${row('95 Benzinas', s.p95)}
+            ${row('Dyzelinas', s.diesel)}
+            ${row('Dujos', s.lpg)}
+          </table>
+        </div>`;
+      }).join('');
+      L.marker([lat, lng], { icon: getMarkerIcon(stations[0].company) }).bindPopup(popupHtml, { maxWidth: 280 }).addTo(cluster);
+    }
+
+    map.addLayer(cluster);
+  }
+
+  // ─── Geocache ─────────────────────────────────────────────────────────────
+  const geocache = (() => {
+    const FLUSH_EVERY = 20;
+    let cache = {};
+    let dirty = 0;
+
+    return {
+      get(address)            { return cache[address]; },
+      size()                  { return Object.keys(cache).length; },
+
+      async set(address, lat, lng, source) {
+        cache[address] = { lat, lng, source };
+        dirty++;
+        if (dirty >= FLUSH_EVERY) await this.flush();
+      },
+
+      async load() {
+        try {
+          const res = await fetch('/data/geocache.json');
+          if (res.ok) cache = await res.json();
+        } catch { /* no cache yet, start empty */ }
+      },
+
+      async flush() {
+        try {
+          await fetch('/data/geocache.json', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(cache),
+          });
+          dirty = 0;
+        } catch(e) {
+          console.error('geocache flush failed:', e);
+        }
+      },
+    };
+  })();
+
+  // ─── Geocoding ────────────────────────────────────────────────────────────
+  const NOMINATIM_UA = 'degaline-map/1.0 (LtLukoziuz+degaline@gmail.com)';
+  const GEOCODE_DELAY = 5000;
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function nominatimFetch(query) {
+    const url = 'https://photon.komoot.io/api/?q='
+              + encodeURIComponent(query) + '&limit=1';
+    for (const wait of [0, 10000, 20000]) {
+      if (wait > 0) await sleep(wait);
+      const res = await fetch(url, { headers: { 'User-Agent': NOMINATIM_UA } });
+      if (res.status !== 429) {
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data.features?.length) return null;
+        const [lng, lat] = data.features[0].geometry.coordinates;
+        return { lat, lon: lng };
+      }
+    }
+    return null;
+  }
+
+  async function geocodeOne(address, municipality) {
+    let hit = await nominatimFetch(address);
+    if (hit) return { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon), source: 'address' };
+
+    await sleep(GEOCODE_DELAY);
+
+    hit = await nominatimFetch(municipality);
+    if (hit) return { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon), source: 'municipality' };
+
+    return { lat: null, lng: null, source: 'failed' };
+  }
+
+  async function geocodeAll(stations, limit = Infinity) {
+    const seen = new Set();
+    const todo = [];
+    for (const s of stations) {
+      if (!s.address || seen.has(s.address)) continue;
+      seen.add(s.address);
+      if (!geocache.get(s.address)) todo.push({ address: s.address, municipality: s.municipality });
+    }
+    const batch = todo.slice(0, limit);
+    if (batch.length === 0) return;
+
+    const statusEl = document.getElementById('status');
+    const failures = [];
+
+    for (let i = 0; i < batch.length; i++) {
+      const { address, municipality } = batch[i];
+      statusEl.textContent = `Geokóduojama ${i + 1}/${batch.length}…`;
+
+      const result = await geocodeOne(address, municipality);
+      await geocache.set(address, result.lat, result.lng, result.source);
+
+      if (result.source === 'failed') failures.push(address);
+      console.log(`[${i + 1}/${batch.length}] ${address} → ${result.source}`);
+
+      if (i < batch.length - 1) await sleep(GEOCODE_DELAY);
+    }
+
+    await geocache.flush();
+
+    if (failures.length > 0) {
+      console.group('Geocoding failures');
+      failures.forEach(a => console.log(a));
+      console.groupEnd();
+    }
+  }
+
+  // ─── xlsx parser ──────────────────────────────────────────────────────────
+  function parseXlsx(arrayBuffer) {
+    const wb   = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array', cellDates: false });
+    const ws   = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
+
+    let headerIdx = -1;
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i][0] === 'Data') { headerIdx = i; break; }
+    }
+    if (headerIdx === -1) throw new Error("Nerasta antraštės eilutė ('Data' A stulpelyje).");
+
+    return rows.slice(headerIdx + 1).filter(r => r[3] != null).map(r => ({
+      date:         r[0],
+      company:      r[1],
+      municipality: r[2],
+      address:      r[3],
+      p95:          typeof r[4] === 'number' ? r[4] : null,
+      diesel:       typeof r[5] === 'number' ? r[5] : null,
+      lpg:          typeof r[6] === 'number' ? r[6] : null,
+    }));
+  }
+
+  // ─── About modal ──────────────────────────────────────────────────────────
+  function initAboutModal(stations) {
+    const companies = [...new Set(stations.map(s => s.company).filter(Boolean))].sort();
+    const list = document.getElementById('company-list');
+    companies.forEach(c => {
+      const li = document.createElement('li');
+      li.textContent = c;
+      list.appendChild(li);
+    });
+
+    const overlay = document.getElementById('about-overlay');
+    document.getElementById('info-btn').addEventListener('click', () => overlay.classList.add('open'));
+    document.getElementById('about-close').addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  function setStatus(msg) {
+    document.getElementById('status').textContent = msg;
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('error-screen');
+    el.style.display = 'flex';
+    document.getElementById('error-msg').textContent = msg;
+  }
+
+  (async () => {
+    try {
+      await geocache.load();
+
+      const xlsxRes = await fetch('/data/latest.xlsx');
+      if (!xlsxRes.ok) throw new Error('Nepavyko įkelti degalinių duomenų failo.');
+      const stations = parseXlsx(await xlsxRes.arrayBuffer());
+
+      setStatus(`Įkeltos ${stations.length} degalinės — talpykloje ${geocache.size()} adresų`);
+      await geocodeAll(stations);
+      placeMarkers(stations);
+      initAboutModal(stations);
+      setStatus(`Įkeltos ${stations.length} degalinės — talpykloje ${geocache.size()} adresų`);
+      console.log('Stations (first 5):', stations.slice(0, 5));
+
+    } catch(err) {
+      if (!location.protocol === 'file:') showError(err.message);
+      console.error(err);
+    }
+  })();
+
+  </script>
+</body>
+</html>
