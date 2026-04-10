@@ -409,8 +409,8 @@
       <div class="rp-row">
         <span class="rp-label">Spindulys:</span>
         <div class="rp-slider-wrap">
-          <input type="range" id="rp-slider" min="1" max="50" value="10">
-          <span id="rp-km-label">10 km</span>
+          <input type="range" id="rp-slider" min="1" max="50" value="5">
+          <span id="rp-km-label">5 km</span>
         </div>
       </div>
       <div class="rp-row">
@@ -697,7 +697,7 @@
     }
 
     // Persisted state
-    let radiusKm = Math.min(50, Math.max(1, parseInt(localStorage.getItem('degaline-radius-km') || '10')));
+    let radiusKm = 5;
     let fuelType = localStorage.getItem('degaline-radius-fuel') || 'p95';
 
     // Volatile state
@@ -924,6 +924,9 @@
     function setCenter(latlng, source) {
       centerLatLng = latlng;
       fromStation  = source || null;
+      radiusKm = 5;
+      slider.value = 5;
+      kmLabel.textContent = '5 km';
       setCollapsed(false);
       drawCenterMarker(latlng);
       drawRadiusCircle(latlng);
@@ -1035,7 +1038,6 @@
     slider.addEventListener('input', () => {
       radiusKm = parseInt(slider.value);
       kmLabel.textContent = radiusKm + ' km';
-      localStorage.setItem('degaline-radius-km', radiusKm);
       if (centerLatLng) drawRadiusCircle(centerLatLng);
       updateResults();
     });
