@@ -74,10 +74,28 @@ A developer-only page for manually verifying station geocoordinates.
 ### Step 13 — Pipeline reliability + versioning
 
 - **Build SHA** stamped into `index.html` at deploy time (`__BUILD_SHA__` → short git commit SHA); shown in about dialog under "Versija:".
-- **Data timestamp** (`fetched_at`) written to `stations.json` by `pipeline.py` (UTC ISO, e.g. `2026-04-09T10:00`); stamped into `index.html` at deploy as "Naujausi duomenys gauti: YYYY-MM-DD HH:MM" (Vilnius timezone).
+- **Data timestamp** (`fetched_at`) written to `stations.json` by `pipeline.py` (UTC ISO with `+00:00` suffix); stamped into `index.html` at deploy as "Naujausi duomenys gauti: YYYY-MM-DD HH:MM" (Vilnius timezone). The `+00:00` suffix is required so `TZ=Europe/Vilnius date -d` correctly converts from UTC rather than treating the value as already-Vilnius time.
 - **Date removed from toolbar** status — now shows only station count.
 - **Workflow cron changed** from daily 07:00 UTC to every 15 minutes Mon–Fri 06:00–14:45 UTC (≈ 08:00–17:00 Vilnius time), to catch LEA publishing at an unpredictable time during the workday.
 - **Early-exit pipeline logic** — implemented. At start of `main()`: if `stations.json` already has today's date, exits immediately. After download: if xlsx date ≠ today (LEA hasn't published yet), exits without touching `stations.json`.
+- **Referer header** added to xlsx download requests to mimic a browser referral from `ena.lt/degalu-kainos-degalinese/`.
+- **Download diagnosis** — confirmed download failures are timing-only (file not yet published by LEA at time of run); CDN is Cloudflare LAX, no geographic IP block. Pipeline catches the file on a later cron tick once LEA publishes.
+- **`getCompanyColor()` helper** — franchise stations named "Foo (Circle K)" automatically inherit the parent brand's color via regex suffix match; used for all marker and panel color lookups.
+
+### Step 14 — Cheapest in radius
+
+- **🎯 toolbar button** enters pick mode — crosshair cursor on desktop, floating hint banner on mobile ("Bakstelėkite vietą žemėlapyje"), button highlights blue
+- **Map click** drops a non-clustered crosshair marker at the tapped point and opens the results panel
+- **"📍 Rasti pigesnes netoliese"** button injected into every station popup — uses that station as center with company-first rule (same-company cheapest shown first with ⭐ tag, no medals in this mode; plain radius search uses 🥇🥈🥉); price tiebreak by distance
+- **Results panel** — bottom sheet on mobile, floating card bottom-right on desktop (media query `pointer: fine` + `min-width: 600px`)
+  - Fuel type pills (95 / Dyzelis / Dujos), default 95, persisted in localStorage
+  - Radius slider 1–50 km, persisted in localStorage
+  - "Rodyti tikrinamą plotą žemėlapyje" checkbox — toggles dashed filled radius circle on map
+  - 3 result rows: colored dot, company, address, distance, price; click zooms to station and opens popup
+  - 🎯 reposition button inside panel to re-enter pick mode without closing
+  - ✕ closes and cleans up all map overlays; Escape key also closes on desktop
+- **1.75× oversized non-clustered markers** placed directly on map for the 3 result stations — always visible regardless of zoom/clustering; clicking them opens the station popup
+- **Collapsible panel on mobile** — tapping anywhere on the header bar (except ✕) collapses/expands the controls and results; chevron indicator (▾/▸) hidden on desktop
 
 ---
 
@@ -85,11 +103,8 @@ A developer-only page for manually verifying station geocoordinates.
 
 ### Step 12 (remaining) — remaining UI polish and remaining features
 
-6. "Cheapest in radius" feature — **approach to be decided separately** (not a sidebar)
-7. Progress bar during geocoding — no longer relevant (geocoding is server-side)
-8. Missing geocache warning — no longer relevant (geocache managed by pipeline.py)
-9. Address preprocessing for `/` double-street format — still relevant for pipeline.py geocoding runs
-10. All errors surfaced in browser UI, never terminal-only — still relevant for hosted version
+1. Address preprocessing for `/` double-street format — still relevant for pipeline.py geocoding runs
+2. All errors surfaced in browser UI, never terminal-only — still relevant for hosted version
 
 ---
 
