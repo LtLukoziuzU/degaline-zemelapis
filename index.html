@@ -349,7 +349,7 @@
       <div class="rp-row">
         <label class="rp-circle-label">
           <input type="checkbox" id="rp-circle-toggle" checked>
-          Rodyti spindulio ratilą žemėlapyje
+          Rodyti tikrinamą plotą žemėlapyje
         </label>
       </div>
     </div>
@@ -711,8 +711,8 @@
       const col = getAccent();
       radiusCircle = L.circle(latlng, {
         radius: radiusKm * 1000,
-        color: col, weight: 1.5, dashArray: '6 4',
-        fillColor: col, fillOpacity: 0.13,
+        color: col, weight: 2, dashArray: '6 4',
+        fillOpacity: 0,
         interactive: false,
       }).addTo(map);
     }
@@ -756,7 +756,7 @@
         return;
       }
 
-      const medals = ['🥇', '🥈', '🥉'];
+      const medals = fromStation ? [] : ['🥇', '🥈', '🥉'];
       picks.forEach((r, i) => {
         const key    = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
         const marker = markerByKey[key];
