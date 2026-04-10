@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev · Degalinių kainos</title>
+  <link rel="stylesheet" href="lib/leaflet/leaflet.min.css">
+  <link rel="stylesheet" href="lib/leaflet.markercluster/MarkerCluster.css">
+  <link rel="stylesheet" href="lib/leaflet.markercluster/MarkerCluster.Default.css">
+  <style>
+    :root {
+      --bg:           #ffffff;
+      --bg-raised:    #f5f5f4;
+      --border:       #e7e5e4;
+      --text:         #1c1917;
+      --text-muted:   #78716c;
+      --text-subtle:  #a8a29e;
+      --accent:       #2563eb;
+      --btn-bg:       #eff6ff;
+      --btn-border:   #2563eb;
+      --btn-color:    #2563eb;
+      --btn-hover-bg: #2563eb;
+      --btn-hover-fg: #ffffff;
+      --error-color:  #dc2626;
+      --popup-price:  #2563eb;
+    }
+    html.dark {
+      --bg:           #1e1e2e;
+      --bg-raised:    #313244;
+      --border:       #313244;
+      --text:         #cdd6f4;
+      --text-muted:   #a6adc8;
+      --text-subtle:  #7f849c;
+      --accent:       #89b4fa;
+      --btn-bg:       #313244;
+      --btn-border:   #89b4fa;
+      --btn-color:    #89b4fa;
+      --btn-hover-bg: #89b4fa;
+      --btn-hover-fg: #1e1e2e;
+      --error-color:  #f38ba8;
+      --popup-price:  #89b4fa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    #toolbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--bg); color: var(--text);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.5rem 1rem; font-family: sans-serif; font-size: 0.9rem;
+    }
+    #toolbar h1 { font-size: 1rem; font-weight: 600; }
+    #dev-badge {
+      background: #dc2626; color: #fff;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em;
+      padding: 0.1rem 0.35rem; border-radius: 3px; flex-shrink: 0;
+    }
+    #status { margin-left: auto; font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+    #verify-status { font-size: 0.8rem; color: var(--text-muted); flex-shrink: 0; white-space: nowrap; }
+
+    #map { position: fixed; top: 2.5rem; left: 0; right: 0; bottom: 0; }
+
+    #error-screen {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg); color: var(--text);
+      font-family: sans-serif;
+      align-items: center; justify-content: center; flex-direction: column;
+      gap: 1rem; padding: 2rem; text-align: center;
+    }
+    #error-screen h2 { color: var(--error-color); font-size: 1.2rem; }
+    #error-screen p  { color: var(--text-muted); max-width: 480px; line-height: 1.6; }
+
+    .toolbar-btn {
+      background: var(--btn-bg); border: 1.5px solid var(--btn-border); color: var(--btn-color);
+      border-radius: 50%; width: 1.6rem; height: 1.6rem;
+      font-size: 0.85rem; cursor: pointer; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.15s, color 0.15s;
+    }
+    .toolbar-btn:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
+
+    /* ── PAT modal ── */
+    #pat-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 3000;
+      background: rgba(0,0,0,0.65);
+      align-items: center; justify-content: center;
+    }
+    #pat-overlay.open { display: flex; }
+    #pat-card {
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem; max-width: 460px; width: 92%;
+      font-family: sans-serif; font-size: 0.9rem;
+      position: relative;
+    }
+    #pat-card h2 { font-size: 1rem; margin-bottom: 0.6rem; }
+    #pat-card p  { color: var(--text-muted); line-height: 1.6; margin-bottom: 0.75rem; font-size: 0.85rem; }
+    #pat-card ol { color: var(--text-muted); line-height: 1.8; margin-bottom: 0.75rem; padding-left: 1.2rem; font-size: 0.85rem; }
+    #pat-card input[type=text] {
+      width: 100%; padding: 0.45rem 0.6rem; border: 1.5px solid var(--border);
+      border-radius: 5px; background: var(--bg-raised); color: var(--text);
+      font-size: 0.85rem; margin-bottom: 0.75rem; font-family: monospace;
+    }
+    #pat-card input[type=text]:focus { outline: none; border-color: var(--accent); }
+    #pat-save {
+      width: 100%; padding: 0.45rem; background: var(--accent); color: #fff;
+      border: none; border-radius: 5px; cursor: pointer; font-size: 0.9rem;
+    }
+    #pat-save:disabled { opacity: 0.4; cursor: default; }
+    #pat-skip {
+      display: block; text-align: center; margin-top: 0.6rem;
+      font-size: 0.8rem; color: var(--text-muted); cursor: pointer;
+      background: none; border: none; width: 100%;
+    }
+    #pat-skip:hover { color: var(--text); }
+    #pat-error { color: var(--error-color); font-size: 0.8rem; margin-bottom: 0.5rem; display: none; }
+    #pat-status-dot {
+      display: inline-block; width: 0.45rem; height: 0.45rem; border-radius: 50%;
+      background: #22c55e; margin-right: 0.25rem; vertical-align: middle;
+    }
+    #pat-status-dot.missing { background: #f59e0b; }
+    #pat-status-dot.error   { background: #ef4444; }
+
+    /* ── Popup ── */
+    .leaflet-popup-content-wrapper {
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2); padding: 0;
+    }
+    .leaflet-popup-tip { background: var(--bg); }
+    .leaflet-popup-content { margin: 0; }
+    .dp-station { padding: 0.65rem 0.85rem; }
+    .dp-station + .dp-station { border-top: 1px solid var(--border); }
+    .dp-name    { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .dp-address { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .dp-prices  { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .dp-prices td { padding: 0.1rem 0; }
+    .dp-prices td:last-child { text-align: right; padding-left: 1.5rem; color: var(--popup-price); }
+    .dp-na { color: var(--text-subtle) !important; }
+
+    .dp-verify {
+      display: flex; gap: 0.4rem; margin-top: 0.55rem; padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .dp-verify-btn {
+      flex: 1; padding: 0.3rem 0.4rem; font-size: 0.75rem; border-radius: 4px;
+      border: 1.5px solid; cursor: pointer; font-family: sans-serif;
+      background: transparent; transition: background 0.12s, color 0.12s;
+      white-space: nowrap;
+    }
+    .btn-correct   { border-color: #22c55e; color: #22c55e; }
+    .btn-correct.active   { background: #22c55e; color: #fff; }
+    .btn-incorrect { border-color: #ef4444; color: #ef4444; }
+    .btn-incorrect.active { background: #ef4444; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <div id="error-screen">
+    <h2 id="error-title">Klaida</h2>
+    <p id="error-msg"></p>
+  </div>
+
+  <div id="toolbar">
+    <h1>Degalinių kainos</h1>
+    <span id="dev-badge">DEV</span>
+    <span id="status">Kraunama...</span>
+    <span id="verify-status"></span>
+    <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
+    <button id="pat-btn"   class="toolbar-btn" title="GitHub token"><span id="pat-status-dot" class="missing"></span>🔑</button>
+  </div>
+
+  <!-- PAT setup modal -->
+  <div id="pat-overlay">
+    <div id="pat-card">
+      <h2>GitHub prieigos raktas</h2>
+      <p>Norint išsaugoti patikrinimus tiesiai į repozitoriją iš naršyklės, reikia asmeninio GitHub rakto (PAT).</p>
+      <ol>
+        <li>Eikite į <strong>github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens</strong></li>
+        <li>Sukurkite naują raką su prieiga tik prie <strong>LtLukoziuzU/degaline-zemelapis</strong></li>
+        <li>Leidimai: <strong>Contents → Read and write</strong></li>
+        <li>Įklijuokite raką žemiau</li>
+      </ol>
+      <p id="pat-error"></p>
+      <input type="text" id="pat-input" placeholder="github_pat_..." autocomplete="off" spellcheck="false">
+      <button id="pat-save">Išsaugoti</button>
+      <button id="pat-skip">Praleisti (tik peržiūrai, neišsaugos)</button>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <script src="lib/leaflet/leaflet.min.js"></script>
+  <script src="lib/leaflet.markercluster/leaflet.markercluster.js"></script>
+  <script>
+  'use strict';
+
+  const REPO      = 'LtLukoziuzU/degaline-zemelapis';
+  const FILE_PATH = 'data/verifications.json';
+  const API_URL   = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+
+  const isLocalhost = ['localhost', '127.0.0.1'].includes(location.hostname);
+
+  // ─── file:// guard ────────────────────────────────────────────────────────
+  if (location.protocol === 'file:') {
+    document.getElementById('error-screen').style.display = 'flex';
+    document.getElementById('error-msg').textContent =
+      'Atidarykite šį puslapį per serverį arba GitHub Pages, ne kaip lokalų failą.';
+    throw new Error('file:// not supported');
+  }
+
+  // ─── Theme ────────────────────────────────────────────────────────────────
+  const TILE_URL  = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+  const TILE_ATTR = '© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors © <a href="https://carto.com">CARTO</a>';
+
+  function applyTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    document.getElementById('theme-btn').textContent = dark ? '☀️' : '🌙';
+    localStorage.setItem('degaline-dev-theme', dark ? 'dark' : 'light');
+  }
+
+  // ─── Leaflet setup ────────────────────────────────────────────────────────
+  L.Icon.Default.prototype.options.iconUrl       = 'lib/leaflet/images/marker-icon.png';
+  L.Icon.Default.prototype.options.iconRetinaUrl = 'lib/leaflet/images/marker-icon-2x.png';
+  L.Icon.Default.prototype.options.shadowUrl     = 'lib/leaflet/images/marker-shadow.png';
+  delete L.Icon.Default.prototype._getIconUrl;
+
+  const savedView = (() => {
+    try {
+      const v = JSON.parse(localStorage.getItem('degaline-view'));
+      if (v && isFinite(v.lat) && isFinite(v.lng) && isFinite(v.zoom)) return v;
+    } catch (_) {}
+    return null;
+  })();
+
+  const map = L.map('map', {
+    maxBounds: [[50.5, 16.5], [60.0, 31.0]],
+    maxBoundsViscosity: 1.0,
+  }).setView(
+    savedView ? [savedView.lat, savedView.lng] : [55.913, 23.913],
+    savedView ? savedView.zoom : 7
+  );
+
+  map.on('moveend zoomend', () => {
+    const c = map.getCenter();
+    localStorage.setItem('degaline-view', JSON.stringify({ lat: c.lat, lng: c.lng, zoom: map.getZoom() }));
+  });
+
+  L.tileLayer(TILE_URL, { attribution: TILE_ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+
+  applyTheme(localStorage.getItem('degaline-dev-theme') !== 'light');
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    applyTheme(!document.documentElement.classList.contains('dark'));
+  });
+
+  // ─── Company colours ──────────────────────────────────────────────────────
+  const COMPANY_COLORS = {
+    'Alauša':           '#2dd4bf',
+    'Apsaga':           '#1d4ed8',
+    'Baltic Petroleum': '#f59e0b',
+    'Boost Petrol':     '#4ade80',
+    'Circle K':         '#dc2626',
+    'Emsi':             '#16a34a',
+    'Eniris':           '#3b82f6',
+    'GM Circle K':      '#dc2626',
+    'Gelvybė':          '#fbbf24',
+    'Jozita':           '#166534',
+    'Naftrus':          '#65a30d',
+    'Narjanta':         '#f97316',
+    'Neste Lietuva':    '#0284c7',
+    'Orlen':            '#b91c1c',
+    'Regusa':           '#4338ca',
+    'Saurida':          '#ca8a04',
+    'Skulas':           '#1f2937',
+    'Stateta':          '#fb923c',
+    'Trevena':          '#7c3aed',
+    'Viada':            '#e11d48',
+  };
+  const SMALL_COLOR = '#9ca3af';
+
+  // status: 'unchecked' | 'correct' | 'incorrect'
+  function getMarkerIcon(company, status) {
+    const color = COMPANY_COLORS[company] || SMALL_COLOR;
+    const innerFill    = status === 'correct' ? '#22c55e' : status === 'incorrect' ? '#ef4444' : 'white';
+    const innerOpacity = (status === 'correct' || status === 'incorrect') ? '0.85' : '0.35';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="36" viewBox="0 0 24 36">
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}" stroke="white" stroke-width="1.5"/>
+      <circle cx="12" cy="12" r="5" fill="${innerFill}" fill-opacity="${innerOpacity}"/>
+    </svg>`;
+    return L.divIcon({ className: '', html: svg, iconSize: [24, 36], iconAnchor: [12, 36], popupAnchor: [0, -36] });
+  }
+
+  // ─── Verification state ───────────────────────────────────────────────────
+  let verifications = {};   // "company|||address" → "correct" | "incorrect"
+  let fileSha       = null; // GitHub API SHA for the verifications.json blob
+
+  const markerRefs   = {}; // groupKey → L.marker
+  const groupStns    = {}; // groupKey → [station, ...]
+  const stationGroup = {}; // stationKey → groupKey
+  let totalStations  = 0;
+
+  function stationKey(s) { return s.company + '|||' + s.address; }
+
+  function escAttr(s) {
+    return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  }
+
+  function groupStatus(stations) {
+    const vs = stations.map(s => verifications[stationKey(s)]);
+    if (vs.some(v => v === 'incorrect')) return 'incorrect';
+    if (vs.every(v => v === 'correct'))  return 'correct';
+    return 'unchecked';
+  }
+
+  function updateStatusBar() {
+    const n = Object.keys(verifications).length;
+    document.getElementById('verify-status').textContent =
+      n > 0 ? `· ${n}/${totalStations} patikrinta` : '';
+  }
+
+  // ─── UTF-8 safe base64 ────────────────────────────────────────────────────
+  function toB64(str) {
+    const bytes = new TextEncoder().encode(str);
+    return btoa(String.fromCodePoint(...bytes));
+  }
+  function fromB64(b64) {
+    const bin   = atob(b64.replace(/\n/g, ''));
+    const bytes = Uint8Array.from(bin, c => c.codePointAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
+  // ─── PAT management ───────────────────────────────────────────────────────
+  function getPat()       { return localStorage.getItem('degaline-dev-pat'); }
+  function setPat(token)  { localStorage.setItem('degaline-dev-pat', token); refreshPatDot(); }
+  function clearPat()     { localStorage.removeItem('degaline-dev-pat'); refreshPatDot(); }
+
+  function refreshPatDot() {
+    const dot = document.getElementById('pat-status-dot');
+    dot.className = getPat() ? '' : 'missing';
+  }
+
+  function openPatModal(errorMsg) {
+    document.getElementById('pat-error').style.display = errorMsg ? 'block' : 'none';
+    document.getElementById('pat-error').textContent   = errorMsg || '';
+    document.getElementById('pat-input').value = getPat() || '';
+    document.getElementById('pat-overlay').classList.add('open');
+  }
+  function closePatModal() {
+    document.getElementById('pat-overlay').classList.remove('open');
+  }
+
+  document.getElementById('pat-btn').addEventListener('click', () => openPatModal());
+  document.getElementById('pat-skip').addEventListener('click', closePatModal);
+  document.getElementById('pat-save').addEventListener('click', () => {
+    const val = document.getElementById('pat-input').value.trim();
+    if (!val) return;
+    setPat(val);
+    closePatModal();
+  });
+  document.getElementById('pat-input').addEventListener('input', () => {
+    document.getElementById('pat-save').disabled =
+      !document.getElementById('pat-input').value.trim();
+  });
+  document.getElementById('pat-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('pat-save').click();
+  });
+
+  // ─── Load verifications ───────────────────────────────────────────────────
+  async function loadVerifications() {
+    if (isLocalhost) {
+      const res = await fetch('data/verifications.json');
+      if (res.ok) verifications = await res.json();
+      return;
+    }
+    // GitHub API: also gives us the SHA we need for future PUTs
+    const pat = getPat();
+    const headers = pat ? { Authorization: `token ${pat}` } : {};
+    const res = await fetch(API_URL, { headers });
+    if (res.status === 404) { verifications = {}; return; }
+    if (!res.ok) return;
+    const meta = await res.json();
+    fileSha = meta.sha;
+    try { verifications = JSON.parse(fromB64(meta.content)); } catch (_) { verifications = {}; }
+  }
+
+  // ─── Save verifications ───────────────────────────────────────────────────
+  async function saveVerification(key, status) {
+    if (status === null) delete verifications[key];
+    else verifications[key] = status;
+    updateStatusBar();
+
+    if (isLocalhost) {
+      await fetch('/data/verifications.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(verifications, null, 2),
+      });
+      return;
+    }
+
+    // GitHub Pages path: PUT via API
+    const pat = getPat();
+    if (!pat) { openPatModal('Reikia rakto, kad būtų galima išsaugoti.'); return; }
+
+    const content = toB64(JSON.stringify(verifications, null, 2));
+    const body    = { message: 'Update verifications', content };
+    if (fileSha) body.sha = fileSha;
+
+    const res = await fetch(API_URL, {
+      method: 'PUT',
+      headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (res.status === 401 || res.status === 403) {
+      openPatModal('Raktas neteisingas arba pasibaigė galiojimas. Įveskite naują.');
+      return;
+    }
+    if (!res.ok) {
+      console.error('GitHub API error:', await res.text());
+      return;
+    }
+    const data = await res.json();
+    fileSha = data.content.sha; // update for next save
+  }
+
+  // ─── Popup interaction ────────────────────────────────────────────────────
+  map.on('popupopen', e => {
+    const el = e.popup.getElement();
+
+    // Re-apply active states on every open
+    el.querySelectorAll('.dp-verify-btn').forEach(btn => {
+      btn.classList.toggle('active', verifications[btn.dataset.key] === btn.dataset.status);
+    });
+
+    if (el._verifyBound) return;
+    el._verifyBound = true;
+
+    el.addEventListener('click', async ev => {
+      const btn = ev.target.closest('.dp-verify-btn');
+      if (!btn) return;
+
+      const key       = btn.dataset.key;
+      const status    = btn.dataset.status;
+      const newStatus = verifications[key] === status ? null : status;
+      await saveVerification(key, newStatus);
+
+      el.querySelectorAll('.dp-verify-btn').forEach(b => {
+        if (b.dataset.key === key)
+          b.classList.toggle('active', verifications[key] === b.dataset.status);
+      });
+
+      const gKey = stationGroup[key];
+      if (gKey && markerRefs[gKey]) {
+        markerRefs[gKey].setIcon(getMarkerIcon(groupStns[gKey][0].company, groupStatus(groupStns[gKey])));
+      }
+    });
+  });
+
+  // ─── Marker placement ─────────────────────────────────────────────────────
+  function placeMarkers(stations) {
+    const groups = {};
+    for (const s of stations) {
+      const gKey = `${s.lat.toFixed(5)},${s.lng.toFixed(5)}`;
+      if (!groups[gKey]) groups[gKey] = { lat: s.lat, lng: s.lng, stations: [] };
+      groups[gKey].stations.push(s);
+    }
+
+    const cluster = L.markerClusterGroup({
+      maxClusterRadius: zoom => zoom <= 9 ? 50 : zoom <= 12 ? 35 : 20,
+    });
+
+    for (const [gKey, { lat, lng, stations: grp }] of Object.entries(groups)) {
+      groupStns[gKey] = grp;
+      for (const s of grp) stationGroup[stationKey(s)] = gKey;
+
+      const popupHtml = grp.map(s => {
+        const key = stationKey(s);
+        const row = (label, val) => val !== null
+          ? `<tr><td>${label}</td><td>${val.toFixed(3)} €/L</td></tr>`
+          : `<tr><td>${label}</td><td class="dp-na">neprekiaujama</td></tr>`;
+        return `<div class="dp-station">
+          <div class="dp-name">${s.company}</div>
+          <div class="dp-address">${s.address}</div>
+          <table class="dp-prices">
+            ${row('95 Benzinas', s.p95)}
+            ${row('Dyzelinas', s.diesel)}
+            ${row('Dujos', s.lpg)}
+          </table>
+          <div class="dp-verify">
+            <button class="dp-verify-btn btn-correct"   data-key="${escAttr(key)}" data-status="correct">✓ Teisinga</button>
+            <button class="dp-verify-btn btn-incorrect" data-key="${escAttr(key)}" data-status="incorrect">✗ Neteisinga</button>
+          </div>
+        </div>`;
+      }).join('');
+
+      const marker = L.marker([lat, lng], { icon: getMarkerIcon(grp[0].company, groupStatus(grp)) })
+        .bindPopup(popupHtml, { maxWidth: 280 });
+      markerRefs[gKey] = marker;
+      marker.addTo(cluster);
+    }
+
+    map.addLayer(cluster);
+  }
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────
+  function setStatus(msg) { document.getElementById('status').textContent = msg; }
+
+  function showError(msg) {
+    document.getElementById('error-screen').style.display = 'flex';
+    document.getElementById('error-msg').textContent = msg;
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  (async () => {
+    refreshPatDot();
+
+    // On GitHub Pages with no PAT yet, prompt immediately
+    if (!isLocalhost && !getPat()) openPatModal();
+
+    try {
+      const [stationsRes] = await Promise.all([
+        fetch('data/stations.json'),
+        loadVerifications(),
+      ]);
+
+      if (!stationsRes.ok) throw new Error('Nepavyko įkelti degalinių duomenų.');
+      const data = await stationsRes.json();
+
+      totalStations = data.stations.length;
+      placeMarkers(data.stations);
+      setStatus(`${totalStations} degalinės · ${data.date}`);
+      updateStatusBar();
+    } catch (err) {
+      showError(err.message);
+      console.error(err);
+    }
+  })();
+
+  </script>
+</body>
+</html>

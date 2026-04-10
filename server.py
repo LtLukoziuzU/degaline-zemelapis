@@ -10,10 +10,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=ROOT, **kwargs)
 
     def do_POST(self):
-        if self.path == '/data/geocache.json':
+        ALLOWED = {'/data/geocache.json', '/data/verifications.json'}
+        if self.path in ALLOWED:
             length = int(self.headers.get('Content-Length', 0))
             body = self.rfile.read(length)
-            out = os.path.join(ROOT, 'data', 'geocache.json')
+            filename = self.path.lstrip('/')  # e.g. "data/geocache.json"
+            out = os.path.join(ROOT, filename)
             os.makedirs(os.path.dirname(out), exist_ok=True)
             with open(out, 'wb') as f:
                 f.write(body)
