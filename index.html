@@ -289,6 +289,10 @@
       border-radius: 4px; line-height: 1;
     }
     .rp-icon-btn:hover { color: var(--text); background: var(--bg-raised); }
+    @media (max-width: 599px), (pointer: coarse) {
+      #rp-close { padding: 0.4rem 0.6rem; font-size: 1.1rem; }
+      #rp-reposition { margin-right: 0.5rem; }
+    }
 
     .rp-controls {
       padding: 0.55rem 0.75rem 0.45rem; border-bottom: 1px solid var(--border);
@@ -398,9 +402,11 @@
       <span id="rp-chevron">▾</span>
       <span class="rp-title">Pigiausi netoliese</span>
       <button id="rp-reposition" class="rp-icon-btn" title="Pakeisti vietą">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+          <path d="M19 9a7 7 0 0 0-14 0" opacity="0.45"/>
+          <path d="M22 9a10 10 0 0 0-20 0" opacity="0.25"/>
         </svg>
       </button>
       <button id="rp-close" class="rp-icon-btn" title="Uždaryti">✕</button>
@@ -935,7 +941,11 @@
     function setCenter(latlng, source) {
       centerLatLng = latlng;
       fromStation  = source || null;
-      document.getElementById('rp-source-tag').classList.remove('visible');
+      const _tag = document.getElementById('rp-source-tag');
+      _tag.textContent = (typeof source === 'object' && source)
+        ? 'Pagal pasirinktą degalinę'
+        : 'Pagal pasirinktą tašką';
+      _tag.classList.add('visible');
       radiusKm = 5;
       slider.value = 5;
       kmLabel.textContent = '5 km';
