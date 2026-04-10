@@ -3,7 +3,7 @@
 ## Išbandyk: https://ltlukoziuzu.github.io/degaline-zemelapis/
 
 ## AI Disclaimer'is
-Taip, nors ir nelabai norom, bet šis projektas yra pilnai sukonstruotas su Claude Code CLI. Web'o žinios pas mane ganėtinai minimalios (per paskutinius 12 metų tik su Unity (C#) lengvai programuota, daugiau tik ką pastebiu iš savo patirties kaip manual QA), lengvus edit'us galiu daryt, bet nesukonstruot viską nuo nulio. Vienintelė didesnė išimtis - šis readme failas. Paprašiau, kad tik duotų initial layout'ą, bet toliau viskas parašyta ranka.
+Taip, nors ir nelabai norom, bet šis projektas yra pilnai sukonstruotas su Claude Code CLI. Web'o žinios pas mane ganėtinai minimalios (per paskutinius 12 metų tik su Unity (C#) lengvai programuota, daugiau tik ką pastebiu iš savo patirties kaip manual QA), lengvus edit'us galiu daryt, bet ne sukonstruot viską nuo nulio. Vienintelė didesnė išimtis - šis readme failas. Paprašiau, kad tik duotų initial layout'ą, bet toliau viskas parašyta ranka.
 
 ## Apie projektą
 <sub>*Famous last words:* </sub>  
@@ -22,8 +22,6 @@ Trys būdai, kaip galima ieškoti atstume aplink:
 * Pagal pasirinktą tašką: Viršuje dešinėje mygtukas, kurį paspaudus vartotojas gali pasirinkti bet kurį tašką žemėlapyje
 
 Bet kokiu atveju, pasirinkus kuro tipą bei atstumą, parodomos trys pigiausios degalinės. Jeigu ieškoma pagal pasirinktą degalinę, pirmas variantas vietoje pigiausios apskritai rodo pigiausią tame tinkle - jei vartotojas turi lojalumo kortelę/kitų nuolaidų ar tiesiog nori tam tikro tinklo.
-
-Duomenis atnaujina pati svetainė, grubiai kas 15 minučių LEA darbo valandomis (Github Actions kartais užtempia runner'io paleidimą) iki kol randamas šiandienos failas - po radimo ir visų veiksmų su juo atlikimo tolimesni patikrinimai iškart sustoja.
 
 ## Duomenų šaltinis
 Kainų duomenys: [Lietuvos Energetikos Agentūra (LEA)](https://www.ena.lt/degalu-kainos-degalinese/) ir degalinių tinklai, suteikę jai informaciją
