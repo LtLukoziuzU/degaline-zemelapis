@@ -24,7 +24,7 @@
       --error-color:  #dc2626;
       --popup-price:  #2563eb;
     }
-    html.dark, html.dark-a, html.dark-b {
+    html.dark {
       --bg:           #1e1e2e;
       --bg-raised:    #313244;
       --border:       #313244;
@@ -40,13 +40,8 @@
       --error-color:  #f38ba8;
       --popup-price:  #89b4fa;
     }
-    /* Option A: dim + cool shift */
-    html.dark-a .leaflet-tile-pane {
+    html.dark .leaflet-tile-pane {
       filter: brightness(0.65) saturate(0.6) hue-rotate(190deg) contrast(1.1);
-    }
-    /* Option B: dim + stronger cool shift */
-    html.dark-b .leaflet-tile-pane {
-      filter: brightness(0.65) saturate(0.65) hue-rotate(260deg) contrast(1.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -420,15 +415,10 @@
 
   let onRadiusThemeChange = null;
 
-  const THEMES = ['light', 'dark-a', 'dark-b'];
-  const THEME_ICONS = { 'light': '🌙', 'dark-a': '🅱', 'dark-b': '☀️' };
-
-  function applyTheme(theme) {
-    document.documentElement.classList.remove('dark', 'dark-a', 'dark-b');
-    if (theme !== 'light') document.documentElement.classList.add(theme);
-    document.getElementById('theme-btn').textContent = THEME_ICONS[theme];
-    document.getElementById('theme-btn').title = theme === 'light' ? 'Tamsi tema A' : theme === 'dark-a' ? 'Tamsi tema B' : 'Šviesi tema';
-    localStorage.setItem('degaline-theme', theme);
+  function applyTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    document.getElementById('theme-btn').textContent = dark ? '☀️' : '🌙';
+    localStorage.setItem('degaline-theme', dark ? 'dark' : 'light');
     if (onRadiusThemeChange) onRadiusThemeChange();
   }
 
@@ -461,11 +451,10 @@
 
   L.tileLayer(TILE_URL, { attribution: TILE_ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
 
-  applyTheme(THEMES.includes(localStorage.getItem('degaline-theme')) ? localStorage.getItem('degaline-theme') : 'dark-a');
+  applyTheme(localStorage.getItem('degaline-theme') !== 'light');
 
   document.getElementById('theme-btn').addEventListener('click', () => {
-    const current = THEMES.find(t => document.documentElement.classList.contains(t)) || 'light';
-    applyTheme(THEMES[(THEMES.indexOf(current) + 1) % THEMES.length]);
+    applyTheme(!document.documentElement.classList.contains('dark'));
   });
 
   // ─── Company colours ──────────────────────────────────────────────────────
