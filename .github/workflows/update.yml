@@ -79,7 +79,8 @@ jobs:
       - name: Stamp build SHA and data time
         run: |
           SHA=$(git rev-parse --short HEAD)
-          DATA_TIME=$(date -u +"%Y-%m-%d %H:%M")
+          TS=$(git log -1 --format="%ct" -- data/stations.json)
+          DATA_TIME=$(TZ=Europe/Vilnius date -d "@$TS" +"%Y-%m-%d %H:%M")
           sed -i "s/__BUILD_SHA__/$SHA/g" index.html
           sed -i "s/__DATA_TIME__/$DATA_TIME/g" index.html
 
