@@ -40,13 +40,13 @@
       --error-color:  #f38ba8;
       --popup-price:  #89b4fa;
     }
-    /* Option A: muted/dimmed — closest to Google Maps dark */
+    /* Option A: dim + cool shift */
     html.dark-a .leaflet-tile-pane {
-      filter: brightness(0.72) saturate(0.45) contrast(1.05);
+      filter: brightness(0.65) saturate(0.6) hue-rotate(190deg) contrast(1.1);
     }
-    /* Option B: invert + hue correction — classic night mode */
+    /* Option B: partial invert + cool shift */
     html.dark-b .leaflet-tile-pane {
-      filter: invert(1) hue-rotate(180deg) saturate(0.5) brightness(0.85);
+      filter: invert(0.88) hue-rotate(175deg) saturate(0.55) brightness(0.82);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
