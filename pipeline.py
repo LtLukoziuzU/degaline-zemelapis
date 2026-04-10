@@ -334,7 +334,7 @@ def build_output(stations: list[dict], cache: dict, date_str: str) -> dict:
             'diesel':       s['diesel'],
             'lpg':          s['lpg'],
         })
-    fetched_at = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M')
+    fetched_at = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M+00:00')
     return {'date': date_str, 'fetched_at': fetched_at, 'stations': out}
 
 # ── Main ───────────────────────────────────────────────────────────────────────

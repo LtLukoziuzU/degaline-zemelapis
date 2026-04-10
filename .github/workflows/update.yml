@@ -79,7 +79,7 @@ jobs:
       - name: Stamp build SHA and data time
         run: |
           SHA=$(git rev-parse --short HEAD)
-          FETCHED_AT=$(python3 -c "import json; d=json.load(open('data/stations.json')); print(d.get('fetched_at', d['date']+'T00:00'))")
+          FETCHED_AT=$(python3 -c "import json; d=json.load(open('data/stations.json')); print(d.get('fetched_at', d['date']+'T00:00+00:00'))")
           DATA_TIME=$(TZ=Europe/Vilnius date -d "$FETCHED_AT" +"%Y-%m-%d %H:%M")
           sed -i "s/__BUILD_SHA__/$SHA/g" index.html
           sed -i "s/__DATA_TIME__/$DATA_TIME/g" index.html
