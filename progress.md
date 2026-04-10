@@ -54,27 +54,20 @@ A developer-only page for manually verifying station geocoordinates.
 
 ## Pending
 
-### Step 8 (remaining) — UI polish and remaining features
-
-6. Search field + sidebar — **needs mobile-first redesign before implementation**; desktop-only plan in [plan-step-8-6-search-sidebar.md](plan-step-8-6-search-sidebar.md) is superseded
-7. Progress bar during geocoding — no longer relevant (geocoding is server-side)
-8. Missing geocache warning — no longer relevant (geocache managed by pipeline.py)
-9. Address preprocessing for `/` double-street format — still relevant for pipeline.py geocoding runs
-10. All errors surfaced in browser UI, never terminal-only — still relevant for hosted version
-
-### Step 10 — Mobile-first redesign
+### Step 11 — Mobile-first redesign
 Full UI redesign for mobile compatibility before implementing remaining features (search/sidebar). Viewport meta tag already added. Key items:
 - Toolbar layout on narrow screens (search field won't fit in current single row)
 - Sidebar replaced with bottom drawer pattern on mobile
 - Touch alternative for right-click (map point mode)
 - iOS safe-area insets for map bottom edge
 
----
+### Step 12 — remaining UI polish and remaining features
 
-## Attribution / Licensing (TODO before handoff)
-- **Data source:** LEA — Lietuvos Energetikos Agentūra (https://www.ena.lt/)
-- **Primary sources:** the list of gas station companies must be generated dynamically from the current xlsx (companies change as new ones are added or existing ones fix compliance). Do not hardcode the list.
-- Credit/attribution text must appear somewhere in the UI (footer or About dialog). Decide on exact wording before handoff.
+6. Search field + sidebar — **needs mobile-first redesign before implementation**; desktop-only plan in [plan-step-8-6-search-sidebar.md](plan-step-8-6-search-sidebar.md) is superseded
+7. Progress bar during geocoding — no longer relevant (geocoding is server-side)
+8. Missing geocache warning — no longer relevant (geocache managed by pipeline.py)
+9. Address preprocessing for `/` double-street format — still relevant for pipeline.py geocoding runs
+10. All errors surfaced in browser UI, never terminal-only — still relevant for hosted version
 
 ---
 
