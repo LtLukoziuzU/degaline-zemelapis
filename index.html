@@ -968,6 +968,7 @@
       const sourceTag = document.getElementById('rp-source-tag');
       sourceTag.textContent = toastMsg ? 'Apytikslė vieta (pagal IP adresą)' : 'Tiksli vieta (GPS)';
       sourceTag.classList.add('visible');
+      syncLocateBtn();
       if (window.innerWidth < 600) {
         // Shift center south so latlng appears centered in the visible area above the panel
         const px = map.project(latlng, zoom);
