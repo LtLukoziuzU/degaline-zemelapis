@@ -77,7 +77,7 @@ A developer-only page for manually verifying station geocoordinates.
 - **Data timestamp** (`fetched_at`) written to `stations.json` by `pipeline.py` (UTC ISO, e.g. `2026-04-09T10:00`); stamped into `index.html` at deploy as "Naujausi duomenys gauti: YYYY-MM-DD HH:MM" (Vilnius timezone).
 - **Date removed from toolbar** status — now shows only station count.
 - **Workflow cron changed** from daily 07:00 UTC to every 15 minutes Mon–Fri 06:00–14:45 UTC (≈ 08:00–17:00 Vilnius time), to catch LEA publishing at an unpredictable time during the workday.
-- **Early-exit pipeline logic** — partially planned (abort if `stations.json` already has today's date, or if downloaded xlsx is not today's), not yet implemented.
+- **Early-exit pipeline logic** — implemented. At start of `main()`: if `stations.json` already has today's date, exits immediately. After download: if xlsx date ≠ today (LEA hasn't published yet), exits without touching `stations.json`.
 
 ---
 
