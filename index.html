@@ -489,7 +489,7 @@
   function getMarkerIcon(company) {
     const color = getCompanyColor(company);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="36" viewBox="0 0 24 36">
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}" stroke="white" stroke-width="1.5"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}"/>
       <circle cx="12" cy="12" r="5" fill="white" fill-opacity="0.35"/>
     </svg>`;
     return L.divIcon({
@@ -756,17 +756,17 @@
         const color = getCompanyColor(r.company);
         const key   = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
         const orig  = markerByKey[key];
-        const svg   = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="54" viewBox="0 0 24 36">
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}" stroke="white" stroke-width="1.5"/>
+        const svg   = `<svg xmlns="http://www.w3.org/2000/svg" width="42" height="63" viewBox="0 0 24 36">
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}"/>
           <circle cx="12" cy="12" r="5" fill="white" fill-opacity="0.35"/>
         </svg>`;
         const m = L.marker([r.lat, r.lng], {
           icon: L.divIcon({
             className: 'rp-big-pin',
             html: svg,
-            iconSize: [36, 54],
-            iconAnchor: [18, 54],
-            popupAnchor: [0, -56],
+            iconSize: [42, 63],
+            iconAnchor: [21, 63],
+            popupAnchor: [0, -65],
           }),
           zIndexOffset: 1500,
         }).addTo(map);
