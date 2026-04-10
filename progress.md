@@ -50,20 +50,34 @@ A developer-only page for manually verifying station geocoordinates.
 - **CI deploy on push:** `update.yml` now also triggers on `push` to main. `update-data` job is skipped on push events; `deploy` job runs regardless, so any commit to main deploys immediately.
 - Verification work is ongoing / deferred to a later date.
 
+### Step 11 — Mobile-first redesign
+
+- `viewport-fit=cover` added for iOS notch / Android edge-to-edge safe area support
+- Toolbar restructured to `flex-direction: column` with `.toolbar-main` inner row; ready for additional rows (search already added below)
+- Buttons enlarged to `2.5rem` (40px) for proper touch targets
+- `ResizeObserver` on `#toolbar` writes `--toolbar-height` CSS var; map `top` tracks it dynamically — toolbar can grow without manual adjustment
+- Map `bottom: env(safe-area-inset-bottom, 0)` for iOS home indicator / Android gesture bar
+- `env(safe-area-inset-top)` padding on `.toolbar-main` for notch devices
+- Status text truncates with ellipsis on narrow screens
+
+### Step 12 (partial) — Search bar
+
+- `.toolbar-search` row added inside `#toolbar` below `.toolbar-main`; `--toolbar-height` auto-adjusts map
+- Full-width input with clear (✕) button; `input.blur()` on selection dismisses Android keyboard
+- Dropdown (`#search-dropdown`) positioned `fixed` at `top: var(--toolbar-height)`, overlays the map
+- Searches company + address + municipality; query split into words, all must match (supports "Circle K Šiauliai")
+- Up to 8 results; each shows company bold + address/municipality
+- Selecting a result: clears input, blurs, calls `cluster.zoomToShowLayer()` then opens popup
+- Keyboard: ↑↓ navigate, Enter select, Esc dismiss
+- `mousedown` + `e.preventDefault()` on results prevents blur-before-click race
+
 ---
 
 ## Pending
 
-### Step 11 — Mobile-first redesign
-Full UI redesign for mobile compatibility before implementing remaining features (search/sidebar). Viewport meta tag already added. Key items:
-- Toolbar layout on narrow screens (search field won't fit in current single row)
-- Sidebar replaced with bottom drawer pattern on mobile
-- Touch alternative for right-click (map point mode)
-- iOS safe-area insets for map bottom edge
+### Step 12 (remaining) — remaining UI polish and remaining features
 
-### Step 12 — remaining UI polish and remaining features
-
-6. Search field + sidebar — **needs mobile-first redesign before implementation**; desktop-only plan in [plan-step-8-6-search-sidebar.md](plan-step-8-6-search-sidebar.md) is superseded
+6. "Cheapest in radius" feature — **approach to be decided separately** (not a sidebar)
 7. Progress bar during geocoding — no longer relevant (geocoding is server-side)
 8. Missing geocache warning — no longer relevant (geocache managed by pipeline.py)
 9. Address preprocessing for `/` double-street format — still relevant for pipeline.py geocoding runs
