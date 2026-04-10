@@ -741,6 +741,8 @@
 
     document.querySelector('.rp-header').addEventListener('click', e => {
       if (e.target.closest('.rp-icon-btn')) return;
+      // Collapse is mobile-only; on desktop the chevron is hidden via CSS
+      if (getComputedStyle(document.getElementById('rp-chevron')).display === 'none') return;
       setCollapsed(!collapsed);
     });
 
@@ -871,7 +873,7 @@
     map.on('click', e => {
       if (!pickMode) return;
       exitPickMode();
-      setCenter(e.latlng, fromStation);
+      setCenter(e.latlng, null);
     });
 
     radiusBtn.addEventListener('click', () => {
