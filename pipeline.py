@@ -11,6 +11,7 @@ Run in CI:    same command — GitHub Actions installs openpyxl first.
 
 import json
 import os
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -178,7 +179,10 @@ def geocode_stations(stations: list[dict], cache: dict):
     for i, (address, municipality) in enumerate(todo):
         print(f'  [{i + 1}/{len(todo)}] {address}')
 
-        result = _photon(f'{address}, Lietuva')
+        # Strip secondary street reference (e.g. "Beržų g. 24/Drąsiųjų 7, Tryškiai"
+        # → "Beržų g. 24, Tryškiai") — Photon can't resolve the dual-street format.
+        query = re.sub(r'/[^,]+', '', address).strip()
+        result = _photon(f'{query}, Lietuva')
         if result:
             lat, lng = result
             cache[address] = {'lat': lat, 'lng': lng, 'source': 'address'}

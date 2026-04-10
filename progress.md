@@ -82,6 +82,11 @@ A developer-only page for manually verifying station geocoordinates.
 - **Download diagnosis** — confirmed download failures are timing-only (file not yet published by LEA at time of run); CDN is Cloudflare LAX, no geographic IP block. Pipeline catches the file on a later cron tick once LEA publishes.
 - **`getCompanyColor()` helper** — franchise stations named "Foo (Circle K)" automatically inherit the parent brand's color via regex suffix match; used for all marker and panel color lookups.
 
+### Step 12 (remaining) — UI polish
+
+- **Address preprocessing for `/` double-street format:** `pipeline.py` now strips the secondary street reference (e.g. `Beržų g. 24/Drąsiųjų 7` → `Beržų g. 24`) before querying Photon. Cache key remains the original address string.
+- **Browser error handling:** no action needed — geocoding is server-side only; all realistic browser failure paths (`file://`, fetch failure) already show friendly Lithuanian UI errors.
+
 ### Step 14 — Cheapest in radius
 
 - **🎯 toolbar button** enters pick mode — crosshair cursor on desktop, floating hint banner on mobile ("Bakstelėkite vietą žemėlapyje"), button highlights blue
@@ -100,11 +105,6 @@ A developer-only page for manually verifying station geocoordinates.
 ---
 
 ## Pending
-
-### Step 12 (remaining) — remaining UI polish and remaining features
-
-1. Address preprocessing for `/` double-street format — still relevant for pipeline.py geocoding runs
-2. All errors surfaced in browser UI, never terminal-only — still relevant for hosted version
 
 ---
 
