@@ -125,6 +125,8 @@ A developer-only page for manually verifying station geocoordinates.
   - Hidden when panel is collapsed; cleared on each new center pick then overridden by source
 - **Icon consistency** — toolbar radius button and in-panel reposition button now use the same pin+arcs SVG; locate-me uses GPS crosshair SVG; all three are visually distinct to first-time visitors
 - **Mobile close UX** — ✕ button gets larger padding/font on touch screens; reposition button pushed left with `margin-right` to avoid accidental close taps
+- **Small operator pin color** changed from mid-grey `#9ca3af` to dark near-black `#3d3d3d` — visible on light tiles, neutral grey (no blue cast) keeps it distinct from Skulas (`#1f2937`)
+- **Locate-me button** hardcoded to `#2563eb` instead of `var(--accent)` — stays vivid blue in dark mode where accent fades to `#89b4fa`
 
 ### Step 15 — Dark mode tile filter
 
