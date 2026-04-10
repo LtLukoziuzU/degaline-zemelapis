@@ -1,23 +1,40 @@
 # Geocoding Strategy
 
-- Delay between Nominatim requests: **5000ms**. Intentionally slow — geocache is built once by the developer before handoff, speed is not a concern. See [nominatim.md](nominatim.md) for full config including User-Agent header and 429 retry logic.
-- Always append ", Lietuva" to address strings for better accuracy.
-- If Nominatim returns no result for a full address, retry with just `municipality + ", Lietuva"` and place marker at municipality center.
-- During geocoding, log progress to the browser console (`console.log`) — sufficient for the developer doing the initial cache build. Do not block the UI.
-- In the toolbar, show a simple text counter ("Geokóduojama 45/312...") only when geocoding is actually running — i.e. when there are cache misses. This covers the edge case where a Windows user opens the app after new stations were added to the xlsx that aren't yet in the cache. Hide the counter once geocoding is complete.
-- Cache entries keyed by address string: `{ lat, lng, source: "address"|"municipality" }`.
-- Flush cache (POST to server) after every 20 new entries so progress is not lost if the tab is closed mid-run.
+All geocoding runs in `pipeline.py` server-side (GitHub Actions or local). The browser never geocodes.
 
-**Cache backend:** All browsers use the same path — `fetch('/data/geocache.json')` to load, `POST /data/geocache.json` to save. The server writes it to disk. No browser-specific code needed.
+- **Provider:** Photon (photon.komoot.io) — no API key required, good Lithuanian address support.
+- **User-Agent:** `degaline-map/1.0 (LtLukoziuz+degaline@gmail.com)` — required by Photon's fair-use policy.
+- **Delay:** 5000ms between requests (`GEOCODE_DELAY`). Geocache is built once per new address — speed is not a concern.
+- **Query format:** Always append `", Lietuva"` to address strings for better accuracy.
+- **Address preprocessing:** Strip secondary street references before querying — e.g. `Beržų g. 24/Drąsiųjų 7, Tryškiai` → `Beržų g. 24, Tryškiai`. Photon cannot resolve dual-street format.
+- **Cache key:** Raw address string stripped of surrounding whitespace (as read from xlsx). Preprocessing only affects the Photon query, not the key.
 
-## Coordinate order
+## Fallback logic
 
-Photon returns GeoJSON coordinates as `[longitude, latitude]` — the opposite of the `{ lat, lng }` order used in the geocache and by Leaflet. When reading coordinates from the Photon response, ensure longitude and latitude are assigned to the correct fields before storing. Verify geocache entries: Lithuanian latitudes are ~54–57, longitudes ~21–26.
+1. Query Photon with `"address, Lietuva"` (preprocessed)
+2. If no result → wait 5s → retry with `"municipality, Lietuva"` (municipality centre fallback)
+3. If still no result → mark as `{ source: "failed", lat: null, lng: null }` — no retry on future runs
+4. Failed entries are skipped when building `stations.json` (no marker placed)
+5. To force a retry: manually delete the entry from `geocache.json`
 
-## Failed geocode addresses
+## 429 handling
 
-After two failed Nominatim attempts (full address → municipality fallback), mark the entry in the geocache as `{ source: "failed", lat: null, lng: null }` and skip it — do not retry on every run. Rules:
-- Do not place a marker for failed entries.
-- The `source: "failed"` entries persist in `geocache.json` so they are not retried on future loads.
-- Provide a way to inspect failures: after geocoding completes, log all failed addresses to the browser console as a grouped list (`console.group('Geocoding failures')` / `console.groupEnd()`). This gives a developer or curious user a clear list to cross-check against the xlsx without needing to dig through the full cache file.
-- To force a retry on a specific address (e.g. after a confirmed typo fix in ENA's data), the entry must be manually deleted from `geocache.json`.
+On HTTP 429 (rate limit): wait 10s, retry. If still 429: wait 20s, retry. If still failing: return None (triggers fallback logic above).
+
+## Cache format
+
+```json
+{
+  "Didžioji g. 1, Vilnius": { "lat": 54.6872, "lng": 25.2797, "source": "address" },
+  "Aleksoto k.":            { "lat": 54.8833, "lng": 23.9167, "source": "municipality" },
+  "Nežinoma g. 99":         { "lat": null,    "lng": null,    "source": "failed" }
+}
+```
+
+## Coordinate validation
+
+Photon returns GeoJSON coordinates as `[longitude, latitude]`. When reading, assign correctly — longitude is NOT latitude. Lithuanian latitudes: ~54–57, longitudes: ~21–26. Results outside this bounding box are likely wrong-country results and should be treated as failures.
+
+## Flush timing
+
+`pipeline.py` flushes `geocache.json` to disk every `FLUSH_EVERY` (20) newly geocoded entries, and once more at the end. This preserves progress if the process is interrupted mid-run.

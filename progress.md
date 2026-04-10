@@ -110,7 +110,6 @@ A developer-only page for manually verifying station geocoordinates.
 
 ## Known Issues / Decisions
 
-- **Address preprocessing for future geocoding:** Addresses with two streets separated by `/` (e.g. `Beržų g. 24/Drąsiųjų 7, Tryškiai`) were patched manually. `pipeline.py` should strip the second street before querying Photon so future new stations with this format geocode correctly.
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
 - **Light/dark mode refinement:** Map tiles stay on Voyager in both modes; only UI chrome switches. Could be further polished (popup contrast, cluster colours, etc.) but deferred.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.

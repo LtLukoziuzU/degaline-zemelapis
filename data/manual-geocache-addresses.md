@@ -1,6 +1,6 @@
 # Addresses Requiring Manual Geocoding
 
-These addresses could not be resolved correctly by Photon and were patched manually in `stashed-geocache.json`.
+These addresses could not be resolved correctly by Photon and were patched manually in `geocache.json`.
 
 ## Municipality fallbacks (10)
 Photon fell back to municipality centre — coordinates manually looked up.

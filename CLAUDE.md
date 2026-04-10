@@ -22,8 +22,7 @@ A publicly hosted web app displaying Lithuanian fuel prices on an interactive ma
 
 **Local dev:**
 - Run `python3 pipeline.py` to generate `data/stations.json`, then serve with `python3 server.py` and open `http://localhost:58472`.
-- `server.py` serves static files only (no POST endpoint needed anymore — geocaching is handled by `pipeline.py`).
-- `update.bat` / `update.sh` and `server.ps1` are retained but no longer the primary workflow.
+- `server.py` serves static files and accepts `POST /data/verifications.json` (for `dev.html`).
 
 **Why not `file://`:** browser security blocks auto-reading sibling files. A local server avoids this for dev use.
 
@@ -34,13 +33,10 @@ A publicly hosted web app displaying Lithuanian fuel prices on an interactive ma
 - [data-flow.md](data-flow.md) — Full data flow diagram (scripts → server → browser)
 - [xlsx-filehandling.md](xlsx-filehandling.md) — xlsx source URL, naming/casing, data shape, column map, "neprekiauja" handling
 - [geocoding-strategy.md](geocoding-strategy.md) — Photon config, cache format, failure handling
-- [file-structure.md](file-structure.md) — Project and dist directory layout, build/handoff instructions
-- [nominatim.md](nominatim.md) — Photon/Nominatim User-Agent, rate limiting, 429 retry logic
+- [file-structure.md](file-structure.md) — Project directory layout
 - [dev-environment.md](dev-environment.md) — Confirmed tools installed on developer's machine
 - [progress.md](progress.md) — Current task tracking and order of work
 - [error-handling-practices.md](error-handling-practices.md) — Practices on how specific errors should be handled
-- [plan-github-migration.md](plan-github-migration.md) — Completed GitHub Pages + Actions migration plan
-- [plan-step-8-6-search-sidebar.md](plan-step-8-6-search-sidebar.md) — Search + sidebar plan (desktop-only, superseded — needs mobile-first redesign)
 
 ## UI/UX Requirements
 
