@@ -1,28 +1,31 @@
 # Degaline — Lithuanian Fuel Price Map
 
-A locally-run web app displaying Lithuanian fuel prices on an interactive map. The daily .xlsx is fetched by a launch script; all gas stations appear as pins with price info.
+A publicly hosted web app displaying Lithuanian fuel prices on an interactive map, available at **https://ltlukoziuzu.github.io/degaline-zemelapis/**. Daily data is fetched and processed by a GitHub Actions pipeline; all gas stations appear as pins with price info. A local dev mode is also supported.
 
 **Two audiences:**
-- **End-users (Windows, non-technical):** Zero prerequisites, launched via `update.bat`, use Chrome or Edge.
-- **Developer/tester (Linux, technical):** Launched via `update.sh`, use any modern browser including Firefox.
+- **End-users (any device):** Zero prerequisites — just open the website in any modern browser.
+- **Developer/tester (Linux, technical):** Can run locally via `server.py` after running `pipeline.py` to generate `data/stations.json`. CachyOS/Arch; `curl` and `xdg-open` assumed available.
 
 ## Hard Constraints
 
-- **Zero prerequisites on Windows.** No Python, Node.js, or any runtime may be required. The app must work on a stock Windows 10/11 machine out of the box.
-- **Linux support for developer use.** On Linux (CachyOS/Arch), `curl` and `xdg-open` are assumed available.
+- **Zero prerequisites for end-users.** No installs required — the app runs at https://ltlukoziuzu.github.io/degaline-zemelapis/ in any modern browser on any device.
 - **All three browsers must work:** Chrome, Edge, Firefox. The feature set may differ slightly by browser, but all three must load data and display the map correctly.
-- **Target Windows users are completely non-technical.** No CLI, no config files, no error messages that require interpretation.
-- **Local only.** No server, no backend, no database. All processing happens in the browser.
+- **Mobile and desktop must both work.** The UI must be fully functional on phones and tablets, not just desktop.
+- **No local server required for end-users.** GitHub Pages serves the static files; GitHub Actions handles data updates. The local server (`server.py`) is for developer use only.
 
 ## Architecture
 
-Launch scripts start a local HTTP server on `localhost:58472`; the browser opens that address.
+**Hosted (primary):**
+- `pipeline.py` — runs daily via GitHub Actions. Downloads the xlsx from ENA, parses with openpyxl, geocodes new addresses via Photon, writes `data/stations.json` and updates `data/geocache.json`. Diffs against previous data and writes logs to `data/logs/` and snapshots to `data/history/`.
+- `.github/workflows/update.yml` — daily cron at 07:00 UTC. Runs `pipeline.py`, commits updated data back to `main`, deploys to GitHub Pages. Sends email notification when stations change.
+- `index.html` — fetches `data/stations.json` on load, renders markers. No xlsx parsing, no geocoding, no local server dependency.
 
-- `update.bat` / `update.sh` — Download the daily .xlsx, start a background HTTP server (`server.ps1` / `server.py`), open the browser.
-- `index.html` — Auto-fetches `data/latest.xlsx` and `data/geocache.json` on load. No file pickers needed.
-- `server.ps1` / `server.py` — Serve static files + accept `POST /data/geocache.json` to write the cache. Die when the terminal closes.
+**Local dev:**
+- Run `python3 pipeline.py` to generate `data/stations.json`, then serve with `python3 server.py` and open `http://localhost:58472`.
+- `server.py` serves static files only (no POST endpoint needed anymore — geocaching is handled by `pipeline.py`).
+- `update.bat` / `update.sh` and `server.ps1` are retained but no longer the primary workflow.
 
-**Why not `file://`:** browser security blocks auto-reading sibling files and writing files without user gestures. A local server avoids both. PowerShell `HttpListener` is built into Windows 10/11; Python `http.server` is built into Python 3.
+**Why not `file://`:** browser security blocks auto-reading sibling files. A local server avoids this for dev use.
 
 **Port:** `58472` — fixed, avoids conflicts with common dev tools.
 
@@ -30,20 +33,23 @@ Launch scripts start a local HTTP server on `localhost:58472`; the browser opens
 
 - [data-flow.md](data-flow.md) — Full data flow diagram (scripts → server → browser)
 - [xlsx-filehandling.md](xlsx-filehandling.md) — xlsx source URL, naming/casing, data shape, column map, "neprekiauja" handling
-- [geocoding-strategy.md](geocoding-strategy.md) — Nominatim config, cache format, failure handling
+- [geocoding-strategy.md](geocoding-strategy.md) — Photon config, cache format, failure handling
 - [file-structure.md](file-structure.md) — Project and dist directory layout, build/handoff instructions
-- [nominatim.md](nominatim.md) — Nominatim User-Agent, rate limiting, 429 retry logic
+- [nominatim.md](nominatim.md) — Photon/Nominatim User-Agent, rate limiting, 429 retry logic
 - [dev-environment.md](dev-environment.md) — Confirmed tools installed on developer's machine
 - [progress.md](progress.md) — Current task tracking and order of work
 - [error-handling-practices.md](error-handling-practices.md) — Practices on how specific errors should be handled
+- [plan-github-migration.md](plan-github-migration.md) — Completed GitHub Pages + Actions migration plan
+- [plan-step-8-6-search-sidebar.md](plan-step-8-6-search-sidebar.md) — Search + sidebar plan (desktop-only, superseded — needs mobile-first redesign)
 
 ## UI/UX Requirements
 
 - **Map fills the screen.** Controls are minimal overlays.
 - **One-button simplicity.** Auto-loads data on open; no file pickers, no manual steps.
-- **Marker colors by fuel type availability:** e.g., green = has 95+diesel+LPG, yellow = partial, grey = data incomplete.
+- **Marker colors by company:** each company gets a distinct hex color; small operators (≤3 stations) share grey. Color map in `COMPANY_COLORS` in `index.html`, reference in `data/company-colors.txt`.
 - **Popups in Lithuanian.** All labels should be in Lithuanian.
 - **No error stack traces shown to user.** On failure, show a friendly Lithuanian-language message.
+- **Mobile-first for all new UI features.** Design for phone first; desktop layout follows from that.
 
 ## Working with the Developer
 
@@ -53,11 +59,12 @@ See [dev-environment.md](dev-environment.md) for the confirmed list of tools alr
 
 ## Key Implementation Notes
 
-- **CORS:** Nominatim allows browser requests. The xlsx fetch is done by the launch script — do not fetch the xlsx from JavaScript directly (ena.lt does not send permissive CORS headers).
-- **`file://` guard:** If `location.protocol === 'file:'`, show a full-screen error telling the user to launch via the bat/sh script. Do not attempt to load data in this case.
-- **Libraries are bundled locally** in `lib/` — do not use CDN links. The app must work without internet (apart from geocoding and tile fetching).
+- **CORS:** The xlsx fetch is done by `pipeline.py` server-side — do not fetch the xlsx from JavaScript directly (ena.lt does not send permissive CORS headers).
+- **`file://` guard:** If `location.protocol === 'file:'`, show a full-screen error telling the user to open the app at https://ltlukoziuzu.github.io/degaline-zemelapis/. Do not attempt to load data in this case.
+- **Libraries are bundled locally** in `lib/` — do not use CDN links. The app must work without internet (apart from tile fetching).
 - **Leaflet tiles:** Use CartoDB Voyager (`basemaps.cartocdn.com/rastertiles/voyager`), not OSM default — OSM blocks requests without a Referer header. If offline, the map shows a grey grid but markers and popups still work.
-- **Date parsing:** Excel dates are often stored as serial numbers. Use SheetJS `cellDates: true` or convert manually.
 - **Price formatting:** Display prices as `X.XXX €/L` (3 decimal places, Lithuanian convention).
 - **Empty price cells:** Treat as "not available" — show "–", not 0.000.
-- **geocache write timing:** Write after every 20 newly geocoded entries so progress is preserved if the tab is closed mid-run.
+- **Geocache key format:** Keys are address strings stripped of surrounding whitespace. Do not change this — pipeline.py strips addresses from the xlsx before cache lookup.
+- **Geocache write timing:** `pipeline.py` flushes to disk every 20 newly geocoded entries so progress is preserved if the process is interrupted.
+- **stations.json format:** `{ "date": "YYYY-MM-DD", "stations": [...] }`. Each station has `company`, `municipality`, `address`, `lat`, `lng`, `p95`, `diesel`, `lpg`. Prices are floats or `null`.
