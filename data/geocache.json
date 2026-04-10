@@ -3563,5 +3563,70 @@
     "lat": 55.9466824,
     "lng": 25.591055,
     "source": "address"
+  },
+  "Švenčionių 35, Ignalina": {
+    "lat": 55.3271809,
+    "lng": 26.1744803,
+    "source": "address"
+  },
+  "Aukštaičių g. 2a, Cirkliškio k.": {
+    "lat": 55.1200151,
+    "lng": 26.131442,
+    "source": "address"
+  },
+  "Laisvės g. 50, Maciuičių k.": {
+    "lat": 55.6857851,
+    "lng": 21.4178713,
+    "source": "address"
+  },
+  "Gegužių g. 28": {
+    "lat": 55.9059107,
+    "lng": 23.2587205,
+    "source": "address"
+  },
+  "Kalvelių k., Lazdijų pl. 29": {
+    "lat": 54.1060552,
+    "lng": 23.6737682,
+    "source": "address"
+  },
+  "Gulbiniškių k. 7": {
+    "lat": 55.0255167,
+    "lng": 24.2452742,
+    "source": "address"
+  },
+  "Seirijų mstl., Algirdo g. 35A": {
+    "lat": 54.2395118,
+    "lng": 23.8230697,
+    "source": "address"
+  },
+  "Viekšnių g. 24, Mažeikiai": {
+    "lat": 56.3042092,
+    "lng": 22.3602577,
+    "source": "address"
+  },
+  "Telšių g. 127, Jovaišiškės k.": {
+    "lat": 55.9032301,
+    "lng": 21.8772543,
+    "source": "address"
+  },
+  "Stoties g. 7C, Plungė": {
+    "lat": 55.9203765,
+    "lng": 21.8321274,
+    "source": "address"
+  },
+  "Rietavo g. 107, Pakerų k.": {
+    "lat": 55.8966727,
+    "lng": 21.8644859,
+    "source": "address"
+  },
+  "Elijos g.26 Palanga (Šventoji)": {
+    "lat": 56.0128803,
+    "lng": 21.1037154,
+    "source": "address"
+  },
+  "Vytauto 80, Kuršėnai": {
+    "lat": 56.0147959,
+    "lng": 22.9514104,
+    "source": "address"
   }
 }
