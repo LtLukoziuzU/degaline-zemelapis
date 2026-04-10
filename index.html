@@ -275,6 +275,14 @@
     #radius-panel.collapsed .rp-controls,
     #radius-panel.collapsed #rp-results { display: none; }
     #radius-panel.collapsed .rp-header { border-bottom: none; }
+    #rp-source-tag {
+      display: none;
+      font-size: 0.72rem; color: var(--text-muted);
+      padding: 0.2rem 0.75rem 0.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    #rp-source-tag.visible { display: block; }
+    #radius-panel.collapsed #rp-source-tag { display: none; }
     .rp-icon-btn {
       background: none; border: none; color: var(--text-muted);
       font-size: 0.95rem; cursor: pointer; padding: 0.2rem 0.35rem;
@@ -397,6 +405,7 @@
       </button>
       <button id="rp-close" class="rp-icon-btn" title="Uždaryti">✕</button>
     </div>
+    <div id="rp-source-tag"></div>
     <div class="rp-controls">
       <div class="rp-row">
         <span class="rp-label">Kuras:</span>
@@ -926,6 +935,7 @@
     function setCenter(latlng, source) {
       centerLatLng = latlng;
       fromStation  = source || null;
+      document.getElementById('rp-source-tag').classList.remove('visible');
       radiusKm = 5;
       slider.value = 5;
       kmLabel.textContent = '5 km';
@@ -955,6 +965,9 @@
 
     function applyLocated(latlng, zoom, toastMsg) {
       setCenter(latlng, 'gps');
+      const sourceTag = document.getElementById('rp-source-tag');
+      sourceTag.textContent = toastMsg ? 'Apytikslė vieta (pagal IP adresą)' : 'Tiksli vieta (GPS)';
+      sourceTag.classList.add('visible');
       if (window.innerWidth < 600) {
         // Shift center south so latlng appears centered in the visible area above the panel
         const px = map.project(latlng, zoom);
