@@ -16,3 +16,4 @@ type: reference
 | `curl` | (system default) |
 | `xdg-open` | (system default) |
 | `wl-clipboard` (`wl-copy`/`wl-paste`) | `sudo pacman -S wl-clipboard` |
+| `gh` (GitHub CLI) | `sudo pacman -S github-cli` |
