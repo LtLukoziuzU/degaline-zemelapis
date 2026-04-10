@@ -111,6 +111,8 @@
     #about-card p  { color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
     #about-card a  { color: var(--accent); }
     #about-card h3 { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    #about-card details { margin-bottom: 1rem; }
+    #about-card details summary { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; cursor: pointer; }
     #about-card ul { list-style: none; columns: 2; gap: 0.5rem; }
     #about-card ul li { color: var(--text); padding: 0.15rem 0; font-size: 0.85rem; }
     #about-close {
@@ -444,8 +446,11 @@
       <h2>Duomenų šaltinis</h2>
       <p>Kainų duomenys: <a href="https://www.ena.lt/degalu-kainos-degalinese/" target="_blank">Lietuvos Energetikos Agentūra (LEA)</a></p>
       <p>Jeigu nematote degalinės, ji nepateikė duomenų į LEA, arba <a href="https://photon.komoot.io/" target="_blank">Photon API</a> nerado šios degalinės koordinačių.</p>
-      <h3>Degalinių tinklai, pateikę kainas:</h3>
-      <ul id="company-list"></ul>
+      <p><strong>Pastaba:</strong> Kadangi degalinių yra 725 šio dokumento rašymo metu, ne visos yra ranka patikrintos, ar pataiko į koordinates - photon.komoot.io kartais kiek klysta. Pagrindinės klaidos ištaisytos (23 adresus ne Lietuvoje rado - kaltinkit degalinių tinklus, kaip kreivai jie surašo adresus, ne pagal taip kaip visi žemėlapiai tikisi), bet dėl šventos ramybės reiktų visus pereiti. Pasidarytas įrankis padaryti tai po truputį, netrukdant svetainės kūrimui ir naudojimui.</p>
+      <details>
+        <summary>Degalinių tinklai, pateikę kainas:</summary>
+        <ul id="company-list"></ul>
+      </details>
       <p style="margin-top:1rem; font-size:0.75rem; color:var(--text-muted);">Versija: <code>__BUILD_SHA__</code></p>
       <p style="font-size:0.75rem; color:var(--text-muted);">Naujausi duomenys gauti: <code>__DATA_TIME__</code></p>
     </div>
@@ -516,7 +521,9 @@
 
   L.tileLayer(TILE_URL, { attribution: TILE_ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
 
-  applyTheme(localStorage.getItem('degaline-theme') !== 'light');
+  const savedTheme = localStorage.getItem('degaline-theme');
+  const prefersDark = savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(prefersDark);
 
   document.getElementById('theme-btn').addEventListener('click', () => {
     applyTheme(!document.documentElement.classList.contains('dark'));
