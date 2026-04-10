@@ -156,6 +156,15 @@
     .btn-correct.active   { background: #22c55e; color: #fff; }
     .btn-incorrect { border-color: #ef4444; color: #ef4444; }
     .btn-incorrect.active { background: #ef4444; color: #fff; }
+
+    #next-btn {
+      background: var(--btn-bg); border: 1.5px solid var(--btn-border); color: var(--btn-color);
+      border-radius: 4px; padding: 0.2rem 0.55rem;
+      font-size: 0.78rem; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+    #next-btn:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
+    #next-btn:disabled { opacity: 0.4; cursor: default; }
   </style>
 </head>
 <body>
@@ -170,6 +179,7 @@
     <span id="dev-badge">DEV</span>
     <span id="status">Kraunama...</span>
     <span id="verify-status"></span>
+    <button id="next-btn" disabled>Kita netikrinta →</button>
     <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
     <button id="pat-btn"   class="toolbar-btn" title="GitHub token"><span id="pat-status-dot" class="missing"></span>🔑</button>
   </div>
@@ -301,7 +311,10 @@
   const markerRefs   = {}; // groupKey → L.marker
   const groupStns    = {}; // groupKey → [station, ...]
   const stationGroup = {}; // stationKey → groupKey
+  const groupOrder   = []; // groupKeys in placement order, for sequential navigation
   let totalStations  = 0;
+  let clusterGroup   = null;
+  let nextCursor     = 0;  // index into groupOrder for "next unchecked" cycling
 
   function stationKey(s) { return s.company + '|||' + s.address; }
 
@@ -315,6 +328,30 @@
     if (vs.every(v => v === 'correct'))  return 'correct';
     return 'unchecked';
   }
+
+  function groupFullyChecked(stations) {
+    return stations.every(s => verifications[stationKey(s)] !== undefined);
+  }
+
+  function goToNextUnchecked() {
+    const n = groupOrder.length;
+    if (!n) return;
+    for (let i = 0; i < n; i++) {
+      const gKey = groupOrder[(nextCursor + i) % n];
+      if (!groupFullyChecked(groupStns[gKey])) {
+        nextCursor = (groupOrder.indexOf(gKey) + 1) % n;
+        clusterGroup.zoomToShowLayer(markerRefs[gKey], () => {
+          markerRefs[gKey].openPopup();
+        });
+        return;
+      }
+    }
+    // All checked
+    document.getElementById('next-btn').textContent = 'Visos patikrintos ✓';
+    document.getElementById('next-btn').disabled = true;
+  }
+
+  document.getElementById('next-btn').addEventListener('click', goToNextUnchecked);
 
   function updateStatusBar() {
     const n = Object.keys(verifications).length;
@@ -470,11 +507,12 @@
       groups[gKey].stations.push(s);
     }
 
-    const cluster = L.markerClusterGroup({
+    clusterGroup = L.markerClusterGroup({
       maxClusterRadius: zoom => zoom <= 9 ? 50 : zoom <= 12 ? 35 : 20,
     });
 
     for (const [gKey, { lat, lng, stations: grp }] of Object.entries(groups)) {
+      groupOrder.push(gKey);
       groupStns[gKey] = grp;
       for (const s of grp) stationGroup[stationKey(s)] = gKey;
 
@@ -501,10 +539,11 @@
       const marker = L.marker([lat, lng], { icon: getMarkerIcon(grp[0].company, groupStatus(grp)) })
         .bindPopup(popupHtml, { maxWidth: 280 });
       markerRefs[gKey] = marker;
-      marker.addTo(cluster);
+      marker.addTo(clusterGroup);
     }
 
-    map.addLayer(cluster);
+    map.addLayer(clusterGroup);
+    document.getElementById('next-btn').disabled = false;
   }
 
   // ─── Helpers ──────────────────────────────────────────────────────────────
