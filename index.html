@@ -789,11 +789,9 @@
     const locateBtn   = document.getElementById('locate-btn');
     const locateToast = document.getElementById('locate-toast');
 
-    if (!navigator.geolocation) locateBtn.style.display = 'none';
-
     function syncLocateBtn() {
       if (window.innerWidth >= 600) { locateBtn.style.bottom = ''; return; }
-      if (panel.classList.contains('open') && !collapsed) {
+      if (panel.classList.contains('open')) {
         locateBtn.style.bottom = (panel.offsetHeight + 12) + 'px';
       } else {
         locateBtn.style.bottom = '';
@@ -947,33 +945,46 @@
     }
 
     // ── Locate button ─────────────────────────────────────────────────────────
-    if (navigator.geolocation) {
-      const locateSvg = locateBtn.innerHTML;
-      locateBtn.addEventListener('click', () => {
-        locateBtn.disabled = true;
-        locateBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>';
+    const locateSvg = locateBtn.innerHTML;
+    const spinnerSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>';
+
+    function applyLocated(latlng, zoom, toastMsg) {
+      setCenter(latlng, 'gps');
+      map.setView(latlng, zoom);
+      if (window.innerWidth < 600) {
+        map.panBy([0, panel.offsetHeight / 2], { animate: false });
+      }
+      locateBtn.disabled = false;
+      locateBtn.innerHTML = locateSvg;
+      if (toastMsg) showLocateToast(toastMsg);
+    }
+
+    async function ipFallback() {
+      try {
+        const res = await fetch('https://ipwho.is/');
+        const d = await res.json();
+        if (!d.success || !isFinite(d.latitude) || !isFinite(d.longitude)) throw new Error();
+        applyLocated(L.latLng(d.latitude, d.longitude), 11, 'Apytikslė vieta pagal IP adresą.');
+      } catch (_) {
+        locateBtn.disabled = false;
+        locateBtn.innerHTML = locateSvg;
+        showLocateToast('Vietos nustatyti nepavyko.');
+      }
+    }
+
+    locateBtn.addEventListener('click', () => {
+      locateBtn.disabled = true;
+      locateBtn.innerHTML = spinnerSvg;
+      if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          pos => {
-            const latlng = L.latLng(pos.coords.latitude, pos.coords.longitude);
-            map.setView(latlng, 14);
-            setCenter(latlng, 'gps');
-            locateBtn.disabled = false;
-            locateBtn.innerHTML = locateSvg;
-          },
-          err => {
-            locateBtn.disabled = false;
-            locateBtn.innerHTML = locateSvg;
-            const msgs = {
-              1: 'Vietos prieiga neleista. Patikrinkite naršyklės nustatymus.',
-              2: 'Vietos nustatyti nepavyko.',
-              3: 'Vietos paieška užtruko per ilgai.',
-            };
-            showLocateToast(msgs[err.code] || 'Vietos klaida.');
-          },
+          pos => applyLocated(L.latLng(pos.coords.latitude, pos.coords.longitude), 14, null),
+          () => ipFallback(),
           { timeout: 10000, maximumAge: 60000 }
         );
-      });
-    }
+      } else {
+        ipFallback();
+      }
+    });
 
     window.addEventListener('resize', syncLocateBtn);
 
