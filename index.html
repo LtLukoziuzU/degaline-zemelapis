@@ -2,7 +2,7 @@
 <html lang="lt">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Degalinių kainos</title>
   <link rel="stylesheet" href="lib/leaflet/leaflet.min.css">
   <link rel="stylesheet" href="lib/leaflet.markercluster/MarkerCluster.css">
@@ -48,13 +48,25 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: var(--bg); color: var(--text);
       border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.5rem 1rem; font-family: sans-serif; font-size: 0.9rem;
+      display: flex; flex-direction: column;
+      font-family: sans-serif; font-size: 0.9rem;
     }
-    #toolbar h1 { font-size: 1rem; font-weight: 600; }
-    #status { margin-left: auto; font-size: 0.8rem; color: var(--text-muted); }
+    .toolbar-main {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: calc(env(safe-area-inset-top, 0px) + 0.4rem) 0.75rem 0.4rem;
+    }
+    #toolbar h1 { font-size: 1rem; font-weight: 600; flex-shrink: 0; }
+    #status {
+      margin-left: auto; font-size: 0.78rem; color: var(--text-muted);
+      min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
 
-    #map { position: fixed; top: 2.5rem; left: 0; right: 0; bottom: 0; }
+    #map {
+      position: fixed;
+      top: var(--toolbar-height, 3.3rem);
+      left: 0; right: 0;
+      bottom: env(safe-area-inset-bottom, 0);
+    }
 
     #error-screen {
       display: none;
@@ -70,8 +82,8 @@
 
     .toolbar-btn {
       background: var(--btn-bg); border: 1.5px solid var(--btn-border); color: var(--btn-color);
-      border-radius: 50%; width: 1.6rem; height: 1.6rem;
-      font-size: 0.85rem; cursor: pointer; line-height: 1;
+      border-radius: 50%; width: 2.5rem; height: 2.5rem;
+      font-size: 1rem; cursor: pointer; line-height: 1;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; transition: background 0.15s, color 0.15s;
     }
@@ -131,10 +143,12 @@
   </div>
 
   <div id="toolbar">
-    <h1>Degalinių kainos</h1>
-    <span id="status">Kraunama...</span>
-    <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
-    <button id="info-btn" class="toolbar-btn" title="Apie">ℹ</button>
+    <div class="toolbar-main">
+      <h1>Degalinių kainos</h1>
+      <span id="status">Kraunama...</span>
+      <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
+      <button id="info-btn" class="toolbar-btn" title="Apie">ℹ</button>
+    </div>
   </div>
 
   <div id="about-overlay">
@@ -154,6 +168,13 @@
   <script src="lib/leaflet.markercluster/leaflet.markercluster.js"></script>
   <script>
   'use strict';
+
+  // ─── Toolbar height → map top ─────────────────────────────────────────────
+  new ResizeObserver(entries => {
+    document.documentElement.style.setProperty(
+      '--toolbar-height', entries[0].borderBoxSize[0].blockSize + 'px'
+    );
+  }).observe(document.getElementById('toolbar'));
 
   // ─── Guard: must be served over HTTP(S), not opened as a local file ───────
   if (location.protocol === 'file:') {
