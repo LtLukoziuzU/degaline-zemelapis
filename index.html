@@ -220,6 +220,7 @@
       <h3>Degalinių tinklai, pateikę kainas:</h3>
       <ul id="company-list"></ul>
       <p style="margin-top:1rem; font-size:0.75rem; color:var(--text-muted);">Versija: <code>__BUILD_SHA__</code></p>
+      <p style="font-size:0.75rem; color:var(--text-muted);">Naujausi duomenys gauti: <code>__DATA_TIME__</code></p>
     </div>
   </div>
 
@@ -499,7 +500,7 @@
       const { cluster, searchIndex } = placeMarkers(data.stations);
       initSearch(searchIndex, cluster);
       initAboutModal(data.stations);
-      setStatus(`${data.stations.length} degalinės · ${data.date}`);
+      setStatus(`${data.stations.length} degalinės`);
     } catch (err) {
       showError(err.message);
       console.error(err);

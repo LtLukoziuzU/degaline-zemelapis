@@ -2,7 +2,7 @@ name: Update fuel prices
 
 on:
   schedule:
-    - cron: '0 7 * * *'   # 07:00 UTC daily (≈ 10:00 Vilnius time)
+    - cron: '*/15 6-14 * * 1-5'  # every 15 min, Mon–Fri, 06:00–14:45 UTC (≈ 08:00–17:00 Vilnius time)
   workflow_dispatch:        # manual trigger from GitHub UI
   push:
     branches: [main]        # deploy on every push to main
@@ -76,10 +76,12 @@ jobs:
         with:
           ref: main   # ensure we get the freshly committed data
 
-      - name: Stamp build SHA
+      - name: Stamp build SHA and data time
         run: |
           SHA=$(git rev-parse --short HEAD)
+          DATA_TIME=$(date -u +"%Y-%m-%d %H:%M")
           sed -i "s/__BUILD_SHA__/$SHA/g" index.html
+          sed -i "s/__DATA_TIME__/$DATA_TIME/g" index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
