@@ -640,7 +640,6 @@
     let centerMarker  = null;
     let radiusCircle  = null;
     let circleVisible = true;
-    let resultRings   = [];
 
     const panel        = document.getElementById('radius-panel');
     const hint         = document.getElementById('pick-hint');
@@ -711,22 +710,15 @@
       const col = getAccent();
       radiusCircle = L.circle(latlng, {
         radius: radiusKm * 1000,
-        color: col, weight: 2, dashArray: '6 4',
-        fillOpacity: 0,
+        color: col, weight: 1.5, dashArray: '6 4',
+        fillColor: col, fillOpacity: 0.13,
         interactive: false,
       }).addTo(map);
     }
 
-    function clearResultRings() {
-      for (const r of resultRings) r.remove();
-      resultRings = [];
-    }
-
-    // ── Results ───────────────────────────────────────────────────────────────
+// ── Results ───────────────────────────────────────────────────────────────
     function updateResults() {
       if (!centerLatLng) return;
-      clearResultRings();
-
       const candidates = [];
       for (const s of stations) {
         const price = s[fuelType];
@@ -780,10 +772,6 @@
           div.addEventListener('click', () => {
             cluster.zoomToShowLayer(marker, () => marker.openPopup());
           });
-          const ring = L.circleMarker([r.lat, r.lng], {
-            radius: 14, color, weight: 2.5, fillOpacity: 0, interactive: false,
-          }).addTo(map);
-          resultRings.push(ring);
         }
 
         resultsDiv.appendChild(div);
@@ -805,7 +793,6 @@
       exitPickMode();
       if (centerMarker) { centerMarker.remove(); centerMarker = null; }
       if (radiusCircle) { radiusCircle.remove(); radiusCircle = null; }
-      clearResultRings();
       centerLatLng = null;
       fromStation  = null;
     }
