@@ -1,0 +1,258 @@
+#!/usr/bin/env python3
+"""
+pipeline.py — Degaline data pipeline
+
+Downloads today's .xlsx from ENA, parses it, geocodes any new addresses via
+Photon, and writes data/stations.json + updates data/geocache.json.
+
+Run locally:  python3 pipeline.py
+Run in CI:    same command — GitHub Actions installs openpyxl first.
+"""
+
+import json
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import date, timedelta
+from pathlib import Path
+
+import openpyxl
+
+# ── Paths ──────────────────────────────────────────────────────────────────────
+ROOT          = Path(__file__).parent
+DATA          = ROOT / 'data'
+GEOCACHE_PATH = DATA / 'geocache.json'
+STATIONS_PATH = DATA / 'stations.json'
+XLSX_PATH     = DATA / 'latest.xlsx'
+
+# ── Constants ──────────────────────────────────────────────────────────────────
+USER_AGENT    = 'degaline-map/1.0 (LtLukoziuz+degaline@gmail.com)'
+GEOCODE_DELAY = 5.0   # seconds between Photon requests
+FLUSH_EVERY   = 20    # flush geocache to disk after this many new entries
+
+# ── xlsx download ──────────────────────────────────────────────────────────────
+def _xlsx_urls(d: date):
+    """Both dk- and DK- casings for a given date."""
+    y, m, dd = d.year, f'{d.month:02d}', f'{d.day:02d}'
+    base = f'https://www.ena.lt/uploads/{y}-EDAC/dk-degalinese-{y}/'
+    return [
+        f'{base}dk-{y}-{m}-{dd}.xlsx',
+        f'{base}DK-{y}-{m}-{dd}.xlsx',
+    ]
+
+def download_xlsx() -> str:
+    """
+    Try today through 4 days ago, both casings each day.
+    Saves to data/latest.xlsx and returns the file date as ISO string.
+    Raises RuntimeError if all attempts fail.
+    """
+    today = date.today()
+    for days_back in range(5):
+        d = today - timedelta(days=days_back)
+        for url in _xlsx_urls(d):
+            try:
+                print(f'Trying {url}')
+                req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    XLSX_PATH.write_bytes(resp.read())
+                date_str = d.isoformat()
+                print(f'Downloaded ({date_str}): {url}')
+                return date_str
+            except urllib.error.HTTPError as e:
+                if e.code == 404:
+                    continue
+                raise
+    raise RuntimeError(
+        'Nepavyko atsisiųsti xlsx failo — bandyta 5 dienos, abi rašybos.'
+    )
+
+# ── xlsx parsing ───────────────────────────────────────────────────────────────
+def parse_xlsx(date_str: str) -> list[dict]:
+    """
+    Parse data/latest.xlsx. Detects header row dynamically (column A == 'Data').
+    Returns a list of station dicts.
+    """
+    wb = openpyxl.load_workbook(XLSX_PATH, read_only=True, data_only=True)
+    ws = wb.active
+    rows = list(ws.iter_rows(values_only=True))
+    wb.close()
+
+    header_idx = next(
+        (i for i, row in enumerate(rows) if row and str(row[0]).strip() == 'Data'),
+        None,
+    )
+    if header_idx is None:
+        raise RuntimeError("Nerasta antraštės eilutė ('Data' A stulpelyje).")
+
+    def price(v):
+        # Accept int or float, reject bool (bool is a subclass of int in Python)
+        return float(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None
+
+    stations = []
+    for row in rows[header_idx + 1:]:
+        if not row or row[3] is None:
+            continue
+        stations.append({
+            'date':         date_str,
+            'company':      str(row[1]).strip() if row[1] is not None else None,
+            'municipality': str(row[2]).strip() if row[2] is not None else None,
+            'address':      str(row[3]).strip() if row[3] is not None else None,
+            'p95':          price(row[4]),
+            'diesel':       price(row[5]),
+            'lpg':          price(row[6]),
+        })
+    return stations
+
+# ── Geocache ───────────────────────────────────────────────────────────────────
+def load_geocache() -> dict:
+    if GEOCACHE_PATH.exists():
+        return json.loads(GEOCACHE_PATH.read_text(encoding='utf-8'))
+    return {}
+
+def save_geocache(cache: dict):
+    GEOCACHE_PATH.write_text(
+        json.dumps(cache, ensure_ascii=False, indent=2), encoding='utf-8'
+    )
+
+# ── Photon geocoding ───────────────────────────────────────────────────────────
+def _photon(query: str) -> tuple[float, float] | None:
+    """
+    Single Photon query. Returns (lat, lng) or None.
+    Retries on 429: waits 10s then 20s before giving up.
+    Lithuanian latitudes: ~54–57, longitudes: ~21–26.
+    """
+    url = 'https://photon.komoot.io/api/?q=' + urllib.parse.quote(query) + '&limit=1'
+    for wait in [0, 10, 20]:
+        if wait:
+            print(f'    429 — waiting {wait}s...')
+            time.sleep(wait)
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read())
+            features = data.get('features', [])
+            if not features:
+                return None
+            # GeoJSON order is [longitude, latitude]
+            lng, lat = features[0]['geometry']['coordinates']
+            return float(lat), float(lng)
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                continue
+            return None
+        except Exception:
+            return None
+    return None
+
+def geocode_stations(stations: list[dict], cache: dict):
+    """
+    Geocode all addresses absent from the cache. Mutates cache in place.
+    Skips addresses already cached (including source='failed' entries — no retry).
+    Flushes cache to disk every FLUSH_EVERY new entries and at the end.
+    """
+    seen = set()
+    todo = []
+    for s in stations:
+        addr = s['address']
+        if not addr or addr in seen:
+            continue
+        seen.add(addr)
+        if addr not in cache:
+            todo.append((addr, s['municipality']))
+
+    if not todo:
+        print('Geocache up to date — nothing to geocode.')
+        return
+
+    print(f'Geocoding {len(todo)} new address(es)...')
+    new_count = 0
+    failures = []
+
+    for i, (address, municipality) in enumerate(todo):
+        print(f'  [{i + 1}/{len(todo)}] {address}')
+
+        result = _photon(f'{address}, Lietuva')
+        if result:
+            lat, lng = result
+            cache[address] = {'lat': lat, 'lng': lng, 'source': 'address'}
+            print(f'    → {lat:.4f}, {lng:.4f}')
+        else:
+            time.sleep(GEOCODE_DELAY)
+            muni_result = _photon(f'{municipality}, Lietuva') if municipality else None
+            if muni_result:
+                lat, lng = muni_result
+                cache[address] = {'lat': lat, 'lng': lng, 'source': 'municipality'}
+                print(f'    → municipality fallback ({municipality}): {lat:.4f}, {lng:.4f}')
+            else:
+                cache[address] = {'lat': None, 'lng': None, 'source': 'failed'}
+                failures.append(address)
+                print('    → failed')
+
+        new_count += 1
+        if new_count % FLUSH_EVERY == 0:
+            save_geocache(cache)
+            print(f'  Geocache flushed ({new_count} new so far)')
+
+        if i < len(todo) - 1:
+            time.sleep(GEOCODE_DELAY)
+
+    save_geocache(cache)
+    ok = len(todo) - len(failures)
+    print(f'Geocoding done: {ok} succeeded, {len(failures)} failed.')
+    if failures:
+        print('Failed addresses:')
+        for a in failures:
+            print(f'  {a}')
+
+# ── stations.json output ───────────────────────────────────────────────────────
+def build_output(stations: list[dict], cache: dict, date_str: str) -> dict:
+    """
+    Combine parsed station data with geocache coordinates.
+    Excludes stations with failed or missing geocache entries.
+    """
+    out = []
+    for s in stations:
+        entry = cache.get(s['address'])
+        if not entry or entry['source'] == 'failed' or entry['lat'] is None:
+            continue
+        out.append({
+            'company':      s['company'],
+            'municipality': s['municipality'],
+            'address':      s['address'],
+            'lat':          entry['lat'],
+            'lng':          entry['lng'],
+            'p95':          s['p95'],
+            'diesel':       s['diesel'],
+            'lpg':          s['lpg'],
+        })
+    return {'date': date_str, 'stations': out}
+
+# ── Main ───────────────────────────────────────────────────────────────────────
+def main():
+    DATA.mkdir(exist_ok=True)
+
+    print('=== Degaline pipeline ===')
+
+    date_str = download_xlsx()
+
+    print(f'Parsing {XLSX_PATH.name}...')
+    stations = parse_xlsx(date_str)
+    print(f'Parsed {len(stations)} station(s).')
+
+    cache = load_geocache()
+    print(f'Geocache loaded: {len(cache)} entry/entries.')
+
+    geocode_stations(stations, cache)
+
+    output = build_output(stations, cache, date_str)
+    STATIONS_PATH.write_text(
+        json.dumps(output, ensure_ascii=False, indent=2), encoding='utf-8'
+    )
+    print(
+        f'Written {STATIONS_PATH.name}: '
+        f'{len(output["stations"])} station(s), date {date_str}.'
+    )
+
+if __name__ == '__main__':
+    main()

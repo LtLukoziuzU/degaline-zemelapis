@@ -2,6 +2,7 @@
 <html lang="lt">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Degalinių kainos</title>
   <link rel="stylesheet" href="lib/leaflet/leaflet.min.css">
   <link rel="stylesheet" href="lib/leaflet.markercluster/MarkerCluster.css">
@@ -149,25 +150,23 @@
 
   <div id="map"></div>
 
-  <script src="lib/xlsx.full.min.js"></script>
   <script src="lib/leaflet/leaflet.min.js"></script>
   <script src="lib/leaflet.markercluster/leaflet.markercluster.js"></script>
   <script>
   'use strict';
 
-  // ─── Guard: must run via local server, not file:// ───────────────────────
+  // ─── Guard: must be served over HTTP(S), not opened as a local file ───────
   if (location.protocol === 'file:') {
-    const el = document.getElementById('error-screen');
-    el.style.display = 'flex';
-    document.getElementById('error-msg').innerHTML =
-      'Ši programa turi būti paleista per <code>update.bat</code> (Windows) arba ' +
-      '<code>./update.sh</code> (Linux), o ne tiesiogiai atidarius HTML failą.';
+    document.getElementById('error-screen').style.display = 'flex';
+    document.getElementById('error-msg').textContent =
+      'Ši programa turi būti atidaryta naršyklėje per interneto adresą (https://...), ' +
+      'o ne tiesiogiai atidarius HTML failą.';
     throw new Error('file:// not supported');
   }
 
   // ─── Theme ────────────────────────────────────────────────────────────────
-  const TILE_LIGHT = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-  const TILE_ATTR  = '© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors © <a href="https://carto.com">CARTO</a>';
+  const TILE_URL  = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+  const TILE_ATTR = '© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors © <a href="https://carto.com">CARTO</a>';
 
   function applyTheme(dark) {
     document.documentElement.classList.toggle('dark', dark);
@@ -202,9 +201,8 @@
     localStorage.setItem('degaline-view', JSON.stringify({ lat: c.lat, lng: c.lng, zoom: map.getZoom() }));
   });
 
-  L.tileLayer(TILE_LIGHT, { attribution: TILE_ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+  L.tileLayer(TILE_URL, { attribution: TILE_ATTR, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
 
-  // Apply saved or default (light) theme
   applyTheme(localStorage.getItem('degaline-theme') !== 'light');
 
   document.getElementById('theme-btn').addEventListener('click', () => {
@@ -213,28 +211,28 @@
 
   // ─── Company colours ──────────────────────────────────────────────────────
   const COMPANY_COLORS = {
-    'Alauša':         '#2dd4bf', // teal
-    'Apsaga':         '#1d4ed8', // deep blue
-    'Baltic Petroleum': '#f59e0b', // amber (orange accent)
-    'Boost Petrol':   '#4ade80', // bright lime green
-    'Circle K':       '#dc2626', // red
-    'Emsi':           '#16a34a', // green
-    'Eniris':         '#3b82f6', // medium blue
-    'GM Circle K':    '#dc2626', // same as Circle K
-    'Gelvybė':        '#fbbf24', // bright yellow
-    'Jozita':         '#166534', // dark green
-    'Naftrus':        '#65a30d', // olive/lime
-    'Narjanta':       '#f97316', // orange
-    'Neste Lietuva':  '#0284c7', // sky blue
-    'Orlen':          '#b91c1c', // dark red
-    'Regusa':         '#4338ca', // indigo
-    'Saurida':        '#ca8a04', // gold
-    'Skulas':         '#1f2937', // dark charcoal
-    'Stateta':        '#fb923c', // light orange
-    'Trevena':        '#7c3aed', // purple
-    'Viada':          '#e11d48', // rose red
+    'Alauša':         '#2dd4bf',
+    'Apsaga':         '#1d4ed8',
+    'Baltic Petroleum': '#f59e0b',
+    'Boost Petrol':   '#4ade80',
+    'Circle K':       '#dc2626',
+    'Emsi':           '#16a34a',
+    'Eniris':         '#3b82f6',
+    'GM Circle K':    '#dc2626',
+    'Gelvybė':        '#fbbf24',
+    'Jozita':         '#166534',
+    'Naftrus':        '#65a30d',
+    'Narjanta':       '#f97316',
+    'Neste Lietuva':  '#0284c7',
+    'Orlen':          '#b91c1c',
+    'Regusa':         '#4338ca',
+    'Saurida':        '#ca8a04',
+    'Skulas':         '#1f2937',
+    'Stateta':        '#fb923c',
+    'Trevena':        '#7c3aed',
+    'Viada':          '#e11d48',
   };
-  const SMALL_COLOR = '#9ca3af'; // grey for all small/unknown operators
+  const SMALL_COLOR = '#9ca3af';
 
   function getMarkerIcon(company) {
     const color = COMPANY_COLORS[company] || SMALL_COLOR;
@@ -255,10 +253,8 @@
   function placeMarkers(stations) {
     const groups = {};
     for (const s of stations) {
-      const entry = geocache.get(s.address);
-      if (!entry || entry.source === 'failed' || entry.lat === null) continue;
-      const key = `${entry.lat.toFixed(5)},${entry.lng.toFixed(5)}`;
-      if (!groups[key]) groups[key] = { lat: entry.lat, lng: entry.lng, stations: [] };
+      const key = `${s.lat.toFixed(5)},${s.lng.toFixed(5)}`;
+      if (!groups[key]) groups[key] = { lat: s.lat, lng: s.lng, stations: [] };
       groups[key].stations.push(s);
     }
 
@@ -281,141 +277,12 @@
           </table>
         </div>`;
       }).join('');
-      L.marker([lat, lng], { icon: getMarkerIcon(stations[0].company) }).bindPopup(popupHtml, { maxWidth: 280 }).addTo(cluster);
+      L.marker([lat, lng], { icon: getMarkerIcon(stations[0].company) })
+        .bindPopup(popupHtml, { maxWidth: 280 })
+        .addTo(cluster);
     }
 
     map.addLayer(cluster);
-  }
-
-  // ─── Geocache ─────────────────────────────────────────────────────────────
-  const geocache = (() => {
-    const FLUSH_EVERY = 20;
-    let cache = {};
-    let dirty = 0;
-
-    return {
-      get(address)            { return cache[address]; },
-      size()                  { return Object.keys(cache).length; },
-
-      async set(address, lat, lng, source) {
-        cache[address] = { lat, lng, source };
-        dirty++;
-        if (dirty >= FLUSH_EVERY) await this.flush();
-      },
-
-      async load() {
-        try {
-          const res = await fetch('/data/geocache.json');
-          if (res.ok) cache = await res.json();
-        } catch { /* no cache yet, start empty */ }
-      },
-
-      async flush() {
-        try {
-          await fetch('/data/geocache.json', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cache),
-          });
-          dirty = 0;
-        } catch(e) {
-          console.error('geocache flush failed:', e);
-        }
-      },
-    };
-  })();
-
-  // ─── Geocoding ────────────────────────────────────────────────────────────
-  const NOMINATIM_UA = 'degaline-map/1.0 (LtLukoziuz+degaline@gmail.com)';
-  const GEOCODE_DELAY = 5000;
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-  async function nominatimFetch(query) {
-    const url = 'https://photon.komoot.io/api/?q='
-              + encodeURIComponent(query) + '&limit=1';
-    for (const wait of [0, 10000, 20000]) {
-      if (wait > 0) await sleep(wait);
-      const res = await fetch(url, { headers: { 'User-Agent': NOMINATIM_UA } });
-      if (res.status !== 429) {
-        if (!res.ok) return null;
-        const data = await res.json();
-        if (!data.features?.length) return null;
-        const [lng, lat] = data.features[0].geometry.coordinates;
-        return { lat, lon: lng };
-      }
-    }
-    return null;
-  }
-
-  async function geocodeOne(address, municipality) {
-    let hit = await nominatimFetch(address);
-    if (hit) return { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon), source: 'address' };
-
-    await sleep(GEOCODE_DELAY);
-
-    hit = await nominatimFetch(municipality);
-    if (hit) return { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon), source: 'municipality' };
-
-    return { lat: null, lng: null, source: 'failed' };
-  }
-
-  async function geocodeAll(stations, limit = Infinity) {
-    const seen = new Set();
-    const todo = [];
-    for (const s of stations) {
-      if (!s.address || seen.has(s.address)) continue;
-      seen.add(s.address);
-      if (!geocache.get(s.address)) todo.push({ address: s.address, municipality: s.municipality });
-    }
-    const batch = todo.slice(0, limit);
-    if (batch.length === 0) return;
-
-    const statusEl = document.getElementById('status');
-    const failures = [];
-
-    for (let i = 0; i < batch.length; i++) {
-      const { address, municipality } = batch[i];
-      statusEl.textContent = `Geokóduojama ${i + 1}/${batch.length}…`;
-
-      const result = await geocodeOne(address, municipality);
-      await geocache.set(address, result.lat, result.lng, result.source);
-
-      if (result.source === 'failed') failures.push(address);
-      console.log(`[${i + 1}/${batch.length}] ${address} → ${result.source}`);
-
-      if (i < batch.length - 1) await sleep(GEOCODE_DELAY);
-    }
-
-    await geocache.flush();
-
-    if (failures.length > 0) {
-      console.group('Geocoding failures');
-      failures.forEach(a => console.log(a));
-      console.groupEnd();
-    }
-  }
-
-  // ─── xlsx parser ──────────────────────────────────────────────────────────
-  function parseXlsx(arrayBuffer) {
-    const wb   = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array', cellDates: false });
-    const ws   = wb.Sheets[wb.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
-
-    let headerIdx = -1;
-    for (let i = 0; i < rows.length; i++) {
-      if (rows[i][0] === 'Data') { headerIdx = i; break; }
-    }
-    if (headerIdx === -1) throw new Error("Nerasta antraštės eilutė ('Data' A stulpelyje).");
-
-    return rows.slice(headerIdx + 1).filter(r => r[3] != null).map(r => ({
-      date:         r[0],
-      company:      r[1],
-      municipality: r[2],
-      address:      r[3],
-      p95:          typeof r[4] === 'number' ? r[4] : null,
-      diesel:       typeof r[5] === 'number' ? r[5] : null,
-      lpg:          typeof r[6] === 'number' ? r[6] : null,
-    }));
   }
 
   // ─── About modal ──────────────────────────────────────────────────────────
@@ -434,34 +301,28 @@
     overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
   }
 
-  // ─── Init ─────────────────────────────────────────────────────────────────
+  // ─── Helpers ──────────────────────────────────────────────────────────────
   function setStatus(msg) {
     document.getElementById('status').textContent = msg;
   }
 
   function showError(msg) {
-    const el = document.getElementById('error-screen');
-    el.style.display = 'flex';
+    document.getElementById('error-screen').style.display = 'flex';
     document.getElementById('error-msg').textContent = msg;
   }
 
+  // ─── Init ─────────────────────────────────────────────────────────────────
   (async () => {
     try {
-      await geocache.load();
+      const res = await fetch('data/stations.json');
+      if (!res.ok) throw new Error('Nepavyko įkelti degalinių duomenų.');
+      const data = await res.json();
 
-      const xlsxRes = await fetch('/data/latest.xlsx');
-      if (!xlsxRes.ok) throw new Error('Nepavyko įkelti degalinių duomenų failo.');
-      const stations = parseXlsx(await xlsxRes.arrayBuffer());
-
-      setStatus(`Įkeltos ${stations.length} degalinės — talpykloje ${geocache.size()} adresų`);
-      await geocodeAll(stations);
-      placeMarkers(stations);
-      initAboutModal(stations);
-      setStatus(`Įkeltos ${stations.length} degalinės — talpykloje ${geocache.size()} adresų`);
-      console.log('Stations (first 5):', stations.slice(0, 5));
-
-    } catch(err) {
-      if (!location.protocol === 'file:') showError(err.message);
+      placeMarkers(data.stations);
+      initAboutModal(data.stations);
+      setStatus(`${data.stations.length} degalinės · ${data.date}`);
+    } catch (err) {
+      showError(err.message);
       console.error(err);
     }
   })();
