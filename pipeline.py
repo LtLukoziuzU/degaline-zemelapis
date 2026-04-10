@@ -56,7 +56,10 @@ def download_xlsx() -> str:
         for url in _xlsx_urls(d):
             try:
                 print(f'Trying {url}')
-                req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+                req = urllib.request.Request(url, headers={
+                    'User-Agent': USER_AGENT,
+                    'Referer': 'https://www.ena.lt/degalu-kainos-degalinese/',
+                })
                 with urllib.request.urlopen(req, timeout=30) as resp:
                     XLSX_PATH.write_bytes(resp.read())
                 date_str = d.isoformat()
