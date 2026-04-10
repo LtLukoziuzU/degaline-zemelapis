@@ -133,6 +133,58 @@
     .dp-prices td { padding: 0.1rem 0; }
     .dp-prices td:last-child { text-align: right; padding-left: 1.5rem; color: var(--popup-price); }
     .dp-na { color: var(--text-subtle) !important; }
+
+    .toolbar-search {
+      padding: 0.35rem 0.75rem 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .search-wrap { position: relative; display: flex; align-items: center; }
+    #search-input {
+      width: 100%; padding: 0.45rem 2.2rem 0.45rem 0.65rem;
+      border: 1.5px solid var(--border); border-radius: 6px;
+      background: var(--bg-raised); color: var(--text);
+      font-size: 0.9rem; font-family: sans-serif;
+      outline: none; -webkit-appearance: none;
+    }
+    #search-input:focus { border-color: var(--accent); }
+    #search-input::placeholder { color: var(--text-subtle); }
+    .search-clear {
+      position: absolute; right: 0.3rem;
+      background: none; border: none; color: var(--text-muted);
+      font-size: 0.85rem; cursor: pointer;
+      width: 1.8rem; height: 1.8rem;
+      display: none; align-items: center; justify-content: center;
+      border-radius: 50%;
+    }
+    .search-clear:hover { color: var(--text); }
+    .search-clear.visible { display: flex; }
+
+    #search-dropdown {
+      display: none;
+      position: fixed;
+      top: var(--toolbar-height, 3.3rem);
+      left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      z-index: 999;
+      max-height: 60vh;
+      overflow-y: auto;
+      font-family: sans-serif;
+    }
+    #search-dropdown.open { display: block; }
+    .search-result {
+      padding: 0.6rem 0.75rem; cursor: pointer;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-result:last-child { border-bottom: none; }
+    .search-result:hover, .search-result.sr-active { background: var(--bg-raised); }
+    .sr-name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+    .sr-addr { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .search-no-results {
+      padding: 0.85rem 0.75rem; color: var(--text-muted);
+      font-size: 0.88rem; text-align: center; font-family: sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -149,7 +201,14 @@
       <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
       <button id="info-btn" class="toolbar-btn" title="Apie">ℹ</button>
     </div>
+    <div class="toolbar-search">
+      <div class="search-wrap">
+        <input id="search-input" type="search" placeholder="Ieškoti degalinės..." autocomplete="off" autocorrect="off" spellcheck="false">
+        <button class="search-clear" id="search-clear" aria-label="Išvalyti">✕</button>
+      </div>
+    </div>
   </div>
+  <div id="search-dropdown"></div>
 
   <div id="about-overlay">
     <div id="about-card">
@@ -270,6 +329,11 @@
     });
   }
 
+  // ─── Helpers ──────────────────────────────────────────────────────────────
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
   // ─── Marker placement ─────────────────────────────────────────────────────
   function placeMarkers(stations) {
     const groups = {};
@@ -283,14 +347,16 @@
       maxClusterRadius: zoom => zoom <= 9 ? 50 : zoom <= 12 ? 35 : 20,
     });
 
-    for (const { lat, lng, stations } of Object.values(groups)) {
-      const popupHtml = stations.map(s => {
+    const searchIndex = [];
+
+    for (const { lat, lng, stations: grp } of Object.values(groups)) {
+      const popupHtml = grp.map(s => {
         const row = (label, val) => val !== null
           ? `<tr><td>${label}</td><td>${val.toFixed(3)} €/L</td></tr>`
           : `<tr><td>${label}</td><td class="dp-na">neprekiaujama</td></tr>`;
         return `<div class="dp-station">
-          <div class="dp-name">${s.company}</div>
-          <div class="dp-address">${s.address}</div>
+          <div class="dp-name">${escHtml(s.company)}</div>
+          <div class="dp-address">${escHtml(s.address)}</div>
           <table class="dp-prices">
             ${row('95 Benzinas', s.p95)}
             ${row('Dyzelinas', s.diesel)}
@@ -298,12 +364,98 @@
           </table>
         </div>`;
       }).join('');
-      L.marker([lat, lng], { icon: getMarkerIcon(stations[0].company) })
-        .bindPopup(popupHtml, { maxWidth: 280 })
-        .addTo(cluster);
+      const marker = L.marker([lat, lng], { icon: getMarkerIcon(grp[0].company) })
+        .bindPopup(popupHtml, { maxWidth: 280 });
+      marker.addTo(cluster);
+      for (const s of grp) {
+        searchIndex.push({ company: s.company, address: s.address, municipality: s.municipality, lat, lng, marker });
+      }
     }
 
     map.addLayer(cluster);
+    return { cluster, searchIndex };
+  }
+
+  // ─── Search ───────────────────────────────────────────────────────────────
+  function initSearch(searchIndex, cluster) {
+    const input    = document.getElementById('search-input');
+    const clearBtn = document.getElementById('search-clear');
+    const dropdown = document.getElementById('search-dropdown');
+
+    let results  = [];
+    let activeIdx = -1;
+
+    function closeDropdown() {
+      dropdown.classList.remove('open');
+      activeIdx = -1;
+    }
+
+    function selectResult(item) {
+      closeDropdown();
+      input.value = '';
+      clearBtn.classList.remove('visible');
+      cluster.zoomToShowLayer(item.marker, () => item.marker.openPopup());
+    }
+
+    function setActive(idx) {
+      activeIdx = idx;
+      dropdown.querySelectorAll('.search-result').forEach((el, i) =>
+        el.classList.toggle('sr-active', i === idx)
+      );
+    }
+
+    function renderDropdown() {
+      const q = input.value.toLowerCase();
+      if (q.length === 0) { closeDropdown(); return; }
+
+      results = searchIndex.filter(item =>
+        (item.company + ' ' + item.address + ' ' + item.municipality).toLowerCase().includes(q)
+      ).slice(0, 8);
+
+      dropdown.innerHTML = '';
+      if (results.length === 0) {
+        dropdown.innerHTML = '<div class="search-no-results">Nerasta</div>';
+      } else {
+        results.forEach((item, i) => {
+          const div = document.createElement('div');
+          div.className = 'search-result';
+          div.innerHTML = `<div class="sr-name">${escHtml(item.company)}</div>
+            <div class="sr-addr">${escHtml(item.address)}, ${escHtml(item.municipality)}</div>`;
+          div.addEventListener('mousedown', e => { e.preventDefault(); selectResult(item); });
+          dropdown.appendChild(div);
+        });
+      }
+      activeIdx = -1;
+      dropdown.classList.add('open');
+    }
+
+    input.addEventListener('input', () => {
+      clearBtn.classList.toggle('visible', input.value.length > 0);
+      renderDropdown();
+    });
+
+    input.addEventListener('keydown', e => {
+      if (!dropdown.classList.contains('open')) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault(); setActive(Math.min(activeIdx + 1, results.length - 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault(); setActive(Math.max(activeIdx - 1, -1));
+      } else if (e.key === 'Enter' && activeIdx >= 0) {
+        e.preventDefault(); selectResult(results[activeIdx]);
+      } else if (e.key === 'Escape') {
+        closeDropdown(); input.blur();
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      input.value = ''; clearBtn.classList.remove('visible');
+      closeDropdown(); input.focus();
+    });
+
+    document.addEventListener('mousedown', e => {
+      if (!dropdown.contains(e.target) && e.target !== input) closeDropdown();
+    });
+    map.on('mousedown touchstart', () => closeDropdown());
   }
 
   // ─── About modal ──────────────────────────────────────────────────────────
@@ -322,7 +474,7 @@
     overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
   }
 
-  // ─── Helpers ──────────────────────────────────────────────────────────────
+  // ─── Status / error ───────────────────────────────────────────────────────
   function setStatus(msg) {
     document.getElementById('status').textContent = msg;
   }
@@ -339,7 +491,8 @@
       if (!res.ok) throw new Error('Nepavyko įkelti degalinių duomenų.');
       const data = await res.json();
 
-      placeMarkers(data.stations);
+      const { cluster, searchIndex } = placeMarkers(data.stations);
+      initSearch(searchIndex, cluster);
       initAboutModal(data.stations);
       setStatus(`${data.stations.length} degalinės · ${data.date}`);
     } catch (err) {
