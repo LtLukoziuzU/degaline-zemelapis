@@ -394,6 +394,7 @@
       closeDropdown();
       input.value = '';
       clearBtn.classList.remove('visible');
+      input.blur();
       cluster.zoomToShowLayer(item.marker, () => item.marker.openPopup());
     }
 
@@ -408,9 +409,11 @@
       const q = input.value.toLowerCase();
       if (q.length === 0) { closeDropdown(); return; }
 
-      results = searchIndex.filter(item =>
-        (item.company + ' ' + item.address + ' ' + item.municipality).toLowerCase().includes(q)
-      ).slice(0, 8);
+      const words = q.split(/\s+/).filter(Boolean);
+      results = searchIndex.filter(item => {
+        const text = (item.company + ' ' + item.address + ' ' + item.municipality).toLowerCase();
+        return words.every(w => text.includes(w));
+      }).slice(0, 8);
 
       dropdown.innerHTML = '';
       if (results.length === 0) {
