@@ -207,7 +207,7 @@
     #radius-panel {
       display: none;
       position: fixed; bottom: env(safe-area-inset-bottom, 0); left: 0; right: 0;
-      background: var(--bg); border-top: 1px solid var(--border);
+      background: var(--bg); color: var(--text); border-top: 1px solid var(--border);
       z-index: 998; font-family: sans-serif;
       max-height: 55vh; overflow-y: auto;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.18);
@@ -257,8 +257,8 @@
     #rp-slider { flex: 1; accent-color: var(--accent); cursor: pointer; }
     #rp-km-label { font-size: 0.82rem; color: var(--text); white-space: nowrap; min-width: 3rem; }
     .rp-circle-label {
-      display: flex; align-items: center; gap: 0.25rem;
-      font-size: 0.78rem; color: var(--text-muted); cursor: pointer; white-space: nowrap;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; color: var(--text-muted); cursor: pointer;
     }
     .rp-circle-label input { accent-color: var(--accent); cursor: pointer; }
 
@@ -274,7 +274,7 @@
     .rp-result-medal { font-size: 1.1rem; line-height: 1; margin-top: 0.1rem; flex-shrink: 0; }
     .rp-result-info { flex: 1; min-width: 0; }
     .rp-result-name {
-      font-weight: 600; font-size: 0.88rem;
+      font-weight: 600; font-size: 0.88rem; color: var(--text);
       display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
     }
     .rp-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
@@ -345,9 +345,11 @@
           <input type="range" id="rp-slider" min="1" max="50" value="10">
           <span id="rp-km-label">10 km</span>
         </div>
-        <label class="rp-circle-label" title="Rodyti spindulio ratilą žemėlapyje">
+      </div>
+      <div class="rp-row">
+        <label class="rp-circle-label">
           <input type="checkbox" id="rp-circle-toggle" checked>
-          rodyti
+          Rodyti spindulio ratilą žemėlapyje
         </label>
       </div>
     </div>
@@ -710,7 +712,7 @@
       radiusCircle = L.circle(latlng, {
         radius: radiusKm * 1000,
         color: col, weight: 1.5, dashArray: '6 4',
-        fillColor: col, fillOpacity: 0.07,
+        fillColor: col, fillOpacity: 0.13,
         interactive: false,
       }).addTo(map);
     }
