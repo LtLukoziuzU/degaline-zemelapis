@@ -950,9 +950,13 @@
 
     function applyLocated(latlng, zoom, toastMsg) {
       setCenter(latlng, 'gps');
-      map.setView(latlng, zoom);
       if (window.innerWidth < 600) {
-        map.panBy([0, panel.offsetHeight / 2], { animate: false });
+        // Shift center south so latlng appears centered in the visible area above the panel
+        const px = map.project(latlng, zoom);
+        const adjusted = map.unproject(px.add([0, panel.offsetHeight / 2]), zoom);
+        map.setView(adjusted, zoom);
+      } else {
+        map.setView(latlng, zoom);
       }
       locateBtn.disabled = false;
       locateBtn.innerHTML = locateSvg;
@@ -960,16 +964,23 @@
     }
 
     async function ipFallback() {
-      try {
-        const res = await fetch('https://ipwho.is/');
-        const d = await res.json();
-        if (!d.success || !isFinite(d.latitude) || !isFinite(d.longitude)) throw new Error();
-        applyLocated(L.latLng(d.latitude, d.longitude), 11, 'Apytikslė vieta pagal IP adresą.');
-      } catch (_) {
-        locateBtn.disabled = false;
-        locateBtn.innerHTML = locateSvg;
-        showLocateToast('Vietos nustatyti nepavyko.');
+      const services = [
+        { url: 'https://ipinfo.io/json', parse: d => d.loc && d.loc.split(',').map(Number) },
+      ];
+      for (const svc of services) {
+        try {
+          const res = await fetch(svc.url);
+          const d = await res.json();
+          const coords = svc.parse(d);
+          if (coords && isFinite(coords[0]) && isFinite(coords[1])) {
+            applyLocated(L.latLng(coords[0], coords[1]), 11, 'Apytikslė vieta pagal IP adresą.');
+            return;
+          }
+        } catch (_) {}
       }
+      locateBtn.disabled = false;
+      locateBtn.innerHTML = locateSvg;
+      showLocateToast('Vietos nustatyti nepavyko.');
     }
 
     locateBtn.addEventListener('click', () => {
