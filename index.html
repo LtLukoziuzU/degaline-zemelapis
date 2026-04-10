@@ -186,6 +186,116 @@
       padding: 0.85rem 0.75rem; color: var(--text-muted);
       font-size: 0.88rem; text-align: center; font-family: sans-serif;
     }
+
+    /* ─── Radius search ──────────────────────────────────────────────────── */
+    body.pick-mode #map { cursor: crosshair; }
+
+    #pick-hint {
+      display: none;
+      position: fixed;
+      top: calc(var(--toolbar-height, 3.3rem) + 0.5rem);
+      left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.72); color: #fff;
+      padding: 0.45rem 1rem; border-radius: 20px;
+      font-size: 0.82rem; font-family: sans-serif;
+      z-index: 1001; pointer-events: none; white-space: nowrap;
+    }
+    #pick-hint.visible { display: block; }
+
+    #radius-btn.pick-active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    #radius-panel {
+      display: none;
+      position: fixed; bottom: env(safe-area-inset-bottom, 0); left: 0; right: 0;
+      background: var(--bg); border-top: 1px solid var(--border);
+      z-index: 998; font-family: sans-serif;
+      max-height: 55vh; overflow-y: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.18);
+    }
+    #radius-panel.open { display: block; }
+
+    @media (min-width: 600px) and (pointer: fine) {
+      #radius-panel {
+        bottom: 1.5rem; right: 1rem; left: auto;
+        width: 320px; border: 1px solid var(--border);
+        border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        max-height: 70vh;
+      }
+    }
+
+    .rp-header {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.6rem 0.75rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--bg);
+    }
+    .rp-title { font-size: 0.9rem; font-weight: 600; flex: 1; }
+    .rp-icon-btn {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 0.95rem; cursor: pointer; padding: 0.2rem 0.35rem;
+      border-radius: 4px; line-height: 1;
+    }
+    .rp-icon-btn:hover { color: var(--text); background: var(--bg-raised); }
+
+    .rp-controls {
+      padding: 0.55rem 0.75rem 0.45rem; border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .rp-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
+    .rp-label { color: var(--text-muted); white-space: nowrap; }
+    .rp-fuel-btns { display: flex; gap: 0.3rem; }
+    .rp-fuel-btn {
+      padding: 0.2rem 0.6rem; border: 1.5px solid var(--border);
+      border-radius: 12px; background: none; color: var(--text-muted);
+      font-size: 0.78rem; cursor: pointer; font-family: sans-serif;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+    }
+    .rp-fuel-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .rp-fuel-btn:not(.active):hover { border-color: var(--accent); color: var(--text); }
+
+    .rp-slider-wrap { display: flex; align-items: center; gap: 0.5rem; flex: 1; }
+    #rp-slider { flex: 1; accent-color: var(--accent); cursor: pointer; }
+    #rp-km-label { font-size: 0.82rem; color: var(--text); white-space: nowrap; min-width: 3rem; }
+    .rp-circle-label {
+      display: flex; align-items: center; gap: 0.25rem;
+      font-size: 0.78rem; color: var(--text-muted); cursor: pointer; white-space: nowrap;
+    }
+    .rp-circle-label input { accent-color: var(--accent); cursor: pointer; }
+
+    #rp-results { padding: 0.35rem 0; }
+    .rp-empty { padding: 0.85rem 0.75rem; font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+    .rp-result {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.1s;
+    }
+    .rp-result:last-child { border-bottom: none; }
+    .rp-result:hover { background: var(--bg-raised); }
+    .rp-result-medal { font-size: 1.1rem; line-height: 1; margin-top: 0.1rem; flex-shrink: 0; }
+    .rp-result-info { flex: 1; min-width: 0; }
+    .rp-result-name {
+      font-weight: 600; font-size: 0.88rem;
+      display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+    }
+    .rp-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .rp-tag {
+      font-weight: 400; font-size: 0.72rem; color: var(--text-muted);
+      background: var(--bg-raised); border-radius: 10px; padding: 0.05rem 0.4rem;
+    }
+    .rp-result-addr {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .rp-result-meta { font-size: 0.8rem; color: var(--text); margin-top: 0.2rem; }
+    .rp-result-meta strong { color: var(--popup-price); }
+
+    .dp-find-nearby {
+      display: block; width: 100%; margin-top: 0.5rem;
+      padding: 0.3rem 0.5rem;
+      background: var(--btn-bg); border: 1.5px solid var(--btn-border); color: var(--btn-color);
+      border-radius: 6px; font-size: 0.75rem; font-family: sans-serif; cursor: pointer;
+    }
+    .dp-find-nearby:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
   </style>
 </head>
 <body>
@@ -199,6 +309,7 @@
     <div class="toolbar-main">
       <h1>Degalinių kainos</h1>
       <span id="status">Kraunama...</span>
+      <button id="radius-btn" class="toolbar-btn" title="Pigiausi netoliese">🎯</button>
       <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
       <button id="info-btn" class="toolbar-btn" title="Apie">ℹ</button>
     </div>
@@ -210,6 +321,38 @@
     </div>
   </div>
   <div id="search-dropdown"></div>
+
+  <div id="pick-hint">Bakstelėkite vietą žemėlapyje</div>
+
+  <div id="radius-panel">
+    <div class="rp-header">
+      <span class="rp-title">Pigiausi netoliese</span>
+      <button id="rp-reposition" class="rp-icon-btn" title="Pakeisti vietą">🎯</button>
+      <button id="rp-close" class="rp-icon-btn" title="Uždaryti">✕</button>
+    </div>
+    <div class="rp-controls">
+      <div class="rp-row">
+        <span class="rp-label">Kuras:</span>
+        <div class="rp-fuel-btns">
+          <button class="rp-fuel-btn" data-fuel="p95">95</button>
+          <button class="rp-fuel-btn" data-fuel="diesel">Dyzelis</button>
+          <button class="rp-fuel-btn" data-fuel="lpg">Dujos</button>
+        </div>
+      </div>
+      <div class="rp-row">
+        <span class="rp-label">Spindulys:</span>
+        <div class="rp-slider-wrap">
+          <input type="range" id="rp-slider" min="1" max="50" value="10">
+          <span id="rp-km-label">10 km</span>
+        </div>
+        <label class="rp-circle-label" title="Rodyti spindulio ratilą žemėlapyje">
+          <input type="checkbox" id="rp-circle-toggle" checked>
+          rodyti
+        </label>
+      </div>
+    </div>
+    <div id="rp-results"></div>
+  </div>
 
   <div id="about-overlay">
     <div id="about-card">
@@ -251,10 +394,13 @@
   const TILE_URL  = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
   const TILE_ATTR = '© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors © <a href="https://carto.com">CARTO</a>';
 
+  let onRadiusThemeChange = null;
+
   function applyTheme(dark) {
     document.documentElement.classList.toggle('dark', dark);
     document.getElementById('theme-btn').textContent = dark ? '☀️' : '🌙';
     localStorage.setItem('degaline-theme', dark ? 'dark' : 'light');
+    if (onRadiusThemeChange) onRadiusThemeChange();
   }
 
   // ─── Leaflet setup ────────────────────────────────────────────────────────
@@ -365,6 +511,7 @@
             ${row('Dyzelinas', s.diesel)}
             ${row('Dujos', s.lpg)}
           </table>
+          <button class="dp-find-nearby" data-lat="${lat}" data-lng="${lng}" data-company="${escHtml(s.company)}">📍 Rasti pigesnes netoliese</button>
         </div>`;
       }).join('');
       const marker = L.marker([lat, lng], { icon: getMarkerIcon(grp[0].company) })
@@ -464,6 +611,268 @@
     map.on('mousedown touchstart', () => closeDropdown());
   }
 
+  // ─── Radius search ────────────────────────────────────────────────────────
+  function initRadiusSearch(stations, searchIndex, cluster) {
+    // Build marker lookup by coordinate key
+    const markerByKey = {};
+    for (const item of searchIndex) {
+      const key = `${item.lat.toFixed(5)},${item.lng.toFixed(5)}`;
+      if (!markerByKey[key]) markerByKey[key] = item.marker;
+    }
+
+    // Persisted state
+    let radiusKm = Math.min(50, Math.max(1, parseInt(localStorage.getItem('degaline-radius-km') || '10')));
+    let fuelType = localStorage.getItem('degaline-radius-fuel') || 'p95';
+
+    // Volatile state
+    let centerLatLng  = null;
+    let fromStation   = null; // { company } if triggered from popup
+    let pickMode      = false;
+    let centerMarker  = null;
+    let radiusCircle  = null;
+    let circleVisible = true;
+    let resultRings   = [];
+
+    const panel        = document.getElementById('radius-panel');
+    const hint         = document.getElementById('pick-hint');
+    const radiusBtn    = document.getElementById('radius-btn');
+    const slider       = document.getElementById('rp-slider');
+    const kmLabel      = document.getElementById('rp-km-label');
+    const resultsDiv   = document.getElementById('rp-results');
+    const circleToggle = document.getElementById('rp-circle-toggle');
+
+    // Initialise controls from persisted state
+    slider.value = radiusKm;
+    kmLabel.textContent = radiusKm + ' km';
+    document.querySelectorAll('.rp-fuel-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.fuel === fuelType)
+    );
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function haversine(lat1, lng1, lat2, lng2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLng = (lng2 - lng1) * Math.PI / 180;
+      const a = Math.sin(dLat/2)**2 +
+                Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * Math.sin(dLng/2)**2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    function getAccent() {
+      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#2563eb';
+    }
+
+    // ── Pick mode ─────────────────────────────────────────────────────────────
+    function enterPickMode() {
+      pickMode = true;
+      document.body.classList.add('pick-mode');
+      radiusBtn.classList.add('pick-active');
+      hint.classList.add('visible');
+    }
+
+    function exitPickMode() {
+      pickMode = false;
+      document.body.classList.remove('pick-mode');
+      radiusBtn.classList.remove('pick-active');
+      hint.classList.remove('visible');
+    }
+
+    // ── Map overlays ──────────────────────────────────────────────────────────
+    function drawCenterMarker(latlng) {
+      if (centerMarker) { centerMarker.remove(); centerMarker = null; }
+      const col = getAccent();
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+        <circle cx="14" cy="14" r="11" fill="none" stroke="${col}" stroke-width="2"/>
+        <circle cx="14" cy="14" r="3" fill="${col}"/>
+        <line x1="14" y1="1"  x2="14" y2="7"  stroke="${col}" stroke-width="2" stroke-linecap="round"/>
+        <line x1="14" y1="21" x2="14" y2="27" stroke="${col}" stroke-width="2" stroke-linecap="round"/>
+        <line x1="1"  y1="14" x2="7"  y2="14" stroke="${col}" stroke-width="2" stroke-linecap="round"/>
+        <line x1="21" y1="14" x2="27" y2="14" stroke="${col}" stroke-width="2" stroke-linecap="round"/>
+      </svg>`;
+      centerMarker = L.marker(latlng, {
+        icon: L.divIcon({ className: '', html: svg, iconSize: [28, 28], iconAnchor: [14, 14] }),
+        zIndexOffset: 2000,
+        interactive: false,
+      }).addTo(map);
+    }
+
+    function drawRadiusCircle(latlng) {
+      if (radiusCircle) { radiusCircle.remove(); radiusCircle = null; }
+      if (!circleVisible) return;
+      const col = getAccent();
+      radiusCircle = L.circle(latlng, {
+        radius: radiusKm * 1000,
+        color: col, weight: 1.5, dashArray: '6 4',
+        fillColor: col, fillOpacity: 0.07,
+        interactive: false,
+      }).addTo(map);
+    }
+
+    function clearResultRings() {
+      for (const r of resultRings) r.remove();
+      resultRings = [];
+    }
+
+    // ── Results ───────────────────────────────────────────────────────────────
+    function updateResults() {
+      if (!centerLatLng) return;
+      clearResultRings();
+
+      const candidates = [];
+      for (const s of stations) {
+        const price = s[fuelType];
+        if (price === null || price === undefined) continue;
+        const dist = haversine(centerLatLng.lat, centerLatLng.lng, s.lat, s.lng);
+        if (dist <= radiusKm) candidates.push({ ...s, dist, price });
+      }
+      candidates.sort((a, b) => a.price - b.price || a.dist - b.dist);
+
+      let picks = [];
+      if (fromStation) {
+        const companyBest = candidates.find(c => c.company === fromStation.company);
+        if (companyBest) {
+          picks.push({ ...companyBest, tag: companyBest.company + ' tinkle' });
+          candidates.filter(c => c !== companyBest).slice(0, 2)
+            .forEach(c => picks.push({ ...c, tag: null }));
+        } else {
+          picks = candidates.slice(0, 3).map(c => ({ ...c, tag: null }));
+        }
+      } else {
+        picks = candidates.slice(0, 3).map(c => ({ ...c, tag: null }));
+      }
+
+      resultsDiv.innerHTML = '';
+      if (picks.length === 0) {
+        resultsDiv.innerHTML = '<div class="rp-empty">Nerasta degalinių šiame spindulyje</div>';
+        return;
+      }
+
+      const medals = ['🥇', '🥈', '🥉'];
+      picks.forEach((r, i) => {
+        const key    = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
+        const marker = markerByKey[key];
+        const color  = COMPANY_COLORS[r.company] || SMALL_COLOR;
+
+        const div = document.createElement('div');
+        div.className = 'rp-result';
+        div.innerHTML = `
+          <div class="rp-result-medal">${medals[i] || ''}</div>
+          <div class="rp-result-info">
+            <div class="rp-result-name">
+              <span class="rp-dot" style="background:${escHtml(color)}"></span>
+              ${escHtml(r.company)}
+              ${r.tag ? `<span class="rp-tag">⭐ ${escHtml(r.tag)}</span>` : ''}
+            </div>
+            <div class="rp-result-addr">${escHtml(r.address)}, ${escHtml(r.municipality)}</div>
+            <div class="rp-result-meta">${r.dist.toFixed(1)} km · <strong>${r.price.toFixed(3)} €/L</strong></div>
+          </div>`;
+
+        if (marker) {
+          div.addEventListener('click', () => {
+            cluster.zoomToShowLayer(marker, () => marker.openPopup());
+          });
+          const ring = L.circleMarker([r.lat, r.lng], {
+            radius: 14, color, weight: 2.5, fillOpacity: 0, interactive: false,
+          }).addTo(map);
+          resultRings.push(ring);
+        }
+
+        resultsDiv.appendChild(div);
+      });
+    }
+
+    // ── Open / close ──────────────────────────────────────────────────────────
+    function setCenter(latlng, source) {
+      centerLatLng = latlng;
+      fromStation  = source || null;
+      drawCenterMarker(latlng);
+      drawRadiusCircle(latlng);
+      panel.classList.add('open');
+      updateResults();
+    }
+
+    function closePanel() {
+      panel.classList.remove('open');
+      exitPickMode();
+      if (centerMarker) { centerMarker.remove(); centerMarker = null; }
+      if (radiusCircle) { radiusCircle.remove(); radiusCircle = null; }
+      clearResultRings();
+      centerLatLng = null;
+      fromStation  = null;
+    }
+
+    // ── Event wiring ──────────────────────────────────────────────────────────
+    map.on('click', e => {
+      if (!pickMode) return;
+      exitPickMode();
+      setCenter(e.latlng, fromStation);
+    });
+
+    radiusBtn.addEventListener('click', () => {
+      if (pickMode) {
+        exitPickMode();
+      } else {
+        enterPickMode();
+      }
+    });
+
+    document.getElementById('rp-reposition').addEventListener('click', enterPickMode);
+    document.getElementById('rp-close').addEventListener('click', closePanel);
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (pickMode) exitPickMode();
+      else if (panel.classList.contains('open')) closePanel();
+    });
+
+    document.querySelectorAll('.rp-fuel-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        fuelType = btn.dataset.fuel;
+        localStorage.setItem('degaline-radius-fuel', fuelType);
+        document.querySelectorAll('.rp-fuel-btn').forEach(b => b.classList.toggle('active', b === btn));
+        updateResults();
+      });
+    });
+
+    slider.addEventListener('input', () => {
+      radiusKm = parseInt(slider.value);
+      kmLabel.textContent = radiusKm + ' km';
+      localStorage.setItem('degaline-radius-km', radiusKm);
+      if (centerLatLng) drawRadiusCircle(centerLatLng);
+      updateResults();
+    });
+
+    circleToggle.addEventListener('change', () => {
+      circleVisible = circleToggle.checked;
+      if (centerLatLng) {
+        if (circleVisible) {
+          drawRadiusCircle(centerLatLng);
+        } else {
+          if (radiusCircle) { radiusCircle.remove(); radiusCircle = null; }
+        }
+      }
+    });
+
+    // "Find nearby" popup buttons — event delegation
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.dp-find-nearby');
+      if (!btn) return;
+      const lat     = parseFloat(btn.dataset.lat);
+      const lng     = parseFloat(btn.dataset.lng);
+      const company = btn.dataset.company;
+      map.closePopup();
+      exitPickMode();
+      setCenter(L.latLng(lat, lng), { company });
+    });
+
+    // Return theme-change hook so applyTheme can refresh accent colour on overlays
+    return function onThemeChange() {
+      if (!centerLatLng) return;
+      drawCenterMarker(centerLatLng);
+      if (circleVisible) drawRadiusCircle(centerLatLng);
+    };
+  }
+
   // ─── About modal ──────────────────────────────────────────────────────────
   function initAboutModal(stations) {
     const companies = [...new Set(stations.map(s => s.company).filter(Boolean))].sort();
@@ -499,6 +908,7 @@
 
       const { cluster, searchIndex } = placeMarkers(data.stations);
       initSearch(searchIndex, cluster);
+      onRadiusThemeChange = initRadiusSearch(data.stations, searchIndex, cluster);
       initAboutModal(data.stations);
       setStatus(`${data.stations.length} degalinės`);
     } catch (err) {
