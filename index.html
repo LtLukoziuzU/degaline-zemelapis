@@ -557,26 +557,40 @@
 
   // ─── Company colours ──────────────────────────────────────────────────────
   const COMPANY_COLORS = {
-    'Alauša':         '#2dd4bf',
-    'Apsaga':         '#1d4ed8',
-    'Baltic Petroleum': '#f59e0b',
-    'Boost Petrol':   '#4ade80',
-    'Circle K':       '#dc2626',
-    'Emsi':           '#16a34a',
-    'Eniris':         '#3b82f6',
-    'GM Circle K':    '#dc2626',
-    'Gelvybė':        '#fbbf24',
-    'Jozita':         '#166534',
-    'Naftrus':        '#65a30d',
-    'Narjanta':       '#f97316',
-    'Neste Lietuva':  '#0284c7',
-    'Orlen':          '#b91c1c',
-    'Regusa':         '#4338ca',
-    'Saurida':        '#ca8a04',
-    'Skulas':         '#1f2937',
-    'Stateta':        '#fb923c',
-    'Trevena':        '#7c3aed',
-    'Viada':          '#e11d48',
+    'Adukesta':                       '#ffcf4a',
+    'Alauša':                         '#101830',
+    'Apsaga':                         '#110170',
+    'Baltic Petroleum':               '#01499b',
+    'Boost Petrol':                   '#003777',
+    'Borusta':                        '#d8e333',
+    'Circle K':                       '#da291c',
+    'Degta':                          '#f2ce06',
+    'Deliuvis':                       '#202880',
+    'Emsi':                           '#20b668',
+    'Gazimpeksas':                    '#0a8528',
+    'Gelvybė':                        '#ffcc00',
+    'Jozita':                         '#16b676',
+    'Junasa':                         '#0c4269',
+    'Melkasta':                       '#4da947',
+    'Naftrus':                        '#f7c202',
+    'Narjanta':                       '#cc4621',
+    'Neste Lietuva':                  '#003a8f',
+    'Nostrada':                       '#e3565c',
+    'Orlen':                          '#c20e1a',
+    'Propano ir butano dujų centras': '#f1db25',
+    'Pynauja':                        '#447e59',
+    'RV':                             '#2b1364',
+    'Regusa':                         '#011565',
+    'Saurida':                        '#1c1d42',
+    'Skulas':                         '#201d1d',
+    'Stateta':                        '#f5821f',
+    'Tomega':                         '#1058a8',
+    'Trevena':                        '#fce94b',
+    'Utentra':                        '#ee9d5a',
+    'Velseka':                        '#f9ab01',
+    'Viada':                          '#d8163c',
+    'Virši':                          '#263471',
+    'Šventosios investicijos':        '#ff8601',
   };
   const SMALL_COLOR = '#3d3d3d';
 
@@ -893,13 +907,21 @@
     function drawCenterMarker(latlng) {
       if (centerMarker) { centerMarker.remove(); centerMarker = null; }
       const col = getAccent();
+      const hw = 4; // halo stroke-width
+      const cw = 2; // color stroke-width
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-        <circle cx="14" cy="14" r="11" fill="none" stroke="${col}" stroke-width="2"/>
-        <circle cx="14" cy="14" r="3" fill="${col}"/>
-        <line x1="14" y1="1"  x2="14" y2="7"  stroke="${col}" stroke-width="2" stroke-linecap="round"/>
-        <line x1="14" y1="21" x2="14" y2="27" stroke="${col}" stroke-width="2" stroke-linecap="round"/>
-        <line x1="1"  y1="14" x2="7"  y2="14" stroke="${col}" stroke-width="2" stroke-linecap="round"/>
-        <line x1="21" y1="14" x2="27" y2="14" stroke="${col}" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="14" cy="14" r="11" fill="none" stroke="white" stroke-width="${hw}" stroke-opacity="0.85"/>
+        <circle cx="14" cy="14" r="3"  fill="white" fill-opacity="0.85"/>
+        <line x1="14" y1="1"  x2="14" y2="7"  stroke="white" stroke-width="${hw}" stroke-linecap="round" stroke-opacity="0.85"/>
+        <line x1="14" y1="21" x2="14" y2="27" stroke="white" stroke-width="${hw}" stroke-linecap="round" stroke-opacity="0.85"/>
+        <line x1="1"  y1="14" x2="7"  y2="14" stroke="white" stroke-width="${hw}" stroke-linecap="round" stroke-opacity="0.85"/>
+        <line x1="21" y1="14" x2="27" y2="14" stroke="white" stroke-width="${hw}" stroke-linecap="round" stroke-opacity="0.85"/>
+        <circle cx="14" cy="14" r="11" fill="none" stroke="${col}" stroke-width="${cw}"/>
+        <circle cx="14" cy="14" r="3"  fill="${col}"/>
+        <line x1="14" y1="1"  x2="14" y2="7"  stroke="${col}" stroke-width="${cw}" stroke-linecap="round"/>
+        <line x1="14" y1="21" x2="14" y2="27" stroke="${col}" stroke-width="${cw}" stroke-linecap="round"/>
+        <line x1="1"  y1="14" x2="7"  y2="14" stroke="${col}" stroke-width="${cw}" stroke-linecap="round"/>
+        <line x1="21" y1="14" x2="27" y2="14" stroke="${col}" stroke-width="${cw}" stroke-linecap="round"/>
       </svg>`;
       centerMarker = L.marker(latlng, {
         icon: L.divIcon({ className: '', html: svg, iconSize: [28, 28], iconAnchor: [14, 14] }),
@@ -911,11 +933,12 @@
     function drawRadiusCircle(latlng) {
       if (radiusCircle) { radiusCircle.remove(); radiusCircle = null; }
       if (!circleVisible) return;
-      const col = getAccent();
+      const dark = document.documentElement.classList.contains('dark');
+      const col  = dark ? '#60a5fa' : getAccent();
       radiusCircle = L.circle(latlng, {
         radius: radiusKm * 1000,
-        color: col, weight: 1.5, dashArray: '6 4',
-        fillColor: col, fillOpacity: 0.13,
+        color: col, weight: dark ? 2 : 1.5, dashArray: '6 4',
+        fillColor: col, fillOpacity: dark ? 0.10 : 0.08,
         interactive: false,
       }).addTo(map);
     }
@@ -1331,6 +1354,52 @@
       onRadiusThemeChange = initRadiusSearch(data.stations, searchIndex, cluster);
       initAboutModal(data.stations);
       setStatus(`${data.stations.length} degalinės`);
+
+      // ── TEMP: color review grid near Riga ────────────────────────────────
+      // Delete this block once pins are confirmed.
+      (function placeColorReviewGrid() {
+        const groups = [
+          { label: 'Raudoni',   companies: ['Circle K','Orlen','Viada'] },
+          { label: 'Oranžiniai',companies: ['Stateta','Narjanta','Utentra','Šventosios investicijos'] },
+          { label: 'Tamsūs',   companies: ['Skulas','Alauša','Gazimpeksas','Saurida','RV'] },
+          { label: 'Mėlyni',   companies: ['Apsaga','Junasa','Deliuvis','Regusa','Neste Lietuva','Baltic Petroleum','Boost Petrol','Tomega','Virši'] },
+          { label: 'Žali',     companies: ['Emsi','Jozita','Melkasta','Pynauja'] },
+          { label: 'Geltoni',  companies: ['Adukesta','Gelvybė','Naftrus','Propano ir butano dujų centras','Trevena','Velseka','Degta','Borusta'] },
+          { label: 'Rožiniai/kiti', companies: ['Nostrada','Narjanta','Utentra'] },
+          { label: 'Smulkūs (pilki)', companies: ['Eniris','Madalva','Eu Verslas','Antivis','Autograndas'] },
+        ];
+
+        const startLat = 56.970;
+        const startLng = 24.030;
+        const rowGap   = 0.007;
+        const colGap   = 0.005;
+        const tempMarkers = [];
+
+        groups.forEach((g, gi) => {
+          const lat = startLat - gi * rowGap;
+          g.companies.forEach((company, ci) => {
+            const lng = startLng + ci * colGap;
+            const m = L.marker([lat, lng], {
+              icon: getMarkerIcon(company),
+              zIndexOffset: 3000,
+            }).addTo(map);
+            m.bindTooltip(company, { permanent: true, direction: 'top', offset: [0, -72], className: 'price-tooltip' });
+            tempMarkers.push(m);
+          });
+          // Group label marker
+          L.marker([lat, startLng - 0.006], {
+            icon: L.divIcon({
+              className: '',
+              html: `<div style="background:rgba(255,255,255,0.85);border:1px solid #999;border-radius:4px;padding:1px 4px;font-size:0.6rem;white-space:nowrap;">${g.label}</div>`,
+              iconAnchor: [0, 10],
+            }),
+            interactive: false,
+          }).addTo(map);
+        });
+
+        map.setView([startLat - 0.02, startLng + 0.02], 13);
+      })();
+      // ── END TEMP ─────────────────────────────────────────────────────────
     } catch (err) {
       showError(err.message);
       console.error(err);
