@@ -9,6 +9,7 @@ Run locally:  python3 pipeline.py
 Run in CI:    same command — GitHub Actions installs openpyxl first.
 """
 
+import http.cookiejar
 import json
 import os
 import re
@@ -45,12 +46,97 @@ def _xlsx_urls(d: date):
         f'{base}DK-{y}-{m}-{dd}.xlsx',
     ]
 
+def _scrape_sharepoint_urls() -> list[str]:
+    """
+    Scrape the ENA listing page for xlsx SharePoint links (/:x:/ = Excel file type).
+    Returns a deduplicated candidate list to try in order:
+      [0] first match = "Naujausios degalų kainos" banner above the table (primary)
+      [1] last match  = rightmost table column (fallback, same URL on normal days)
+    Returns [] on any failure or if no links found.
+    """
+    try:
+        req = urllib.request.Request(
+            'https://www.ena.lt/degalu-kainos-degalinese/',
+            headers={
+                'User-Agent': USER_AGENT,
+                'Referer': 'https://www.ena.lt/',
+            },
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            html = resp.read().decode('utf-8', errors='replace')
+        raw = re.findall(
+            r'https://ltenergagen\.sharepoint\.com/:x:/[^\s"\'<>]+', html
+        )
+        if not raw:
+            print('ENA page scraped but no SharePoint xlsx links found.')
+            return []
+        # Unescape HTML entities, deduplicate while preserving order
+        seen, candidates = set(), []
+        for url in [raw[0], raw[-1]]:
+            url = url.replace('&amp;', '&')
+            if url not in seen:
+                seen.add(url)
+                candidates.append(url)
+        print(f'Found {len(candidates)} SharePoint candidate(s): {candidates}')
+        return candidates
+    except Exception as e:
+        print(f'ENA page scrape failed: {e}')
+        return []
+
+def _date_from_xlsx() -> str | None:
+    """
+    Peek at the downloaded xlsx and read the date from the first data row
+    (column A, format '2026 04 09' with spaces). Returns ISO string or None.
+    """
+    try:
+        wb = openpyxl.load_workbook(XLSX_PATH, read_only=True, data_only=True)
+        ws = wb.active
+        for row in ws.iter_rows(values_only=True):
+            if not row or not row[0]:
+                continue
+            v = str(row[0]).strip()
+            if v == 'Data':
+                continue  # skip header row
+            v = v.replace(' ', '-')
+            if re.match(r'\d{4}-\d{2}-\d{2}', v):
+                wb.close()
+                return v[:10]
+        wb.close()
+    except Exception as e:
+        print(f'Could not read date from xlsx: {e}')
+    return None
+
 def download_xlsx() -> str:
     """
-    Try today through 4 days ago, both casings each day.
+    Download today's xlsx.
+    First tries scraping the ENA listing page for a SharePoint link (/:x:/ = Excel).
+    Falls back to the old direct URL pattern if scraping yields nothing.
     Saves to data/latest.xlsx and returns the file date as ISO string.
     Raises RuntimeError if all attempts fail.
     """
+    # 1. Try SharePoint via ENA page scrape (primary = banner link, fallback = last table column)
+    for sp_url in _scrape_sharepoint_urls():
+        sep = '&' if '?' in sp_url else '?'
+        download_url = sp_url + sep + 'download=1'
+        try:
+            print(f'Trying SharePoint download: {download_url}')
+            jar = http.cookiejar.CookieJar()
+            opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+            req = urllib.request.Request(download_url, headers={
+                'User-Agent': USER_AGENT,
+                'Referer': 'https://www.ena.lt/degalu-kainos-degalinese/',
+            })
+            with opener.open(req, timeout=60) as resp:
+                XLSX_PATH.write_bytes(resp.read())
+            date_str = _date_from_xlsx()
+            if date_str:
+                print(f'Downloaded via SharePoint ({date_str})')
+                return date_str
+            print('SharePoint download succeeded but date unreadable — trying next candidate.')
+        except Exception as e:
+            print(f'SharePoint download failed ({sp_url}): {e}')
+
+    # 2. Fall back to old direct URL pattern
     today = date.today()
     for days_back in range(5):
         d = today - timedelta(days=days_back)
@@ -71,7 +157,7 @@ def download_xlsx() -> str:
                     continue
                 raise
     raise RuntimeError(
-        'Nepavyko atsisiųsti xlsx failo — bandyta 5 dienos, abi rašybos.'
+        'Nepavyko atsisiųsti xlsx failo — SharePoint ir tiesioginiai URL neprieinami.'
     )
 
 # ── xlsx parsing ───────────────────────────────────────────────────────────────
