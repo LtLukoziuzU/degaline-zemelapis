@@ -210,3 +210,5 @@ A developer-only page for manually verifying station geocoordinates.
 - **Node.js 20 deprecation warning** in the deploy job — caused by `actions/upload-pages-artifact@v4` using `actions/upload-artifact@v7` internally. Cannot be fixed from our side; upstream will update before September 2026.
 
 - **Company marker colors don't match pin background for non-white logos:** Some logos (e.g. Boostpetrol, Trevena) use a custom background color in the circular PNG, but the `COMPANY_COLORS` map in `index.html` may not match. Requires manual review per company — needs guided fixing.
+- **Target icon for 'cheapest in radius' color and circle fill blends into map in dark mode.** Ask developer to provide example how it looks.
+- **Show last selected fuel price above map pin.** First time user defaults to diesel, then taken from localStorage. Small toast like blurb above map pin, make it look good both in light and dark mode.

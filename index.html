@@ -129,6 +129,15 @@
       padding: 0;
     }
     .leaflet-popup-tip { background: var(--bg); }
+    .price-tooltip {
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border) !important;
+      border-radius: 10px; padding: 1px 6px;
+      font-size: 0.65rem; font-weight: 700;
+      white-space: nowrap; pointer-events: none;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .price-tooltip::before { display: none; }
     .leaflet-popup-content { margin: 0; }
     .dp-station { padding: 0.65rem 0.85rem; }
     .dp-station + .dp-station { border-top: 1px solid var(--border); }
@@ -461,7 +470,7 @@
       <h2>Duomenų šaltinis</h2>
       <p>Kainų duomenys: <a href="https://www.ena.lt/degalu-kainos-degalinese/" target="_blank">Lietuvos Energetikos Agentūra (LEA)</a></p>
       <p>Jeigu nematote degalinės, ji nepateikė duomenų į LEA, arba <a href="https://photon.komoot.io/" target="_blank">Photon API</a> nerado šios degalinės koordinačių.</p>
-      <p><strong>Pastaba:</strong> Kadangi degalinių yra 725 šio dokumento rašymo metu, ne visos yra ranka patikrintos, ar pataiko į koordinates - photon.komoot.io kartais kiek klysta. Pagrindinės klaidos ištaisytos (23 adresus ne Lietuvoje rado - kaltinkit degalinių tinklus, kaip kreivai jie surašo adresus, ne pagal taip kaip visi žemėlapiai tikisi), bet dėl šventos ramybės reiktų visus pereiti. Pasidarytas įrankis padaryti tai po truputį, netrukdant svetainės kūrimui ir naudojimui.</p>
+      <p><strong>Pastaba:</strong> Kadangi degalinių yra 725 šio dokumento rašymo metu, ne visos yra ranka patikrintos, ar pataiko į koordinates - photon.komoot.io kartais kiek klysta. Pagrindinės klaidos ištaisytos (13 adresų ne Lietuvoje rado, 10 tiesiog fail'ino, 33 rado, bet visiškai ne toj savivaldybėj, 1 Alauša supjovė grybą ir LEAi teigia, kad Vilnius yra Rokiškio savivaldybėj - dėl beveik visų kaltinkit degalinių tinklus, kaip kreivai jie surašo adresus pas save/LEA'i, ne pagal taip kaip visi žemėlapiai tikisi), bet dėl šventos ramybės reiktų visus pereiti. Pasidarytas įrankis padaryti tai po truputį, netrukdant svetainės kūrimui ir naudojimui.</p>
       <details>
         <summary>Degalinių tinklai, pateikę kainas:</summary>
         <ul id="company-list"></ul>
@@ -652,10 +661,27 @@
   const _ua = navigator.userAgent;
   const _isIOS     = /iP(hone|ad|od)/.test(_ua);
   const _isAndroid = /Android/.test(_ua);
-  function mapsUrl(lat, lng) {
-    if (_isAndroid) return `geo:0,0?q=${lat},${lng}`;
-    if (_isIOS)     return `https://maps.apple.com/?q=${lat},${lng}`;
-    return `https://www.google.com/maps?q=${lat},${lng}`;
+  function mapsUrl(company, address, municipality, lat, lng) {
+    const query = encodeURIComponent(`${company} ${address} ${municipality}`);
+    if (_isAndroid) return `geo:${lat},${lng}?q=${query}`;
+    if (_isIOS)     return `https://maps.apple.com/?q=${query}&sll=${lat},${lng}&z=17`;
+    return `https://www.google.com/maps/search/${query}/@${lat},${lng},17z`;
+  }
+
+  // ─── Active fuel (shared between price tooltips and radius panel) ─────────
+  let activeFuel = localStorage.getItem('degaline-radius-fuel') || 'diesel';
+  let allMarkerGroups = []; // [{ marker, grp }]
+
+  function priceTooltipContent(grp) {
+    const prices = grp.map(s => s[activeFuel]).filter(p => p !== null);
+    if (!prices.length) return 'nėra';
+    return Math.min(...prices).toFixed(3) + ' €/L';
+  }
+
+  function updatePriceTooltips() {
+    for (const { marker, grp } of allMarkerGroups) {
+      marker.setTooltipContent(priceTooltipContent(grp));
+    }
   }
 
   // ─── Marker placement ─────────────────────────────────────────────────────
@@ -688,13 +714,18 @@
             ${row('Dyzelinas', s.diesel)}
             ${row('Dujos', s.lpg)}
           </table>
-          <a class="dp-gmaps" href="${mapsUrl(lat, lng)}" target="_blank" rel="noopener"><svg width="11" height="15" viewBox="0 0 11 15" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 4.125 5.5 9.5 5.5 9.5S11 9.625 11 5.5C11 2.462 8.538 0 5.5 0z" fill="white"/><circle cx="5.5" cy="5.5" r="2.2" fill="#EA4335"/></svg>${(_isIOS || _isAndroid) ? 'Atidaryti žemėlapyje' : 'Atidaryti Google Maps'}</a>
+          <a class="dp-gmaps" href="${mapsUrl(s.company, s.address, s.municipality, lat, lng)}" target="_blank" rel="noopener"><svg width="11" height="15" viewBox="0 0 11 15" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 4.125 5.5 9.5 5.5 9.5S11 9.625 11 5.5C11 2.462 8.538 0 5.5 0z" fill="white"/><circle cx="5.5" cy="5.5" r="2.2" fill="#EA4335"/></svg>${(_isIOS || _isAndroid) ? 'Atidaryti žemėlapyje' : 'Atidaryti Google Maps'}</a>
           <button class="dp-find-nearby" data-lat="${lat}" data-lng="${lng}" data-company="${escHtml(s.company)}">📍 Rasti pigesnes netoliese</button>
         </div>`;
       }).join('');
       const pinCompany = (grp.find(s => getCompanyLogo(s.company)) ?? grp[0]).company;
       const marker = L.marker([lat, lng], { icon: getMarkerIcon(pinCompany) })
-        .bindPopup(popupHtml, { maxWidth: 280 });
+        .bindPopup(popupHtml, { maxWidth: 280 })
+        .bindTooltip(priceTooltipContent(grp), {
+          permanent: true, direction: 'top',
+          offset: [0, -72], className: 'price-tooltip',
+        });
+      allMarkerGroups.push({ marker, grp });
       marker.addTo(cluster);
       for (const s of grp) {
         searchIndex.push({ company: s.company, address: s.address, municipality: s.municipality, lat, lng, marker });
@@ -801,7 +832,7 @@
 
     // Persisted state
     let radiusKm = 5;
-    let fuelType = localStorage.getItem('degaline-radius-fuel') || 'p95';
+    let fuelType = activeFuel;
 
     // Volatile state
     let centerLatLng  = null;
@@ -1145,8 +1176,10 @@
     document.querySelectorAll('.rp-fuel-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         fuelType = btn.dataset.fuel;
+        activeFuel = fuelType;
         localStorage.setItem('degaline-radius-fuel', fuelType);
         document.querySelectorAll('.rp-fuel-btn').forEach(b => b.classList.toggle('active', b === btn));
+        updatePriceTooltips();
         updateResults();
       });
     });
@@ -1213,8 +1246,10 @@
     if (isFinite(urlLat) && isFinite(urlLng)) {
       if (urlF) {
         fuelType = urlF;
+        activeFuel = fuelType;
         localStorage.setItem('degaline-radius-fuel', fuelType);
         document.querySelectorAll('.rp-fuel-btn').forEach(b => b.classList.toggle('active', b.dataset.fuel === fuelType));
+        updatePriceTooltips();
       }
       let snapSource = null, minDist = Infinity;
       for (const s of stations) {
