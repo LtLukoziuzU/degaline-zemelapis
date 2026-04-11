@@ -293,7 +293,7 @@
     .rp-icon-btn:hover { color: var(--text); background: var(--bg-raised); }
     @media (max-width: 599px), (pointer: coarse) {
       #rp-close { padding: 0.4rem 0.6rem; font-size: 1.1rem; }
-      #rp-reposition { margin-right: 0.5rem; }
+      #rp-share { margin-left: 0.5rem; }
     }
 
     .rp-controls {
@@ -1157,7 +1157,15 @@
       }
       const source = minDist < 0.03 ? { company: snapSource.company } : null;
       setCenter(L.latLng(urlLat, urlLng), source, isFinite(urlR) ? urlR : 5);
-      map.setView(L.latLng(urlLat, urlLng), isFinite(urlZ) ? urlZ : map.getZoom());
+      const urlZoom = isFinite(urlZ) ? urlZ : map.getZoom();
+      const urlLL = L.latLng(urlLat, urlLng);
+      if (window.innerWidth < 600) {
+        const px = map.project(urlLL, urlZoom);
+        const adjusted = map.unproject(px.add([0, panel.offsetHeight / 2]), urlZoom);
+        map.setView(adjusted, urlZoom);
+      } else {
+        map.setView(urlLL, urlZoom);
+      }
       history.replaceState(null, '', location.pathname);
     } else {
       const saved = (() => {
