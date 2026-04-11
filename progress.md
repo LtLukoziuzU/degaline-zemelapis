@@ -194,6 +194,15 @@ A developer-only page for manually verifying station geocoordinates.
 - **Trevena** — original is a 150×34 px wide banner (4.5:1 ratio); rebuilt circle at 82% width fill on yellow background.
 - **Boostpetrol** — mark was only 39% fill; cropped from original JPEG, scaled to 72% fill on navy `(0,55,117)` background.
 
+### Step 23 — Maps link improvement, price tooltips on pins, Pastaba update
+
+- **"Atidaryti žemėlapyje" improved** — `mapsUrl()` now accepts `company`, `address`, `municipality` and builds a business-search URL per platform: Android `geo:lat,lng?q=...`, iOS `maps.apple.com/?q=...&sll=...&z=17`, Desktop `google.com/maps/search/?api=1&query=...`. Opens business card instead of bare coordinate pin.
+- **Price tooltip on every unclustered pin** — permanent Leaflet tooltip above each map pin showing the selected fuel's price (`1.299 €/L`) or `nėra` if unavailable. Adapts to light/dark mode via CSS vars; 2px border (black/white) for contrast. Applies to both cluster markers and cheapest-in-radius result markers.
+- **Default fuel type changed to Dyzelinas** — first-time visitors see diesel prices by default (was 95); persisted in localStorage as before.
+- **Fuel type selection updates all tooltips** — switching fuel type in the radius panel immediately refreshes all visible pin labels.
+- **Pastaba text updated** in the about dialog with corrected geocoding error breakdown.
+- **`company-color-review.md`** created — plain list of all 49 companies from `stations.json` for manual color/logo background review.
+
 ---
 
 ## Pending
@@ -202,13 +211,10 @@ A developer-only page for manually verifying station geocoordinates.
 
 ## Known Issues / Decisions
 
-- **"Atidaryti žemėlapyje" opens coords, not the business listing:** Current URLs drop a pin at raw coordinates. Ideally the maps app would open the actual gas station business card (name, reviews, hours). Options: include company name in the query string (`?q=company+name+at+lat,lng`), or look up a place ID — but place ID requires a Maps API key and reliability varies. Needs investigation.
-
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.
 - **Node.js 20 deprecation warning** in the deploy job — caused by `actions/upload-pages-artifact@v4` using `actions/upload-artifact@v7` internally. Cannot be fixed from our side; upstream will update before September 2026.
 
-- **Company marker colors don't match pin background for non-white logos:** Some logos (e.g. Boostpetrol, Trevena) use a custom background color in the circular PNG, but the `COMPANY_COLORS` map in `index.html` may not match. Requires manual review per company — needs guided fixing.
-- **Target icon for 'cheapest in radius' color and circle fill blends into map in dark mode.** Ask developer to provide example how it looks.
-- **Show last selected fuel price above map pin.** First time user defaults to diesel, then taken from localStorage. Small toast like blurb above map pin, make it look good both in light and dark mode.
+- **Company marker colors don't match pin background for non-white logos:** Manual review in progress via `company-color-review.md` — developer fills in color decisions per company.
+- **Target icon for 'cheapest in radius' color and circle fill blends into map in dark mode.** Needs developer screenshot to assess.
