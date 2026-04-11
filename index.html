@@ -331,6 +331,8 @@
     .rp-result:last-child { border-bottom: none; }
     .rp-result:hover { background: var(--bg-raised); }
     .rp-result-medal { font-size: 1.1rem; line-height: 1; margin-top: 0.1rem; flex-shrink: 0; }
+    .rp-result-logo { align-self: stretch; flex-shrink: 0; display: flex; align-items: center; }
+    .rp-result-logo img { height: 100%; width: auto; display: block; }
     .rp-result-info { flex: 1; min-width: 0; }
     .rp-result-name {
       font-weight: 600; font-size: 0.88rem; color: var(--text);
@@ -912,7 +914,7 @@
         const key  = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
         const orig = markerByKey[key];
         const m = L.marker([r.lat, r.lng], {
-          icon: getMarkerIcon(r.company, 126),
+          icon: getMarkerIcon(r.company),
           zIndexOffset: 1500,
         }).addTo(map);
         if (orig) {
@@ -966,10 +968,12 @@
         const marker = markerByKey[key];
         const color  = getCompanyColor(r.company);
 
+        const logo  = getCompanyLogo(r.company);
         const div = document.createElement('div');
         div.className = 'rp-result';
         div.innerHTML = `
           <div class="rp-result-medal">${medals[i] || ''}</div>
+          ${logo ? `<div class="rp-result-logo"><img src="goodlogo/${logo}.png" alt=""></div>` : ''}
           <div class="rp-result-info">
             <div class="rp-result-name">
               <span class="rp-dot" style="background:${escHtml(color)}"></span>
