@@ -61,7 +61,7 @@ jobs:
 
   deploy:
     needs: update-data
-    if: always() && (needs.update-data.result == 'success' || needs.update-data.result == 'skipped')
+    if: always() && (needs.update-data.result == 'skipped' || needs.update-data.outputs.data_changed == 'true')
     runs-on: ubuntu-latest
     permissions:
       pages: write
