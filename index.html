@@ -132,6 +132,7 @@
     .leaflet-popup-content { margin: 0; }
     .dp-station { padding: 0.65rem 0.85rem; }
     .dp-station + .dp-station { border-top: 1px solid var(--border); }
+    .dp-logo { height: 2.8rem; width: 2.8rem; object-fit: contain; display: block; margin-bottom: 0.3rem; }
     .dp-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
     .dp-address { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
     .dp-prices { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
@@ -662,7 +663,9 @@
         const row = (label, val) => val !== null
           ? `<tr><td>${label}</td><td>${val.toFixed(3)} €/L</td></tr>`
           : `<tr><td>${label}</td><td class="dp-na">neprekiaujama</td></tr>`;
+        const sLogo = getCompanyLogo(s.company);
         return `<div class="dp-station">
+          ${sLogo ? `<img class="dp-logo" src="goodlogo/${sLogo}.png" alt="">` : ''}
           <div class="dp-name">${escHtml(s.company)}</div>
           <div class="dp-address">${escHtml(s.address)}</div>
           <table class="dp-prices">
