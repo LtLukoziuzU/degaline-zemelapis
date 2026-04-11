@@ -566,10 +566,10 @@
     'Circle K':                       '#da291c',
     'Degta':                          '#f2ce06',
     'Deliuvis':                       '#202880',
-    'Emsi':                           '#20b668',
-    'Gazimpeksas':                    '#0a8528',
+    'Emsi':                           '#11af5d',
+    'Gazimpeksas':                    '#06571a',
     'Gelvybė':                        '#ffcc00',
-    'Jozita':                         '#16b676',
+    'Jozita':                         '#108455',
     'Junasa':                         '#0c4269',
     'Melkasta':                       '#4da947',
     'Naftrus':                        '#f7c202',
@@ -578,7 +578,7 @@
     'Nostrada':                       '#e3565c',
     'Orlen':                          '#c20e1a',
     'Propano ir butano dujų centras': '#f1db25',
-    'Pynauja':                        '#447e59',
+    'Pynauja':                        '#366346',
     'RV':                             '#2b1364',
     'Regusa':                         '#011565',
     'Saurida':                        '#1c1d42',
@@ -1354,52 +1354,6 @@
       onRadiusThemeChange = initRadiusSearch(data.stations, searchIndex, cluster);
       initAboutModal(data.stations);
       setStatus(`${data.stations.length} degalinės`);
-
-      // ── TEMP: color review grid near Riga ────────────────────────────────
-      // Delete this block once pins are confirmed.
-      (function placeColorReviewGrid() {
-        const groups = [
-          { label: 'Raudoni',   companies: ['Circle K','Orlen','Viada'] },
-          { label: 'Oranžiniai',companies: ['Stateta','Narjanta','Utentra','Šventosios investicijos'] },
-          { label: 'Tamsūs',   companies: ['Skulas','Alauša','Gazimpeksas','Saurida','RV'] },
-          { label: 'Mėlyni',   companies: ['Apsaga','Junasa','Deliuvis','Regusa','Neste Lietuva','Baltic Petroleum','Boost Petrol','Tomega','Virši'] },
-          { label: 'Žali',     companies: ['Emsi','Jozita','Melkasta','Pynauja'] },
-          { label: 'Geltoni',  companies: ['Adukesta','Gelvybė','Naftrus','Propano ir butano dujų centras','Trevena','Velseka','Degta','Borusta'] },
-          { label: 'Rožiniai/kiti', companies: ['Nostrada','Narjanta','Utentra'] },
-          { label: 'Smulkūs (pilki)', companies: ['Eniris','Madalva','Eu Verslas','Antivis','Autograndas'] },
-        ];
-
-        const startLat = 56.970;
-        const startLng = 24.030;
-        const rowGap   = 0.007;
-        const colGap   = 0.005;
-        const tempMarkers = [];
-
-        groups.forEach((g, gi) => {
-          const lat = startLat - gi * rowGap;
-          g.companies.forEach((company, ci) => {
-            const lng = startLng + ci * colGap;
-            const m = L.marker([lat, lng], {
-              icon: getMarkerIcon(company),
-              zIndexOffset: 3000,
-            }).addTo(map);
-            m.bindTooltip(company, { permanent: true, direction: 'top', offset: [0, -72], className: 'price-tooltip' });
-            tempMarkers.push(m);
-          });
-          // Group label marker
-          L.marker([lat, startLng - 0.006], {
-            icon: L.divIcon({
-              className: '',
-              html: `<div style="background:rgba(255,255,255,0.85);border:1px solid #999;border-radius:4px;padding:1px 4px;font-size:0.6rem;white-space:nowrap;">${g.label}</div>`,
-              iconAnchor: [0, 10],
-            }),
-            interactive: false,
-          }).addTo(map);
-        });
-
-        map.setView([startLat - 0.02, startLng + 0.02], 13);
-      })();
-      // ── END TEMP ─────────────────────────────────────────────────────────
     } catch (err) {
       showError(err.message);
       console.error(err);

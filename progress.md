@@ -203,6 +203,14 @@ A developer-only page for manually verifying station geocoordinates.
 - **Pastaba text updated** in the about dialog with corrected geocoding error breakdown.
 - **`company-color-review.md`** created — plain list of all 49 companies from `stations.json` for manual color/logo background review.
 
+### Step 24 — Pin color overhaul and dark mode overlay fixes
+
+- **Full `COMPANY_COLORS` rewrite** — all 34 named companies now use brand-accurate hex colors sourced from logo review (`company-color-review.md`). 14 additional companies added that were previously falling through to small-operator grey. GM Circle K entry removed — Circle K franchises now handled entirely by the existing regex.
+- **Hue spreading for white-background logos** — companies whose logos have white backgrounds (where the teardrop color is the sole differentiator) had hues slightly spread within each color cluster to improve map readability: oranges, ambers, yellows, and blues each shifted 5–13° apart. Dark greens (Gazimpeksas, Pynauja, Emsi, Jozita) brightened instead of hue-shifted (too dark/desaturated for hue shifts to matter visually), at half the initially computed brightening after visual review.
+- **Skulas and Stateta** switched to alt colors: Skulas `#201d1d` (near-black) and Stateta `#f5821f` (orange), avoiding the all-red cluster.
+- **Dark mode crosshair marker** — white halo strokes drawn behind the accent-colored lines so the center marker is visible on dark-filtered tiles.
+- **Dark mode radius circle** — uses `#60a5fa` (vivid blue) instead of the pale `#89b4fa` accent; weight bumped to 2px; fill opacity 0.10 vs 0.08 in light mode.
+
 ---
 
 ## Pending
@@ -215,6 +223,3 @@ A developer-only page for manually verifying station geocoordinates.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.
 - **Node.js 20 deprecation warning** in the deploy job — caused by `actions/upload-pages-artifact@v4` using `actions/upload-artifact@v7` internally. Cannot be fixed from our side; upstream will update before September 2026.
-
-- **Company marker colors don't match pin background for non-white logos:** Manual review in progress via `company-color-review.md` — developer fills in color decisions per company.
-- **Target icon for 'cheapest in radius' color and circle fill blends into map in dark mode.** Needs developer screenshot to assess.
