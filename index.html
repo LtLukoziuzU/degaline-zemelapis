@@ -567,19 +567,96 @@
     return SMALL_COLOR;
   }
 
-  function getMarkerIcon(company) {
+  const LOGO_MAP = {
+    'Adukesta':                          'adukesta',
+    'Alauša':                            'alausa',
+    'Apsaga':                            'apsaga',
+    'Baltic Petroleum':                  'balticpetroleum',
+    'Boost Petrol':                      'boostpetrol',
+    'Borusta':                           'borusta',
+    'Circle K':                          'circlek',
+    'Degta':                             'degta',
+    'Deliuvis':                          'deliuvis',
+    'Emsi':                              'emsi',
+    'Gazimpeksas':                       'gazimpeksas',
+    'Gelvybė':                           'gelvybe',
+    'Jozita':                            'jozita',
+    'Junasa':                            'junasa',
+    'Melkasta':                          'melkasta',
+    'Naftrus':                           'naftrus',
+    'Narjanta':                          'narjanta',
+    'Neste Lietuva':                     'neste',
+    'Nostrada':                          'nostrada',
+    'Orlen':                             'orlen',
+    'Plovimo sistemos':                  'neste',
+    'Propano ir butano dujų centras':    'propanoirbutanodujucentras',
+    'Pynauja':                           'pynauja',
+    'Regusa':                            'regusa',
+    'RV':                                'RV',
+    'Saurida':                           'saurida',
+    'Skulas':                            'skulas',
+    'Stateta':                           'stateta',
+    'Šventosios investicijos':           'sventosiosinvesticijos',
+    'Tomega':                            'tomega',
+    'Trevena':                           'trevena',
+    'Utentra':                           'utentra',
+    'Velseka':                           'velseka',
+    'Viada':                             'viada',
+    'Virši':                             'virsi',
+  };
+
+  function getCompanyLogo(company) {
+    if (/circle\s*k/i.test(company)) return 'circlek';
+    return LOGO_MAP[company] || null;
+  }
+
+  const _iconCache = {};
+
+  function makeLogoIcon(logoName, size) {
+    const key = `${logoName}@${size}`;
+    if (!_iconCache[key]) {
+      const half = size / 2;
+      _iconCache[key] = L.icon({
+        iconUrl: `goodlogo/${logoName}.png`,
+        iconSize:    [size, size],
+        iconAnchor:  [half, half],
+        popupAnchor: [0, -half],
+      });
+    }
+    return _iconCache[key];
+  }
+
+  function makeCircleIcon(company, size) {
+    const color = getCompanyColor(company);
+    const key = `circle@${color}@${size}`;
+    if (!_iconCache[key]) {
+      const half = size / 2;
+      const r    = half - 2;
+      const svg  = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${half}" cy="${half}" r="${r}" fill="${color}" stroke="white" stroke-width="2"/></svg>`;
+      _iconCache[key] = L.divIcon({
+        className: '',
+        html: svg,
+        iconSize:    [size, size],
+        iconAnchor:  [half, half],
+        popupAnchor: [0, -half],
+      });
+    }
+    return _iconCache[key];
+  }
+
+  // Kept for easy revert — not used while logo pins are active.
+  function _tearDropIcon(company) {
     const color = getCompanyColor(company);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="36" viewBox="0 0 24 36">
       <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}"/>
       <circle cx="12" cy="12" r="5" fill="white" fill-opacity="0.35"/>
     </svg>`;
-    return L.divIcon({
-      className: '',
-      html: svg,
-      iconSize: [24, 36],
-      iconAnchor: [12, 36],
-      popupAnchor: [0, -36],
-    });
+    return L.divIcon({ className: '', html: svg, iconSize: [24, 36], iconAnchor: [12, 36], popupAnchor: [0, -36] });
+  }
+
+  function getMarkerIcon(company, size = 40) {
+    const logo = getCompanyLogo(company);
+    return logo ? makeLogoIcon(logo, size) : makeCircleIcon(company, size);
   }
 
   // ─── Helpers ──────────────────────────────────────────────────────────────
@@ -856,21 +933,10 @@
     function drawResultMarkers(picks) {
       clearResultMarkers();
       picks.forEach(r => {
-        const color = getCompanyColor(r.company);
-        const key   = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
-        const orig  = markerByKey[key];
-        const svg   = `<svg xmlns="http://www.w3.org/2000/svg" width="42" height="63" viewBox="0 0 24 36">
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" fill="${color}"/>
-          <circle cx="12" cy="12" r="5" fill="white" fill-opacity="0.35"/>
-        </svg>`;
+        const key  = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
+        const orig = markerByKey[key];
         const m = L.marker([r.lat, r.lng], {
-          icon: L.divIcon({
-            className: 'rp-big-pin',
-            html: svg,
-            iconSize: [42, 63],
-            iconAnchor: [21, 63],
-            popupAnchor: [0, -65],
-          }),
+          icon: getMarkerIcon(r.company, 70),
           zIndexOffset: 1500,
         }).addTo(map);
         if (orig) {
