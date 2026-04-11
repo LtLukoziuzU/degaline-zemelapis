@@ -1159,13 +1159,15 @@
       setCenter(L.latLng(urlLat, urlLng), source, isFinite(urlR) ? urlR : 5);
       const urlZoom = isFinite(urlZ) ? urlZ : map.getZoom();
       const urlLL = L.latLng(urlLat, urlLng);
-      if (window.innerWidth < 600) {
-        const px = map.project(urlLL, urlZoom);
-        const adjusted = map.unproject(px.add([0, panel.offsetHeight / 2]), urlZoom);
-        map.setView(adjusted, urlZoom);
-      } else {
-        map.setView(urlLL, urlZoom);
-      }
+      requestAnimationFrame(() => {
+        if (window.innerWidth < 600) {
+          const px = map.project(urlLL, urlZoom);
+          const adjusted = map.unproject(px.add([0, panel.offsetHeight / 2]), urlZoom);
+          map.setView(adjusted, urlZoom);
+        } else {
+          map.setView(urlLL, urlZoom);
+        }
+      });
       history.replaceState(null, '', location.pathname);
     } else {
       const saved = (() => {
