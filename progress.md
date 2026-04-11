@@ -159,18 +159,20 @@ A developer-only page for manually verifying station geocoordinates.
 - Final output in `goodlogo/` — one `{company}.png` per company, ready for use as map pins.
 - Full strategy, decisions, and manual fix log documented in [logo-processing.md](logo-processing.md).
 
+### Step 20 — Company logo map pins and UI integration
+
+- Teardrop pins replaced with logo-embedded teardrops: white disk (r=8 in 24-unit viewBox) behind each logo so light/white content reads regardless of teardrop color. No-logo companies keep the plain teardrop with white semi-transparent circle. Old teardrop code retained for easy revert.
+- `LOGO_MAP` in `index.html` maps company name strings to `goodlogo/` filenames; Circle K franchisees matched via `/circle\s*k/i` regex.
+- Plovimo sistemos has no logo (shares address with Neste); grouped pins prefer the first logo-having company in the group regardless of data order.
+- Pin size: 36×54 px normal (3:4 ratio, logo ~40px); result panel markers same size but not clustered.
+- Company logo shown in station popup (above name) and in radius panel result rows (2.8rem square, between medal and text).
+- Post-processing fixes to `goodlogo/`: emsi/pynauja/stateta transparent interiors → white; melkasta black background → white; jozita/naftrus/neste/RV/utentra marks expanded and re-centered; circlek/orlen/viada marks expanded (red border preserved for CK/Viada); orlen nudged up 12px to compensate for text-heavy bottom.
+- Cluster radii tightened: zoom ≤10 → 70px, 11–13 → 60px, ≥14 → 40px.
+- Attribution note added to company list spoiler in about dialog: "Įmonių logotipai paimti iš viešai prieinamų duomenų."
+
 ---
 
 ## Pending
-
-### Step 20 — Replace map pins with circular company logos
-
-Plan documented in [plan-map-pin-logos.md](plan-map-pin-logos.md). Key decisions already made:
-- `goodlogo/` contains 34 circular PNGs ready to use
-- Circle K franchisees (any name matching `/circle\s*k/i`) all use `circlek.png`
-- Plovimo sistemos shares coordinates with Neste — use Neste logo for the pin
-- Companies without logos fall back to current colored SVG teardrop pin
-- Normal pin size: 40×40 px, center-anchored; radius result pins: 70×70 px
 
 ---
 

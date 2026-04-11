@@ -56,6 +56,29 @@ The automated pipeline handled the majority of logos correctly. The following 10
 
 Photo-based logos (real-world photos of stations with no clean logo) were scrapped entirely — those companies fall back to the default map pin design.
 
+## Post-Processing Fixes (Step 20)
+
+After the pipeline produced the initial `goodlogo/` set, additional fixes were applied when integrating logos into the map UI:
+
+| Company | Issue | Fix applied |
+|---|---|---|
+| emsi | Transparent interior pixels faded into teardrop pin color | Composited onto white circle background — transparent interior → white |
+| melkasta | Opaque black background inside circle | Replaced all near-black opaque pixels inside circle with white |
+| pynauja | Same as emsi | Composited onto white circle background |
+| stateta | Same as emsi | Composited onto white circle background |
+| jozita | Logo mark too small in circle (65% fill) | Cropped mark, scaled to 72% fill, re-pasted centered |
+| naftrus | Logo mark too small (45% fill) | Cropped mark, scaled to 75% fill, re-pasted centered |
+| neste | Logo mark too small (65% fill) | Cropped mark, scaled to 75% fill, re-pasted centered |
+| RV | Logo mark too small (46% fill) | Cropped mark, scaled to 75% fill, re-pasted centered |
+| utentra | Logo mark too small (55% fill) | Cropped mark, scaled to 75% fill, re-pasted centered |
+| circlek | Mark too small within red circle (45% fill) | Scaled whole image so mark → 60% fill, re-centered; preserves red border |
+| orlen | Mark slightly off-center and too small (55% fill) | Scaled to 68% fill, re-centered on mark bbox, nudged 12px up (text-heavy bottom) |
+| viada | Mark too small within red circle (55% fill) | Scaled so mark → 65% fill, re-centered; preserves red border |
+
+**Technique for white-background logos (jozita, naftrus, neste, RV, utentra):** detect non-white mark pixels, find bounding box, scale crop to target fill %, paste centered on fresh white circle background.
+
+**Technique for colored-background logos (circlek, orlen, viada):** detect non-red mark pixels, find bounding box center, scale entire image, re-crop so mark center aligns with canvas center, re-apply circular mask.
+
 ## Logos Without Images (fallback to default pin)
 
 Companies present in `stations.json` but not in `goodlogo/` should fall back to the existing SVG teardrop pin colored by `COMPANY_COLORS`.
