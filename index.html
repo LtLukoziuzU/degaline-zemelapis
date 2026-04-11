@@ -665,7 +665,7 @@
     const query = encodeURIComponent(`${company} ${address} ${municipality}`);
     if (_isAndroid) return `geo:${lat},${lng}?q=${query}`;
     if (_isIOS)     return `https://maps.apple.com/?q=${query}&sll=${lat},${lng}&z=17`;
-    return `https://www.google.com/maps/search/${query}/@${lat},${lng},17z`;
+    return `https://www.google.com/maps/search/?api=1&query=${query}`;
   }
 
   // ─── Active fuel (shared between price tooltips and radius panel) ─────────
@@ -967,6 +967,9 @@
         const m = L.marker([r.lat, r.lng], {
           icon: getMarkerIcon(r.company),
           zIndexOffset: 1500,
+        }).bindTooltip(priceTooltipContent([r]), {
+          permanent: true, direction: 'top',
+          offset: [0, -72], className: 'price-tooltip',
         }).addTo(map);
         if (orig) {
           m.on('click', () => {
