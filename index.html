@@ -675,7 +675,8 @@
           <button class="dp-find-nearby" data-lat="${lat}" data-lng="${lng}" data-company="${escHtml(s.company)}">📍 Rasti pigesnes netoliese</button>
         </div>`;
       }).join('');
-      const marker = L.marker([lat, lng], { icon: getMarkerIcon(grp[0].company) })
+      const pinCompany = (grp.find(s => getCompanyLogo(s.company)) ?? grp[0]).company;
+      const marker = L.marker([lat, lng], { icon: getMarkerIcon(pinCompany) })
         .bindPopup(popupHtml, { maxWidth: 280 });
       marker.addTo(cluster);
       for (const s of grp) {
