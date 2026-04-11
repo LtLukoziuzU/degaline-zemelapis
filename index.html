@@ -653,7 +653,7 @@
   const _isIOS     = /iP(hone|ad|od)/.test(_ua);
   const _isAndroid = /Android/.test(_ua);
   function mapsUrl(lat, lng) {
-    if (_isAndroid) return `geo:${lat},${lng}`;
+    if (_isAndroid) return `geo:0,0?q=${lat},${lng}`;
     if (_isIOS)     return `https://maps.apple.com/?q=${lat},${lng}`;
     return `https://www.google.com/maps?q=${lat},${lng}`;
   }
