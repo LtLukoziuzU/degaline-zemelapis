@@ -361,14 +361,12 @@
       border: 1.5px solid; background: transparent;
     }
     .dp-find-nearby {
-      border-color: var(--btn-border); color: var(--btn-color);
-      background: var(--btn-bg);
+      border-color: var(--btn-border); color: var(--btn-color); background: var(--btn-bg);
     }
     .dp-find-nearby:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
     html.dark .dp-find-nearby { color: #ffffff; }
-    .dp-gmaps { border-color: #EA4335; color: #EA4335; }
-    .dp-gmaps:hover { background: #EA4335; color: #ffffff; }
-    html.dark .dp-gmaps { color: #ffffff; }
+    .dp-gmaps { border-color: #c62828; background: #EA4335; color: #ffffff; }
+    .dp-gmaps:hover { background: #c62828; }
   </style>
 </head>
 <body>
@@ -691,7 +689,7 @@
             ${row('Dyzelinas', s.diesel)}
             ${row('Dujos', s.lpg)}
           </table>
-          <a class="dp-gmaps" href="${mapsUrl(lat, lng)}" target="_blank" rel="noopener"><svg width="11" height="15" viewBox="0 0 11 15" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 4.125 5.5 9.5 5.5 9.5S11 9.625 11 5.5C11 2.462 8.538 0 5.5 0z" fill="#EA4335"/><circle cx="5.5" cy="5.5" r="2.2" fill="white"/></svg>Atidaryti Google Maps</a>
+          <a class="dp-gmaps" href="${mapsUrl(lat, lng)}" target="_blank" rel="noopener"><svg width="11" height="15" viewBox="0 0 11 15" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 4.125 5.5 9.5 5.5 9.5S11 9.625 11 5.5C11 2.462 8.538 0 5.5 0z" fill="white"/><circle cx="5.5" cy="5.5" r="2.2" fill="#EA4335"/></svg>${(_isIOS || _isAndroid) ? 'Atidaryti žemėlapyje' : 'Atidaryti Google Maps'}</a>
           <button class="dp-find-nearby" data-lat="${lat}" data-lng="${lng}" data-company="${escHtml(s.company)}">📍 Rasti pigesnes netoliese</button>
         </div>`;
       }).join('');
