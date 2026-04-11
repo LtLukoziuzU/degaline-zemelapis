@@ -436,19 +436,7 @@ def main():
 
     today = date.today().isoformat()
 
-    # Skip if today's data was already processed.
-    if STATIONS_PATH.exists():
-        existing = json.loads(STATIONS_PATH.read_text(encoding='utf-8'))
-        if existing.get('date') == today:
-            print(f'stations.json already up to date for {today} — nothing to do.')
-            return
-
     date_str = download_xlsx()
-
-    # Skip if LEA hasn't published today's file yet.
-    if date_str != today:
-        print(f'Downloaded xlsx is from {date_str}, not today ({today}) — LEA has not published yet. Skipping.')
-        return
 
     print(f'Parsing {XLSX_PATH.name}...')
     stations = parse_xlsx(date_str)

@@ -3,7 +3,9 @@
 The official source is published daily by ENA (Energetikos agentūra):
 - **Listing page:** `https://www.ena.lt/degalu-kainos-degalinese/`
 
-**Current method (as of ~2026-04-10):** ENA moved files to SharePoint. `pipeline.py` scrapes the listing page and finds all SharePoint URLs containing `/:x:/` (SharePoint's Excel file-type prefix). The last match in document order is the most recent file (table grows rightward, newest column last). The sharing URL has `&download=1` appended to force a direct download. The file date is read from column A of the xlsx itself rather than derived from the URL.
+**Current method (as of ~2026-04-10):** ENA moved files to SharePoint. `pipeline.py` scrapes the listing page and finds all SharePoint URLs containing `/:x:/` (SharePoint's Excel file-type prefix). Two candidates are extracted in document order: the first match is the "Naujausios degalų kainos" banner link above the table (primary); the last match is the rightmost table column (fallback — normally the same URL). The sharing URL has `&download=1` appended to force a direct download. The file date is read from column A of the xlsx itself rather than derived from the URL.
+
+**Re-download on every run:** ENA edits the SharePoint file live throughout the day, and may make a final edit after the last cron tick. The pipeline always re-downloads and re-processes on every cron tick, regardless of the file's date. The git commit step handles idempotency: it only commits if `stations.json` actually changed on disk.
 
 **Fallback:** If scraping finds no SharePoint link, `pipeline.py` falls back to the old direct URL pattern:
 - `https://www.ena.lt/uploads/{YYYY}-EDAC/dk-degalinese-{YYYY}/dk-{YYYY}-{MM}-{DD}.xlsx`
