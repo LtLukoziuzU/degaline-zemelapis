@@ -1,0 +1,296 @@
+========================================================================
+SUSPICIOUS PIN REPORT — check_pins.py
+Data date: 2026-04-10
+Total stations checked: 725
+Flagged: 32
+Sorted by how far past the allowed radius (worst first).
+DO NOT edit data without manual map verification.
+========================================================================
+
+[001]  196.7 km over limit  (dist 234.7 km, limit 38 km)
+       Company:      Emsi
+       Municipality: Trakų r. sav.
+       Address:      Sausių g.2 Sausių k..
+       Pin:          55.598788, 21.638964
+       Muni centroid:54.648000, 24.935000
+       Maps link:    https://www.google.com/maps?q=55.5987879,21.638964
+       54.70785781027374, 24.99614857931957
+
+[002]  195.7 km over limit  (dist 230.7 km, limit 35 km)
+       Company:      Eniris
+       Municipality: Akmenės r. sav.
+       Address:      Skabeikių k. 4
+       Pin:          54.404247, 24.422562
+       Muni centroid:56.248000, 22.748000
+       Maps link:    https://www.google.com/maps?q=54.4042472,24.4225618
+       56.160026217939155, 22.760705040509606
+
+[003]  159.4 km over limit  (dist 194.4 km, limit 35 km)
+       Company:      Pakelės namai
+       Municipality: Pasvalio r. sav.
+       Address:      Liepų g. 4, Škilinpamūšio k.
+       Pin:          55.230082, 21.685162
+       Muni centroid:56.073000, 24.400000
+       Maps link:    https://www.google.com/maps?q=55.2300819,21.685162
+       56.26740588402012, 24.3707266405145
+
+[004]  156.0 km over limit  (dist 174.0 km, limit 18 km)
+       Company:      Autograndas
+       Municipality: Visagino sav.
+       Address:      Taikos pr. 48
+       Pin:          54.911634, 23.954221
+       Muni centroid:55.601000, 26.420000
+       Maps link:    https://www.google.com/maps?q=54.9116335,23.9542209
+       55.59058126805581, 26.463274240483475
+
+[005]  144.5 km over limit  (dist 182.5 km, limit 38 km)
+       Company:      Narjanta
+       Municipality: Biržų r. sav.
+       Address:      S. Nėries g. 35, Vabalninkas
+       Pin:          55.912479, 21.855402
+       Muni centroid:56.200000, 24.750000
+       Maps link:    https://www.google.com/maps?q=55.912479,21.8554021
+       55.97504103373914, 24.740181269336894
+
+[006]  143.1 km over limit  (dist 155.1 km, limit 12 km)
+       Company:      Apsaga
+       Municipality: Šiaulių m. sav.
+       Address:      Vilniaus g.16, Šiauliai
+       Pin:          54.954118, 25.064766
+       Muni centroid:55.934000, 23.314000
+       Maps link:    https://www.google.com/maps?q=54.9541177,25.0647663
+       55.92367391122238, 23.35015102700618
+
+[007]  137.4 km over limit  (dist 177.4 km, limit 40 km)
+       Company:      Trevena
+       Municipality: Šilutės r. sav.
+       Address:      Liepų g. 4, Žemaitkiemio k.
+       Pin:          54.244750, 23.473861
+       Muni centroid:55.352000, 21.482000
+       Maps link:    https://www.google.com/maps?q=54.24475,23.4738607
+       55.22751999916803, 21.701934682795354
+
+[008]  135.8 km over limit  (dist 173.8 km, limit 38 km)
+       Company:      Baltic Petroleum
+       Municipality: Alytaus r. sav.
+       Address:      Likiškėlių k.
+       Pin:          55.799657, 24.686965
+       Muni centroid:54.270000, 24.130000
+       Maps link:    https://www.google.com/maps?q=55.799657,24.686965
+       54.387869930193546, 23.9961368115932
+
+[009]  128.5 km over limit  (dist 150.5 km, limit 22 km)
+       Company:      Boost Petrol
+       Municipality: Elektrėnų sav.
+       Address:      Dubijos g. 36
+       Pin:          55.910190, 23.352812
+       Muni centroid:54.780000, 24.662000
+       Maps link:    https://www.google.com/maps?q=55.9101897,23.3528125
+       54.786630604868535, 24.714077520677133
+
+[010]  117.8 km over limit  (dist 155.8 km, limit 38 km)
+       Company:      Baltic Petroleum
+       Municipality: Radviliškio r. sav.
+       Address:      Užuovėjos k.
+       Pin:          54.809765, 25.291711
+       Muni centroid:55.798000, 23.547000
+       Maps link:    https://www.google.com/maps?q=54.8097652,25.291711
+       55.76392693422567, 23.74273026095568
+
+[011]  116.4 km over limit  (dist 151.4 km, limit 35 km)
+       Company:      Viada
+       Municipality: Prienų r. sav.
+       Address:      Grigaliūnų k. 11
+       Pin:          55.152965, 26.133573
+       Muni centroid:54.630000, 23.948000
+       Maps link:    https://www.google.com/maps?q=55.152965,26.1335733
+       54.71421761688625, 23.64979234044376
+
+[012]  113.9 km over limit  (dist 153.9 km, limit 40 km)
+       Company:      Baltic Petroleum
+       Municipality: Zarasų r. sav.
+       Address:      Sarakiškių k., Vytauto g. 61
+       Pin:          55.364072, 23.889829
+       Muni centroid:55.732000, 26.248000
+       Maps link:    https://www.google.com/maps?q=55.3640715,23.889829
+       55.73732047613279, 26.27263601165436
+
+[013]  109.0 km over limit  (dist 144.0 km, limit 35 km)
+       Company:      Apsaga
+       Municipality: Joniškio r. sav.
+       Address:      Radikių k.
+       Pin:          54.960324, 23.960550
+       Muni centroid:56.240000, 23.610000
+       Maps link:    https://www.google.com/maps?q=54.9603239,23.9605503
+       56.207476114609, 23.58062885585498
+
+[014]  108.8 km over limit  (dist 146.8 km, limit 38 km)
+       Company:      Baltic Petroleum
+       Municipality: Biržų r. sav.
+       Address:      Valantiškio k.
+       Pin:          55.065813, 23.552370
+       Muni centroid:56.200000, 24.750000
+       Maps link:    https://www.google.com/maps?q=55.0658129,23.5523697
+       56.197536624311574, 24.709564296332225
+
+[015]   97.9 km over limit  (dist 139.9 km, limit 42 km)
+       Company:      Alauša
+       Municipality: Rokiškio r. sav.
+       Address:      Laisvės pr. 125A, Vilnius
+       Pin:          54.727634, 25.236304
+       Muni centroid:55.970000, 25.583000
+       Maps link:    https://www.google.com/maps?q=54.7276342,25.2363041
+       54.727634, 25.236304
+
+[016]   92.5 km over limit  (dist 132.5 km, limit 40 km)
+       Company:      Orlen
+       Municipality: Raseinių r. sav.
+       Address:      Pikelių k. 8
+       Pin:          56.418397, 22.109181
+       Muni centroid:55.370000, 23.118000
+       Maps link:    https://www.google.com/maps?q=56.4183967,22.109181
+       55.46157573226657, 22.69576794047752
+
+[017]   75.9 km over limit  (dist 120.9 km, limit 45 km)
+       Company:      Boost Petrol
+       Municipality: Šiaulių r. sav.
+       Address:      Ginkūnų k., Aušros g. 26
+       Pin:          54.903684, 23.923689
+       Muni centroid:55.934000, 23.314000
+       Maps link:    https://www.google.com/maps?q=54.9036844,23.9236894
+       55.956402885792116, 23.342774869336033
+
+[018]   75.5 km over limit  (dist 113.5 km, limit 38 km)
+       Company:      Narjanta
+       Municipality: Kupiškio r. sav.
+       Address:      Dvariškių vs. 2
+       Pin:          54.823692, 25.272075
+       Muni centroid:55.830000, 24.972000
+       Maps link:    https://www.google.com/maps?q=54.8236922,25.2720749
+       55.77341176146028, 24.754275026999274
+
+[019]   67.5 km over limit  (dist 109.5 km, limit 42 km)
+       Company:      Baltic Petroleum
+       Municipality: Jurbarko r. sav.
+       Address:      Klišių k., Pievų g. 2
+       Pin:          55.536012, 21.239087
+       Muni centroid:55.075000, 22.768000
+       Maps link:    https://www.google.com/maps?q=55.5360116,21.2390869
+       55.09864047549883, 22.77265403675954
+
+[020]   64.3 km over limit  (dist 104.3 km, limit 40 km)
+       Company:      Naftrus
+       Municipality: Raseinių r. sav.
+       Address:      Pievų g. 17, Slabados k.
+       Pin:          54.901444, 24.540238
+       Muni centroid:55.370000, 23.118000
+       Maps link:    https://www.google.com/maps?q=54.9014437,24.5402384
+       55.38622324487591, 23.043018825130876
+
+[021]   56.0 km over limit  (dist 88.0 km, limit 32 km)
+       Company:      Melkasta
+       Municipality: Vilkaviškio r. sav.
+       Address:      Gulbiniškių k. 7
+       Pin:          55.025517, 24.245274
+       Muni centroid:54.651000, 23.035000
+       Maps link:    https://www.google.com/maps?q=55.0255167,24.2452742
+       54.712128632606095, 23.208029871130275
+
+[022]   52.0 km over limit  (dist 90.0 km, limit 38 km)
+       Company:      Tomega
+       Municipality: Šalčininkų r. sav.
+       Address:      Tartoko k.
+       Pin:          55.018722, 24.447139
+       Muni centroid:54.302000, 25.097000
+       Maps link:    https://www.google.com/maps?q=55.0187222,24.4471389
+       54.30669946586023, 25.361297935241527
+
+[023]   49.8 km over limit  (dist 89.8 km, limit 40 km)
+       Company:      Emsi
+       Municipality: Kėdainių r. sav.
+       Address:      Juodgirio k.1,
+       Pin:          55.498223, 22.597442
+       Muni centroid:55.283000, 23.968000
+       Maps link:    https://www.google.com/maps?q=55.4982234,22.5974418
+       55.197461348611554, 23.626039582793897
+
+[024]   32.5 km over limit  (dist 72.5 km, limit 40 km)
+       Company:      Boost Petrol
+       Municipality: Molėtų r. sav.
+       Address:      Smėlinkos k.
+       Pin:          55.755047, 24.741374
+       Muni centroid:55.227000, 25.416000
+       Maps link:    https://www.google.com/maps?q=55.7550466,24.7413738
+       55.264367304751474, 25.490029040468624
+
+[025]   32.0 km over limit  (dist 72.0 km, limit 40 km)
+       Company:      Alauša
+       Municipality: Anykščių r. sav.
+       Address:      Bajorų k.
+       Pin:          55.462167, 26.238806
+       Muni centroid:55.527000, 25.102000
+       Maps link:    https://www.google.com/maps?q=55.4621667,26.2388056
+       55.68557232059739, 25.352641391313238
+
+[026]   27.0 km over limit  (dist 59.0 km, limit 32 km)
+       Company:      Orlen
+       Municipality: Marijampolės sav.
+       Address:      Aleksandravo k.
+       Pin:          55.020733, 22.869891
+       Muni centroid:54.569000, 23.354000
+       Maps link:    https://www.google.com/maps?q=55.0207332,22.8698907
+       54.58318370673407, 23.37088305578108
+
+[027]   23.0 km over limit  (dist 63.0 km, limit 40 km)
+       Company:      Emsi
+       Municipality: Kauno r. sav.
+       Address:      Marijampolės g. 58, Mastaičių k.
+       Pin:          55.078611, 22.912306
+       Muni centroid:54.870000, 23.830000
+       Maps link:    https://www.google.com/maps?q=55.0786111,22.9123056
+       54.8096461622104, 23.853755755791376
+
+[028]   20.2 km over limit  (dist 62.2 km, limit 42 km)
+       Company:      Eniris
+       Municipality: Jurbarko r. sav.
+       Address:      Tauragės g. 29, Rimšų k.
+       Pin:          55.183051, 21.807426
+       Muni centroid:55.075000, 22.768000
+       Maps link:    https://www.google.com/maps?q=55.1830513,21.8074261
+       55.26194139458901, 22.691802119985162
+
+[029]   12.9 km over limit  (dist 44.9 km, limit 32 km)
+       Company:      Stateta
+       Municipality: Marijampolės sav.
+       Address:      Kantališkių k.
+       Pin:          54.887949, 23.783796
+       Muni centroid:54.569000, 23.354000
+       Maps link:    https://www.google.com/maps?q=54.8879495,23.7837958
+       54.634456918965675, 23.436407869276024
+
+[030]   12.4 km over limit  (dist 50.4 km, limit 38 km)
+       Company:      Viada
+       Municipality: Ukmergės r. sav.
+       Address:      Šventupės k., Beržų g. 13
+       Pin:          55.016321, 24.088609
+       Muni centroid:55.248000, 24.770000
+       Maps link:    https://www.google.com/maps?q=55.0163209,24.0886087
+       55.32043047338182, 24.87475241348606
+
+[031]    8.7 km over limit  (dist 36.7 km, limit 28 km)
+       Company:      Regusa
+       Municipality: Kazlų Rūdos sav.
+       Address:      Medelyno g. 4A, Jūrės k.
+       Pin:          54.899426, 24.014132
+       Muni centroid:54.764000, 23.492000
+       Maps link:    https://www.google.com/maps?q=54.8994259,24.0141322
+       54.76938010970969, 23.48659364044621
+
+[032]    5.4 km over limit  (dist 45.4 km, limit 40 km)
+       Company:      Viada
+       Municipality: Kauno r. sav.
+       Address:      Ilgakiemio k., Prienų g. 22
+       Pin:          54.907638, 24.537114
+       Muni centroid:54.870000, 23.830000
+       Maps link:    https://www.google.com/maps?q=54.9076376,24.5371141
+       54.773889122454676, 23.889349869282352

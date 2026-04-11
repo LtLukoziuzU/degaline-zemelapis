@@ -353,13 +353,14 @@
 
     .rp-big-pin { cursor: pointer; }
 
-    .dp-find-nearby {
+    .dp-find-nearby, .dp-gmaps {
       display: block; width: 100%; margin-top: 0.5rem;
       padding: 0.3rem 0.5rem;
       background: var(--btn-bg); border: 1.5px solid var(--btn-border); color: var(--btn-color);
       border-radius: 6px; font-size: 0.75rem; font-family: sans-serif; cursor: pointer;
+      text-align: center; text-decoration: none; box-sizing: border-box;
     }
-    .dp-find-nearby:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
+    .dp-find-nearby:hover, .dp-gmaps:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
   </style>
 </head>
 <body>
@@ -673,6 +674,7 @@
             ${row('Dyzelinas', s.diesel)}
             ${row('Dujos', s.lpg)}
           </table>
+          <a class="dp-gmaps" href="https://www.google.com/maps?q=${lat},${lng}" target="_blank" rel="noopener"><svg width="11" height="15" viewBox="0 0 11 15" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 4.125 5.5 9.5 5.5 9.5S11 9.625 11 5.5C11 2.462 8.538 0 5.5 0z" fill="#EA4335"/><circle cx="5.5" cy="5.5" r="2.2" fill="white"/></svg>Atidaryti Google Maps</a>
           <button class="dp-find-nearby" data-lat="${lat}" data-lng="${lng}" data-company="${escHtml(s.company)}">📍 Rasti pigesnes netoliese</button>
         </div>`;
       }).join('');

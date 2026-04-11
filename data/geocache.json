@@ -40,9 +40,9 @@
     "source": "address"
   },
   "Bajorų k.": {
-    "lat": 55.4621667,
-    "lng": 26.2388056,
-    "source": "address"
+    "lat": 55.6855723,
+    "lng": 25.3526414,
+    "source": "manual"
   },
   "Plento g. 2B, Kairiai": {
     "lat": 55.9201684,
@@ -135,9 +135,9 @@
     "source": "address"
   },
   "Vilniaus g.16, Šiauliai": {
-    "lat": 54.9541177,
-    "lng": 25.0647663,
-    "source": "address"
+    "lat": 55.9236739,
+    "lng": 23.350151,
+    "source": "manual"
   },
   "Pramonės g. 3A, Šiauliai": {
     "lat": 55.9178654,
@@ -170,9 +170,9 @@
     "source": "address"
   },
   "Radikių k.": {
-    "lat": 54.9603239,
-    "lng": 23.9605503,
-    "source": "address"
+    "lat": 56.2074761,
+    "lng": 23.5806289,
+    "source": "manual"
   },
   "Alytus, Santaikos g. 33": {
     "lat": 54.3864789,
@@ -185,9 +185,9 @@
     "source": "address"
   },
   "Valantiškio k.": {
-    "lat": 55.0658129,
-    "lng": 23.5523697,
-    "source": "address"
+    "lat": 56.1975366,
+    "lng": 24.7095643,
+    "source": "manual"
   },
   "Druskininkai, Gardino g. 79": {
     "lat": 53.9998992,
@@ -380,9 +380,9 @@
     "source": "address"
   },
   "Užuovėjos k.": {
-    "lat": 54.8097652,
-    "lng": 25.291711,
-    "source": "address"
+    "lat": 55.7639269,
+    "lng": 23.7427303,
+    "source": "manual"
   },
   "Radviliškis, Miško g. 64": {
     "lat": 55.8006377,
@@ -545,9 +545,9 @@
     "source": "address"
   },
   "Likiškėlių k.": {
-    "lat": 55.799657,
-    "lng": 24.686965,
-    "source": "address"
+    "lat": 54.3878699,
+    "lng": 23.9961368,
+    "source": "manual"
   },
   "Šiauliai, Kupiškio g. 4": {
     "lat": 55.9577451,
@@ -570,9 +570,9 @@
     "source": "address"
   },
   "Sarakiškių k., Vytauto g. 61": {
-    "lat": 55.3640715,
-    "lng": 23.889829,
-    "source": "address"
+    "lat": 55.7373205,
+    "lng": 26.272636,
+    "source": "manual"
   },
   "Visalaukio g. 2": {
     "lat": 54.7792861,
@@ -585,9 +585,9 @@
     "source": "address"
   },
   "Klišių k., Pievų g. 2": {
-    "lat": 55.5360116,
-    "lng": 21.2390869,
-    "source": "address"
+    "lat": 55.0986405,
+    "lng": 22.772654,
+    "source": "manual"
   },
   "Noriūnų k., Parko g. 3A": {
     "lat": 55.7964476,
@@ -1395,9 +1395,9 @@
     "source": "manual"
   },
   "Skabeikių k. 4": {
-    "lat": 54.4042472,
-    "lng": 24.4225618,
-    "source": "address"
+    "lat": 56.1600262,
+    "lng": 22.760705,
+    "source": "manual"
   },
   "Kalnuotės 1 k.": {
     "lat": 54.944732669430635,
@@ -1415,9 +1415,9 @@
     "source": "address"
   },
   "Pievų g. 17, Slabados k.": {
-    "lat": 54.9014437,
-    "lng": 24.5402384,
-    "source": "address"
+    "lat": 55.3862232,
+    "lng": 23.0430188,
+    "source": "manual"
   },
   "Topolių g. 1, Degučių k.": {
     "lat": 55.970742,
@@ -1450,14 +1450,14 @@
     "source": "address"
   },
   "S. Nėries g. 35, Vabalninkas": {
-    "lat": 55.912479,
-    "lng": 21.8554021,
-    "source": "address"
+    "lat": 55.975041,
+    "lng": 24.7401813,
+    "source": "manual"
   },
   "Dvariškių vs. 2": {
-    "lat": 54.8236922,
-    "lng": 25.2720749,
-    "source": "address"
+    "lat": 55.7734118,
+    "lng": 24.754275,
+    "source": "manual"
   },
   "Servečės g. 2, Vilnius": {
     "lat": 54.6341739,
@@ -1955,14 +1955,14 @@
     "source": "manual"
   },
   "Pikelių k. 8": {
-    "lat": 56.4183967,
-    "lng": 22.109181,
-    "source": "address"
+    "lat": 55.4615757,
+    "lng": 22.6957679,
+    "source": "manual"
   },
   "Aleksandravo k.": {
-    "lat": 55.0207332,
-    "lng": 22.8698907,
-    "source": "address"
+    "lat": 54.5831837,
+    "lng": 23.3708831,
+    "source": "manual"
   },
   "Žemaitijos g. 42, Mažeikiai": {
     "lat": 56.3020426,
@@ -2025,9 +2025,9 @@
     "source": "address"
   },
   "Tartoko k.": {
-    "lat": 55.0187222,
-    "lng": 24.4471389,
-    "source": "address"
+    "lat": 54.3066995,
+    "lng": 25.3612979,
+    "source": "manual"
   },
   "Dumblės k.": {
     "lat": 54.160143712059806,
@@ -2075,9 +2075,9 @@
     "source": "address"
   },
   "Liepų g. 4, Žemaitkiemio k.": {
-    "lat": 54.24475,
-    "lng": 23.4738607,
-    "source": "address"
+    "lat": 55.22752,
+    "lng": 21.7019347,
+    "source": "manual"
   },
   "Kvėdarnos g. 2, Vatušių k.": {
     "lat": 55.7184722,
@@ -2260,9 +2260,9 @@
     "source": "address"
   },
   "Ilgakiemio k., Prienų g. 22": {
-    "lat": 54.9076376,
-    "lng": 24.5371141,
-    "source": "address"
+    "lat": 54.7738891,
+    "lng": 23.8893499,
+    "source": "manual"
   },
   "Kampiškių k., Baltijos g. 41": {
     "lat": 54.8425457,
@@ -2475,9 +2475,9 @@
     "source": "address"
   },
   "Grigaliūnų k. 11": {
-    "lat": 55.152965,
-    "lng": 26.1335733,
-    "source": "address"
+    "lat": 54.7142176,
+    "lng": 23.6497923,
+    "source": "manual"
   },
   "Mačiūnų k., Kauno pl. 40": {
     "lat": 54.6589845,
@@ -2615,9 +2615,9 @@
     "source": "address"
   },
   "Šventupės k., Beržų g. 13": {
-    "lat": 55.0163209,
-    "lng": 24.0886087,
-    "source": "address"
+    "lat": 55.3204305,
+    "lng": 24.8747524,
+    "source": "manual"
   },
   "Utena, Metalo g. 8": {
     "lat": 55.4969921,
@@ -2760,9 +2760,9 @@
     "source": "manual"
   },
   "Taikos pr. 48": {
-    "lat": 54.9116335,
-    "lng": 23.9542209,
-    "source": "address"
+    "lat": 55.5905813,
+    "lng": 26.4632742,
+    "source": "manual"
   },
   "Kazlavo km. 4 Kalvarijos sav.": {
     "lat": 54.3288515,
@@ -2820,9 +2820,9 @@
     "source": "address"
   },
   "Liepų g. 4, Škilinpamūšio k.": {
-    "lat": 55.2300819,
-    "lng": 21.685162,
-    "source": "address"
+    "lat": 56.2674059,
+    "lng": 24.3707266,
+    "source": "manual"
   },
   "Pasienio g. 10, Škilinpamūšio k,": {
     "lat": 56.2724649,
@@ -2865,9 +2865,9 @@
     "source": "address"
   },
   "Ginkūnų k., Aušros g. 26": {
-    "lat": 54.9036844,
-    "lng": 23.9236894,
-    "source": "address"
+    "lat": 55.9564029,
+    "lng": 23.3427749,
+    "source": "manual"
   },
   "Kęstučio g. 1B, Kelmė": {
     "lat": 55.6347932,
@@ -2885,14 +2885,14 @@
     "source": "address"
   },
   "Dubijos g. 36": {
-    "lat": 55.9101897,
-    "lng": 23.3528125,
-    "source": "address"
+    "lat": 54.7866306,
+    "lng": 24.7140775,
+    "source": "manual"
   },
   "Smėlinkos k.": {
-    "lat": 55.7550466,
-    "lng": 24.7413738,
-    "source": "address"
+    "lat": 55.2643673,
+    "lng": 25.490029,
+    "source": "manual"
   },
   "Zarasų g. 9, Utena": {
     "lat": 55.5123015,
@@ -2905,9 +2905,9 @@
     "source": "address"
   },
   "Kantališkių k.": {
-    "lat": 54.8879495,
-    "lng": 23.7837958,
-    "source": "address"
+    "lat": 54.6344569,
+    "lng": 23.4364079,
+    "source": "manual"
   },
   "Ukmergės g. 246, Vilnius": {
     "lat": 54.7231463,
@@ -3065,9 +3065,9 @@
     "source": "address"
   },
   "Marijampolės g. 58, Mastaičių k.": {
-    "lat": 55.0786111,
-    "lng": 22.9123056,
-    "source": "address"
+    "lat": 54.8096462,
+    "lng": 23.8537558,
+    "source": "manual"
   },
   "Medininkų k., Pasieniečių g.10": {
     "lat": 54.5496804,
@@ -3135,9 +3135,9 @@
     "source": "manual"
   },
   "Sausių g.2 Sausių k..": {
-    "lat": 55.5987879,
-    "lng": 21.638964,
-    "source": "address"
+    "lat": 54.7078578,
+    "lng": 24.9961486,
+    "source": "manual"
   },
   "Savanorių 225, Vilnius": {
     "lat": 54.641028,
@@ -3455,9 +3455,9 @@
     "source": "address"
   },
   "Medelyno g. 4A, Jūrės k.": {
-    "lat": 54.8994259,
-    "lng": 24.0141322,
-    "source": "address"
+    "lat": 54.7693801,
+    "lng": 23.4865936,
+    "source": "manual"
   },
   "Sodo g. 11, Gavaltuvos k.": {
     "lat": 54.6767015,
@@ -3505,9 +3505,9 @@
     "source": "address"
   },
   "Tauragės g. 29, Rimšų k.": {
-    "lat": 55.1830513,
-    "lng": 21.8074261,
-    "source": "address"
+    "lat": 55.2619414,
+    "lng": 22.6918021,
+    "source": "manual"
   },
   "Jurbarko g. 34, Raseiniai": {
     "lat": 55.3706566,
@@ -3550,9 +3550,9 @@
     "source": "address"
   },
   "Juodgirio k.1,": {
-    "lat": 55.4982234,
-    "lng": 22.5974418,
-    "source": "address"
+    "lat": 55.1974613,
+    "lng": 23.6260396,
+    "source": "manual"
   },
   "Mokyklos g. 26, Maišiagalos mstl.": {
     "lat": 54.873392178170015,
@@ -3590,9 +3590,9 @@
     "source": "address"
   },
   "Gulbiniškių k. 7": {
-    "lat": 55.0255167,
-    "lng": 24.2452742,
-    "source": "address"
+    "lat": 54.7121286,
+    "lng": 23.2080299,
+    "source": "manual"
   },
   "Seirijų mstl., Algirdo g. 35A": {
     "lat": 54.2395118,
