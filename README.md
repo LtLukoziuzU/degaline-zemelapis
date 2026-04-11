@@ -13,7 +13,7 @@ Taip, nors ir nelabai norom, bet šis projektas yra pilnai sukonstruotas su Clau
 
 Idėja paprasta - padaryti interaktyvų žemėlapį, kuriame greitai galėtų pažiūrėti bet kokios vietovės (pagal vartotojo lokaciją, pagal tašką arba pagal pasirinktą degalinę) pigiausias vertes. Žemėlapis pats reguliariai (LEA darbo valandomis) ištraukia naujus duomenis ir juos pakeičia, jei randama naujų adresų, juos cache'ina, kad vieši API būtų neapkrauti. 
 
-**Pastaba:** Kadangi degalinių yra 725 šio dokumento rašymo metu, ne visos yra ranka patikrintos, ar pataiko į koordinates - photon.komoot.io kartais kiek klysta. Pagrindinės klaidos ištaisytos (23 adresus ne Lietuvoje rado - kaltinkit degalinių tinklus, kaip kreivai jie surašo adresus, ne pagal taip kaip visi žemėlapiai tikisi), bet dėl šventos ramybės reiktų visus pereiti. Pasidarytas įrankis padaryti tai po truputį, netrukdant svetainės kūrimui ir naudojimui.
+**Pastaba:** Kadangi degalinių yra 725 šio dokumento rašymo metu, ne visos yra ranka patikrintos, ar pataiko į koordinates - photon.komoot.io kartais kiek klysta. Pagrindinės klaidos ištaisytos (13 adresų ne Lietuvoje rado, 10 tiesiog fail'ino, 33 rado, bet visiškai ne toj savivaldybėj, 1 Alauša supjovė grybą ir LEAi teigia, kad Vilnius yra Rokiškio savivaldybėj - dėl beveik visų kaltinkit degalinių tinklus, kaip kreivai jie surašo adresus pas save/LEA'i, ne pagal taip kaip visi žemėlapiai tikisi), bet dėl šventos ramybės reiktų visus pereiti. Pasidarytas įrankis padaryti tai po truputį, netrukdant svetainės kūrimui ir naudojimui.
 
 ## Kaip naudotis
 Trys būdai, kaip galima ieškoti atstume aplink:
