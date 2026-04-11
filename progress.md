@@ -170,6 +170,30 @@ A developer-only page for manually verifying station geocoordinates.
 - Cluster radii tightened: zoom ≤10 → 70px, 11–13 → 60px, ≥14 → 40px.
 - Attribution note added to company list spoiler in about dialog: "Įmonių logotipai paimti iš viešai prieinamų duomenų."
 
+### Step 21 — Pin location audit and mass correction
+
+- **`check_pins.py`** — new script that compares each station's coordinates against its declared municipality's centroid (hardcoded table of 60 Lithuanian municipalities with radius thresholds). Outputs `check_pins_report.txt` sorted by worst offender, with Google Maps links per entry.
+- **32 suspicious pins flagged**, manually reviewed by opening each Maps link. 31 confirmed wrong (geocoder resolved ambiguous bare addresses to the wrong city); 1 (Alauša / Laisvės pr. 125A, Vilnius) confirmed correct pin with only a wrong municipality field in LEA source data.
+- **`data/stations.json` and `data/geocache.json`** updated with corrected coordinates for all 31 entries; geocache entries marked `source: "manual"`.
+- **`data/verifications.json`** extended to 58 entries: the 3 pre-existing manual verifications + 32 check_pins entries + 23 previously manually geocoded addresses from `manual-geocache-addresses.md`.
+
+### Step 22 — "Open in Maps" button in popups
+
+- **Both `index.html` and `dev.html`** — new button in each station popup: red filled button with white pin SVG icon.
+  - `index.html`: appears above "Rasti pigesnes netoliese"; visually distinct (solid red vs. outlined blue) so external-link intent is clear without hovering.
+  - `dev.html`: appears below Teisinga/Neteisinga buttons; muted style appropriate for dev tooling.
+- **Platform-aware URL** (`mapsUrl()` helper, detected once at load):
+  - Android → `geo:0,0?q=lat,lng` (opens system maps chooser, drops a pin)
+  - iOS → `https://maps.apple.com/?q=lat,lng` (opens Apple Maps app with pin)
+  - Desktop → `https://www.google.com/maps?q=lat,lng` (Google Maps web)
+- **Label** — "Atidaryti žemėlapyje" on Android/iOS; "Atidaryti Google Maps" on desktop.
+- **`color: #ffffff !important`** required to override browser UA stylesheet link color on the `<a>` element.
+
+### Logo fixes (post Step 20)
+
+- **Trevena** — original is a 150×34 px wide banner (4.5:1 ratio); rebuilt circle at 82% width fill on yellow background.
+- **Boostpetrol** — mark was only 39% fill; cropped from original JPEG, scaled to 72% fill on navy `(0,55,117)` background.
+
 ---
 
 ## Pending
@@ -177,6 +201,8 @@ A developer-only page for manually verifying station geocoordinates.
 ---
 
 ## Known Issues / Decisions
+
+- **"Atidaryti žemėlapyje" opens coords, not the business listing:** Current URLs drop a pin at raw coordinates. Ideally the maps app would open the actual gas station business card (name, reviews, hours). Options: include company name in the query string (`?q=company+name+at+lat,lng`), or look up a place ID — but place ID requires a Maps API key and reliability varies. Needs investigation.
 
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
