@@ -1117,6 +1117,9 @@
     });
 
     // ── Share button ──────────────────────────────────────────────────────────
+    const FUEL_TO_ALIAS   = { p95: '95', diesel: 'dyz', lpg: 'snd' };
+    const FUEL_FROM_ALIAS = { '95': 'p95', 'dyz': 'diesel', 'snd': 'lpg', 'lpg': 'lpg' };
+
     document.getElementById('rp-share').addEventListener('click', () => {
       if (!centerLatLng) return;
       const url = new URL(location.href);
@@ -1125,6 +1128,7 @@
       url.searchParams.set('lng', centerLatLng.lng.toFixed(5));
       url.searchParams.set('r', radiusKm);
       url.searchParams.set('z', map.getZoom());
+      url.searchParams.set('f', FUEL_TO_ALIAS[fuelType] || fuelType);
       navigator.clipboard.writeText(url.toString()).then(() => {
         showLocateToast('Nuoroda nukopijuota!');
       }).catch(() => {
@@ -1138,8 +1142,14 @@
     const urlLng = parseFloat(urlP.get('lng'));
     const urlR   = parseInt(urlP.get('r'));
     const urlZ   = parseInt(urlP.get('z'));
+    const urlF   = FUEL_FROM_ALIAS[urlP.get('f')];
 
     if (isFinite(urlLat) && isFinite(urlLng)) {
+      if (urlF) {
+        fuelType = urlF;
+        localStorage.setItem('degaline-radius-fuel', fuelType);
+        document.querySelectorAll('.rp-fuel-btn').forEach(b => b.classList.toggle('active', b.dataset.fuel === fuelType));
+      }
       let snapSource = null, minDist = Infinity;
       for (const s of stations) {
         const d = haversine(urlLat, urlLng, s.lat, s.lng);
