@@ -403,6 +403,12 @@
     <div class="rp-header">
       <span id="rp-chevron">▾</span>
       <span class="rp-title">Pigiausi netoliese</span>
+      <button id="rp-share" class="rp-icon-btn" title="Kopijuoti nuorodą">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
       <button id="rp-reposition" class="rp-icon-btn" title="Pakeisti vietą">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
@@ -945,7 +951,7 @@
     }
 
     // ── Open / close ──────────────────────────────────────────────────────────
-    function setCenter(latlng, source) {
+    function setCenter(latlng, source, radiusOverride) {
       centerLatLng = latlng;
       fromStation  = source || null;
       const _tag = document.getElementById('rp-source-tag');
@@ -953,15 +959,25 @@
         ? 'Pagal pasirinktą degalinę'
         : 'Pagal pasirinktą tašką';
       _tag.classList.add('visible');
-      radiusKm = 5;
-      slider.value = 5;
-      kmLabel.textContent = '5 km';
+      radiusKm = (radiusOverride != null && isFinite(radiusOverride))
+        ? Math.min(50, Math.max(1, radiusOverride)) : 5;
+      slider.value = radiusKm;
+      kmLabel.textContent = radiusKm + ' km';
       setCollapsed(false);
       drawCenterMarker(latlng);
       drawRadiusCircle(latlng);
       panel.classList.add('open');
       updateResults();
       syncLocateBtn();
+      saveSearch();
+    }
+
+    function saveSearch() {
+      if (!centerLatLng) return;
+      localStorage.setItem('degaline-search', JSON.stringify({
+        lat: centerLatLng.lat, lng: centerLatLng.lng,
+        radiusKm, source: fromStation,
+      }));
     }
 
     function closePanel() {
@@ -973,6 +989,7 @@
       clearResultMarkers();
       centerLatLng = null;
       fromStation  = null;
+      localStorage.removeItem('degaline-search');
       syncLocateBtn();
     }
 
@@ -1073,6 +1090,7 @@
       kmLabel.textContent = radiusKm + ' km';
       if (centerLatLng) drawRadiusCircle(centerLatLng);
       updateResults();
+      saveSearch();
     });
 
     circleToggle.addEventListener('change', () => {
@@ -1097,6 +1115,50 @@
       exitPickMode();
       setCenter(L.latLng(lat, lng), { company });
     });
+
+    // ── Share button ──────────────────────────────────────────────────────────
+    document.getElementById('rp-share').addEventListener('click', () => {
+      if (!centerLatLng) return;
+      const url = new URL(location.href);
+      url.search = '';
+      url.searchParams.set('lat', centerLatLng.lat.toFixed(5));
+      url.searchParams.set('lng', centerLatLng.lng.toFixed(5));
+      url.searchParams.set('r', radiusKm);
+      url.searchParams.set('z', map.getZoom());
+      navigator.clipboard.writeText(url.toString()).then(() => {
+        showLocateToast('Nuoroda nukopijuota!');
+      }).catch(() => {
+        showLocateToast('Nepavyko nukopijuoti nuorodos.');
+      });
+    });
+
+    // ── URL params / saved search restore ────────────────────────────────────
+    const urlP   = new URLSearchParams(location.search);
+    const urlLat = parseFloat(urlP.get('lat'));
+    const urlLng = parseFloat(urlP.get('lng'));
+    const urlR   = parseInt(urlP.get('r'));
+    const urlZ   = parseInt(urlP.get('z'));
+
+    if (isFinite(urlLat) && isFinite(urlLng)) {
+      let snapSource = null, minDist = Infinity;
+      for (const s of stations) {
+        const d = haversine(urlLat, urlLng, s.lat, s.lng);
+        if (d < minDist) { minDist = d; snapSource = s; }
+      }
+      const source = minDist < 0.03 ? { company: snapSource.company } : null;
+      setCenter(L.latLng(urlLat, urlLng), source, isFinite(urlR) ? urlR : 5);
+      map.setView(L.latLng(urlLat, urlLng), isFinite(urlZ) ? urlZ : map.getZoom());
+      history.replaceState(null, '', location.pathname);
+    } else {
+      const saved = (() => {
+        try {
+          const s = JSON.parse(localStorage.getItem('degaline-search'));
+          if (s && isFinite(s.lat) && isFinite(s.lng) && isFinite(s.radiusKm)) return s;
+        } catch (_) {}
+        return null;
+      })();
+      if (saved) setCenter(L.latLng(saved.lat, saved.lng), saved.source || null, saved.radiusKm);
+    }
 
     // Return theme-change hook so applyTheme can refresh accent colour on overlays
     return function onThemeChange() {
