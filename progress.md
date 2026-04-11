@@ -141,9 +141,36 @@ A developer-only page for manually verifying station geocoordinates.
 - **Geocoding accuracy note** added to the about dialog — explains that coordinates are Photon-generated and may occasionally be imprecise; notes the verification tool exists to address this over time.
 - **Company list collapsed by default** — the list of gas station networks in the about dialog is now hidden under a `<details>`/`<summary>` spoiler block to reduce visual noise on open.
 
+### Step 18 — Search persistence, share link, and related fixes
+
+- **Last search persisted in localStorage** (`degaline-search`: lat, lng, radiusKm, source) — restored automatically on next visit with the same radius and source context. Cleared when user explicitly closes the panel with ✕, so only "left-open" searches are restored.
+- **Share link button** (chain icon, `#rp-share`) added to panel header — copies a URL with `?lat=…&lng=…&r=…&z=…&f=…` to clipboard via `navigator.clipboard`; shows "Nuoroda nukopijuota!" toast on success (reuses `#locate-toast`).
+  - Fuel type encoded as short aliases: `95` / `dyz` / `snd` (receiving end also accepts `lpg` → LPG).
+  - On open: URL params take priority over localStorage saved search; lat/lng snapped to nearest station within 30 m → station-based search with correct company-first medals; params stripped from address bar via `history.replaceState` after apply.
+  - Mobile centering fix applied — `requestAnimationFrame` defers `map.setView` with panel-offset adjustment to after the browser's first layout pass (panel height is 0 during synchronous init).
+- **Panel button spacing fixed on mobile** — `margin-right` moved from `#rp-reposition` to `margin-left` on `#rp-share`; all three icon buttons now have uniform gaps.
+- **Geocache collision investigated** — `Gegužių g. 28, Šiauliai` (Neste) and `Gegužių g. 28` (Plovimo sistemos) share coordinates; confirmed intentional (two separate businesses at the same address). No action taken.
+
+### Step 19 — Company logo processing for custom map pins
+
+- Sourced logo images for all companies into `originallogo/` (gitignored). Photo-based logos (real-world station photos) scrapped — those companies fall back to default pin.
+- `process_logos.py` — resizes and crops each logo to a 256×256 circle PNG with transparent exterior; no color changes.
+- `make_circleextend.py` — detects each logo's background color and fills the full circle with it, removing artifact black corners left by the putalpha approach. Auto-detection worked for ~24 of 34 logos; 10 required manual fixing (black text removal issues, color quantization mismatches, transparent-bg logos).
+- Final output in `goodlogo/` — one `{company}.png` per company, ready for use as map pins.
+- Full strategy, decisions, and manual fix log documented in [logo-processing.md](logo-processing.md).
+
 ---
 
 ## Pending
+
+### Step 20 — Replace map pins with circular company logos
+
+Plan documented in [plan-map-pin-logos.md](plan-map-pin-logos.md). Key decisions already made:
+- `goodlogo/` contains 34 circular PNGs ready to use
+- Circle K franchisees (any name matching `/circle\s*k/i`) all use `circlek.png`
+- Plovimo sistemos shares coordinates with Neste — use Neste logo for the pin
+- Companies without logos fall back to current colored SVG teardrop pin
+- Normal pin size: 40×40 px, center-anchored; radius result pins: 70×70 px
 
 ---
 

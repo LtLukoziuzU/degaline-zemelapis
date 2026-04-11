@@ -37,6 +37,7 @@ A publicly hosted web app displaying Lithuanian fuel prices on an interactive ma
 - [dev-environment.md](dev-environment.md) — Confirmed tools installed on developer's machine
 - [progress.md](progress.md) — Current task tracking and order of work
 - [error-handling-practices.md](error-handling-practices.md) — Practices on how specific errors should be handled
+- [logo-processing.md](logo-processing.md) — Strategy, scripts, and manual fix log for company logo → circular map pin pipeline
 
 ## UI/UX Requirements
 
@@ -64,3 +65,4 @@ See [dev-environment.md](dev-environment.md) for the confirmed list of tools alr
 - **Geocache key format:** Keys are address strings stripped of surrounding whitespace. Do not change this — pipeline.py strips addresses from the xlsx before cache lookup.
 - **Geocache write timing:** `pipeline.py` flushes to disk every 20 newly geocoded entries so progress is preserved if the process is interrupted.
 - **stations.json format:** `{ "date": "YYYY-MM-DD", "stations": [...] }`. Each station has `company`, `municipality`, `address`, `lat`, `lng`, `p95`, `diesel`, `lpg`. Prices are floats or `null`.
+- **Custom map pin logos:** `goodlogo/` (committed) contains 256×256 circular PNGs — one per company — for use as map pins. `originallogo/` (gitignored) holds unmodified source images. Scripts: `process_logos.py` (circle crop), `make_circleextend.py` (background fill). See [logo-processing.md](logo-processing.md) for full details.
