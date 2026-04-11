@@ -615,12 +615,12 @@
   // pinH: rendered height in px (width = pinH * 2/3, matching the 24×36 viewBox ratio).
   // Logo companies: white disk (r=8) behind the logo gives a consistent backdrop so
   // light/white logo content is always visible regardless of teardrop color.
-  function getMarkerIcon(company, pinH = 54) {
+  function getMarkerIcon(company, pinH = 72) {
     const key = `${company}@${pinH}`;
     if (_iconCache[key]) return _iconCache[key];
     const logo  = getCompanyLogo(company);
     const color = getCompanyColor(company);
-    const pinW  = Math.round(pinH * 2 / 3);
+    const pinW  = Math.round(pinH * 3 / 4); // 3:4 ratio = fatter head, shorter tail
     const inner = logo
       ? `<circle cx="12" cy="12" r="8" fill="white"/><image href="goodlogo/${logo}.png" x="3" y="3" width="18" height="18"/>`
       : `<circle cx="12" cy="12" r="5" fill="white" fill-opacity="0.35"/>`;
@@ -912,7 +912,7 @@
         const key  = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
         const orig = markerByKey[key];
         const m = L.marker([r.lat, r.lng], {
-          icon: getMarkerIcon(r.company, 81),
+          icon: getMarkerIcon(r.company, 96),
           zIndexOffset: 1500,
         }).addTo(map);
         if (orig) {
