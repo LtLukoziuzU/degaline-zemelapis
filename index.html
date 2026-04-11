@@ -650,7 +650,7 @@
     }
 
     const cluster = L.markerClusterGroup({
-      maxClusterRadius: zoom => zoom <= 9 ? 50 : zoom <= 12 ? 35 : 20,
+      maxClusterRadius: zoom => zoom <= 10 ? 35 : zoom <= 13 ? 25 : 15,
     });
 
     const searchIndex = [];
@@ -912,7 +912,7 @@
         const key  = `${r.lat.toFixed(5)},${r.lng.toFixed(5)}`;
         const orig = markerByKey[key];
         const m = L.marker([r.lat, r.lng], {
-          icon: getMarkerIcon(r.company, 96),
+          icon: getMarkerIcon(r.company, 126),
           zIndexOffset: 1500,
         }).addTo(map);
         if (orig) {
