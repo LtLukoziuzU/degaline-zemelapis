@@ -356,12 +356,19 @@
     .dp-find-nearby, .dp-gmaps {
       display: block; width: 100%; margin-top: 0.5rem;
       padding: 0.3rem 0.5rem;
-      background: var(--btn-bg); border: 1.5px solid var(--btn-border); color: var(--btn-color);
       border-radius: 6px; font-size: 0.75rem; font-family: sans-serif; cursor: pointer;
       text-align: center; text-decoration: none; box-sizing: border-box;
+      border: 1.5px solid; background: transparent;
     }
-    .dp-find-nearby:hover, .dp-gmaps:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
-    html.dark .dp-find-nearby, html.dark .dp-gmaps { color: #ffffff; }
+    .dp-find-nearby {
+      border-color: var(--btn-border); color: var(--btn-color);
+      background: var(--btn-bg);
+    }
+    .dp-find-nearby:hover { background: var(--btn-hover-bg); color: var(--btn-hover-fg); }
+    html.dark .dp-find-nearby { color: #ffffff; }
+    .dp-gmaps { border-color: #EA4335; color: #EA4335; }
+    .dp-gmaps:hover { background: #EA4335; color: #ffffff; }
+    html.dark .dp-gmaps { color: #ffffff; }
   </style>
 </head>
 <body>
@@ -645,6 +652,15 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  const _ua = navigator.userAgent;
+  const _isIOS     = /iP(hone|ad|od)/.test(_ua);
+  const _isAndroid = /Android/.test(_ua);
+  function mapsUrl(lat, lng) {
+    if (_isAndroid) return `geo:${lat},${lng}`;
+    if (_isIOS)     return `https://maps.apple.com/?q=${lat},${lng}`;
+    return `https://www.google.com/maps?q=${lat},${lng}`;
+  }
+
   // ─── Marker placement ─────────────────────────────────────────────────────
   function placeMarkers(stations) {
     const groups = {};
@@ -675,7 +691,7 @@
             ${row('Dyzelinas', s.diesel)}
             ${row('Dujos', s.lpg)}
           </table>
-          <a class="dp-gmaps" href="https://www.google.com/maps?q=${lat},${lng}" target="_blank" rel="noopener"><svg width="11" height="15" viewBox="0 0 11 15" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 4.125 5.5 9.5 5.5 9.5S11 9.625 11 5.5C11 2.462 8.538 0 5.5 0z" fill="#EA4335"/><circle cx="5.5" cy="5.5" r="2.2" fill="white"/></svg>Atidaryti Google Maps</a>
+          <a class="dp-gmaps" href="${mapsUrl(lat, lng)}" target="_blank" rel="noopener"><svg width="11" height="15" viewBox="0 0 11 15" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 4.125 5.5 9.5 5.5 9.5S11 9.625 11 5.5C11 2.462 8.538 0 5.5 0z" fill="#EA4335"/><circle cx="5.5" cy="5.5" r="2.2" fill="white"/></svg>Atidaryti Google Maps</a>
           <button class="dp-find-nearby" data-lat="${lat}" data-lng="${lng}" data-company="${escHtml(s.company)}">📍 Rasti pigesnes netoliese</button>
         </div>`;
       }).join('');
