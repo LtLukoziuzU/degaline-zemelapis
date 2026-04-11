@@ -208,3 +208,5 @@ A developer-only page for manually verifying station geocoordinates.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.
 - **Node.js 20 deprecation warning** in the deploy job — caused by `actions/upload-pages-artifact@v4` using `actions/upload-artifact@v7` internally. Cannot be fixed from our side; upstream will update before September 2026.
+
+- **Company marker colors don't match pin background for non-white logos:** Some logos (e.g. Boostpetrol, Trevena) use a custom background color in the circular PNG, but the `COMPANY_COLORS` map in `index.html` may not match. Requires manual review per company — needs guided fixing.
