@@ -150,9 +150,37 @@
     .dp-prices td:last-child { text-align: right; padding-left: 1.5rem; color: var(--popup-price); }
     .dp-na { color: var(--text-subtle) !important; }
 
+    .toolbar-second-row {
+      border-top: 1px solid var(--border);
+    }
     .toolbar-search {
       padding: 0.35rem 0.75rem 0.5rem;
-      border-top: 1px solid var(--border);
+    }
+    #fuel-toggle {
+      display: flex;
+      gap: 0.4rem;
+      padding: 0 0.75rem 0.45rem;
+    }
+    .fuel-btn {
+      flex: 1;
+      padding: 0.25rem 0;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-family: sans-serif;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+    }
+    .fuel-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .fuel-btn:not(.active):hover { border-color: var(--accent); color: var(--text); }
+    @media (min-width: 600px) {
+      .toolbar-second-row { display: flex; align-items: center; padding-right: 0.75rem; }
+      .toolbar-search { flex: 1; padding-right: 0; }
+      #fuel-toggle { padding: 0 0 0 0.5rem; flex-shrink: 0; }
+      .fuel-btn { flex: 0 0 auto; padding: 0.22rem 0.75rem; }
     }
     .search-wrap { position: relative; display: flex; align-items: center; }
     #search-input {
@@ -321,15 +349,6 @@
     }
     .rp-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
     .rp-label { color: var(--text-muted); white-space: nowrap; }
-    .rp-fuel-btns { display: flex; gap: 0.3rem; }
-    .rp-fuel-btn {
-      padding: 0.2rem 0.6rem; border: 1.5px solid var(--border);
-      border-radius: 12px; background: none; color: var(--text-muted);
-      font-size: 0.78rem; cursor: pointer; font-family: sans-serif;
-      transition: background 0.12s, color 0.12s, border-color 0.12s;
-    }
-    .rp-fuel-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .rp-fuel-btn:not(.active):hover { border-color: var(--accent); color: var(--text); }
 
     .rp-slider-wrap { display: flex; align-items: center; gap: 0.5rem; flex: 1; }
     #rp-slider { flex: 1; accent-color: var(--accent); cursor: pointer; }
@@ -408,10 +427,17 @@
       <button id="theme-btn" class="toolbar-btn" title="Perjungti temą">🌙</button>
       <button id="info-btn" class="toolbar-btn" title="Apie">ℹ</button>
     </div>
-    <div class="toolbar-search">
-      <div class="search-wrap">
-        <input id="search-input" type="search" placeholder="Ieškoti degalinės..." autocomplete="off" autocorrect="off" spellcheck="false">
-        <button class="search-clear" id="search-clear" aria-label="Išvalyti">✕</button>
+    <div class="toolbar-second-row">
+      <div class="toolbar-search">
+        <div class="search-wrap">
+          <input id="search-input" type="search" placeholder="Ieškoti degalinės..." autocomplete="off" autocorrect="off" spellcheck="false">
+          <button class="search-clear" id="search-clear" aria-label="Išvalyti">✕</button>
+        </div>
+      </div>
+      <div id="fuel-toggle">
+        <button class="fuel-btn" data-fuel="p95">95</button>
+        <button class="fuel-btn" data-fuel="diesel">Dyzelinas</button>
+        <button class="fuel-btn" data-fuel="lpg">Dujos</button>
       </div>
     </div>
   </div>
@@ -436,26 +462,10 @@
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
         </svg>
       </button>
-      <button id="rp-reposition" class="rp-icon-btn" title="Pakeisti vietą">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-          <circle cx="12" cy="9" r="2.5"/>
-          <path d="M19 9a7 7 0 0 0-14 0" opacity="0.45"/>
-          <path d="M22 9a10 10 0 0 0-20 0" opacity="0.25"/>
-        </svg>
-      </button>
       <button id="rp-close" class="rp-icon-btn" title="Uždaryti">✕</button>
     </div>
     <div id="rp-source-tag"></div>
     <div class="rp-controls">
-      <div class="rp-row">
-        <span class="rp-label">Kuras:</span>
-        <div class="rp-fuel-btns">
-          <button class="rp-fuel-btn" data-fuel="p95">95</button>
-          <button class="rp-fuel-btn" data-fuel="diesel">Dyzelinas</button>
-          <button class="rp-fuel-btn" data-fuel="lpg">Dujos</button>
-        </div>
-      </div>
       <div class="rp-row">
         <span class="rp-label">Spindulys:</span>
         <div class="rp-slider-wrap">
@@ -545,7 +555,7 @@
     maxBounds: [[50.5, 16.5], [60.0, 31.0]],
     maxBoundsViscosity: 1.0,
   }).setView(
-    savedView ? [savedView.lat, savedView.lng] : [55.913, 23.913],
+    savedView ? [savedView.lat, savedView.lng] : [55.2, 23.9],
     savedView ? savedView.zoom : 7
   );
 
@@ -707,6 +717,22 @@
       marker.setTooltipContent(priceTooltipContent(grp));
     }
   }
+
+  function setActiveFuel(type) {
+    activeFuel = type;
+    localStorage.setItem('degaline-radius-fuel', type);
+    document.querySelectorAll('.fuel-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.fuel === type)
+    );
+    updatePriceTooltips();
+    document.dispatchEvent(new CustomEvent('fuelchange', { detail: type }));
+  }
+
+  // Initialise all fuel buttons (toolbar + panel) and wire toolbar clicks
+  setActiveFuel(activeFuel);
+  document.querySelectorAll('.fuel-btn').forEach(btn =>
+    btn.addEventListener('click', () => setActiveFuel(btn.dataset.fuel))
+  );
 
   // ─── Marker placement ─────────────────────────────────────────────────────
   function placeMarkers(stations) {
@@ -879,9 +905,6 @@
     // Initialise controls from persisted state
     slider.value = radiusKm;
     kmLabel.textContent = radiusKm + ' km';
-    document.querySelectorAll('.rp-fuel-btn').forEach(b =>
-      b.classList.toggle('active', b.dataset.fuel === fuelType)
-    );
 
     // ── Helpers ──────────────────────────────────────────────────────────────
     function haversine(lat1, lng1, lat2, lng2) {
@@ -1204,7 +1227,6 @@
       }
     });
 
-    document.getElementById('rp-reposition').addEventListener('click', enterPickMode);
     document.getElementById('rp-close').addEventListener('click', closePanel);
 
     document.addEventListener('keydown', e => {
@@ -1213,15 +1235,9 @@
       else if (panel.classList.contains('open')) closePanel();
     });
 
-    document.querySelectorAll('.rp-fuel-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        fuelType = btn.dataset.fuel;
-        activeFuel = fuelType;
-        localStorage.setItem('degaline-radius-fuel', fuelType);
-        document.querySelectorAll('.rp-fuel-btn').forEach(b => b.classList.toggle('active', b === btn));
-        updatePriceTooltips();
-        updateResults();
-      });
+    document.addEventListener('fuelchange', e => {
+      fuelType = e.detail;
+      updateResults();
     });
 
     slider.addEventListener('input', () => {
@@ -1286,10 +1302,7 @@
     if (isFinite(urlLat) && isFinite(urlLng)) {
       if (urlF) {
         fuelType = urlF;
-        activeFuel = fuelType;
-        localStorage.setItem('degaline-radius-fuel', fuelType);
-        document.querySelectorAll('.rp-fuel-btn').forEach(b => b.classList.toggle('active', b.dataset.fuel === fuelType));
-        updatePriceTooltips();
+        setActiveFuel(fuelType);
       }
       let snapSource = null, minDist = Infinity;
       for (const s of stations) {

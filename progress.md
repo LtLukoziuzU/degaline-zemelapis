@@ -211,6 +211,13 @@ A developer-only page for manually verifying station geocoordinates.
 - **Dark mode crosshair marker** — white halo strokes drawn behind the accent-colored lines so the center marker is visible on dark-filtered tiles.
 - **Dark mode radius circle** — uses `#60a5fa` (vivid blue) instead of the pale `#89b4fa` accent; weight bumped to 2px; fill opacity 0.10 vs 0.08 in light mode.
 
+### Step 25 — Fuel type selector in toolbar + map center fix
+
+- **Map center corrected** — default `setView` lat moved from `55.913` → `55.2`; first-time visitors now see Lithuania centred without Latvia bleeding into the top of the viewport.
+- **Fuel type selector moved to toolbar** — three buttons (`95`, `Dyzelinas`, `Dujos`) added as a persistent row below the search input. On mobile: full-width flex row, each button `flex: 1`. On desktop: buttons are auto-width and share the same row as the search input (`.toolbar-second-row` flex container).
+- **`setActiveFuel(type)`** introduced as the single function for all fuel-type changes — updates `activeFuel`, persists to localStorage, syncs button active states, refreshes price tooltips, dispatches `fuelchange` custom event. All prior duplicate sync code (URL restore, panel buttons) replaced with calls to this function.
+- **Radius panel decluttered** — fuel type row (`Kuras:` label + pills) removed; reposition pin-drop button removed from panel header (toolbar button already serves this purpose). Panel now shows only radius slider and circle-toggle checkbox.
+
 ---
 
 ## Pending
