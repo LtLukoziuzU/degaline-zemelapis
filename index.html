@@ -206,6 +206,14 @@
     /* ─── Radius search ──────────────────────────────────────────────────── */
     body.pick-mode #map { cursor: crosshair; }
 
+    #pick-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 500; /* above Leaflet layers (400), below toolbar/panels (999+) */
+      cursor: crosshair;
+    }
+    body.pick-mode #pick-overlay { display: block; }
+
     #pick-hint {
       display: none;
       position: fixed;
@@ -483,6 +491,7 @@
   </div>
 
   <div id="map"></div>
+  <div id="pick-overlay"></div>
 
   <script src="lib/leaflet/leaflet.min.js"></script>
   <script src="lib/leaflet.markercluster/leaflet.markercluster.js"></script>
@@ -1177,10 +1186,14 @@
     window.addEventListener('resize', syncLocateBtn);
 
     // ── Event wiring ──────────────────────────────────────────────────────────
-    map.on('click', e => {
-      if (!pickMode) return;
+    // Overlay sits above all Leaflet layers so clicks always land here in pick
+    // mode, even when the cursor is over a pin or cluster.
+    document.getElementById('pick-overlay').addEventListener('click', e => {
+      const mapEl = document.getElementById('map');
+      const rect  = mapEl.getBoundingClientRect();
+      const point = L.point(e.clientX - rect.left, e.clientY - rect.top);
       exitPickMode();
-      setCenter(e.latlng, null);
+      setCenter(map.containerPointToLatLng(point), null);
     });
 
     radiusBtn.addEventListener('click', () => {
