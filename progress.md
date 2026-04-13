@@ -226,6 +226,8 @@ A developer-only page for manually verifying station geocoordinates.
 
 ## Known Issues / Decisions
 
+- **Mobile panel height / scrollable results:** Results are currently capped at 3 to avoid the panel growing too tall. To show more (top 5, 10, or all in radius), the panel needs a max-height constraint (~50% viewport) and `#rp-results` made `overflow-y: scroll`, otherwise results would push off-screen on mobile.
+
 - **SharePoint layout — check week of 2026-04-14:** ENA switched from direct URLs to SharePoint links (~2026-04-10). Scraping uses `/:x:/` to target Excel files and takes the **first** match — the "Naujausios degalų kainos" banner above the table, which has explicitly pointed to the newest file since day one. The table below it also duplicates the newest link as its last column. Unknown whether next week the page restructures (new table block, banner disappears, etc.) in a way that breaks `matches[0]` = newest. Verify pipeline downloads the correct date on Monday 2026-04-14.
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.

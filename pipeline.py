@@ -36,6 +36,12 @@ USER_AGENT    = 'degaline-map/1.0 (LtLukoziuz+degaline@gmail.com)'
 GEOCODE_DELAY = 5.0   # seconds between Photon requests
 FLUSH_EVERY   = 20    # flush geocache to disk after this many new entries
 
+# Franchisee/operator names in ENA xlsx that should map to their parent brand.
+# Substring match: if any key appears in the raw company string, use the value.
+COMPANY_ALIASES = {
+    '(Circle K)': 'Circle K',
+}
+
 # ── xlsx download ──────────────────────────────────────────────────────────────
 def _xlsx_urls(d: date):
     """Both dk- and DK- casings for a given date."""
@@ -186,9 +192,14 @@ def parse_xlsx(date_str: str) -> list[dict]:
     for row in rows[header_idx + 1:]:
         if not row or row[3] is None:
             continue
+        raw_company = str(row[1]).strip() if row[1] is not None else None
+        company = next(
+            (alias for substr, alias in COMPANY_ALIASES.items() if raw_company and substr in raw_company),
+            raw_company,
+        )
         stations.append({
             'date':         date_str,
-            'company':      str(row[1]).strip() if row[1] is not None else None,
+            'company':      company,
             'municipality': str(row[2]).strip() if row[2] is not None else None,
             'address':      str(row[3]).strip() if row[3] is not None else None,
             'p95':          price(row[4]),
