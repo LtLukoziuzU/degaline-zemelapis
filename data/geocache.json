@@ -3628,5 +3628,10 @@
     "lat": 56.0147959,
     "lng": 22.9514104,
     "source": "address"
+  },
+  "Putvinskio g. 29, Kelmė": {
+    "lat": 55.6412613,
+    "lng": 22.9268833,
+    "source": "address"
   }
 }
