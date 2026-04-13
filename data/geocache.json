@@ -3633,5 +3633,55 @@
     "lat": 55.6412613,
     "lng": 22.9268833,
     "source": "address"
+  },
+  "Slavinčiškio g.18, Slavinčiškis": {
+    "lat": 55.8324305,
+    "lng": 25.0200782,
+    "source": "address"
+  },
+  "Paukštininkų g.13, Kaišiadorys": {
+    "lat": 54.8621235,
+    "lng": 24.3951041,
+    "source": "address"
+  },
+  "Gėlyno g.25, Marijampolė": {
+    "lat": 54.5840739,
+    "lng": 23.3609621,
+    "source": "address"
+  },
+  "Stoties g.25, Pasvalys": {
+    "lat": 56.0673047,
+    "lng": 24.3859088,
+    "source": "address"
+  },
+  "J.Basanavičiaus g. 103, Kėdainiai": {
+    "lat": 55.2742329,
+    "lng": 23.9449674,
+    "source": "address"
+  },
+  "Šėtos g. 120 , Kėdainiai": {
+    "lat": 55.2972995,
+    "lng": 24.001282,
+    "source": "address"
+  },
+  "Dariaus ir Girėno 23 A, Kėdainiai": {
+    "lat": 55.3127081,
+    "lng": 23.9781131,
+    "source": "address"
+  },
+  "Gedimino g. 50 , Kėdainiai": {
+    "lat": 55.2914813,
+    "lng": 23.96054,
+    "source": "address"
+  },
+  "Vandžiogalos g 29,Saviečių k.": {
+    "lat": 55.1668782,
+    "lng": 23.99486,
+    "source": "address"
+  },
+  "Vytėnų vs 9, Vytėnai": {
+    "lat": 55.8575363,
+    "lng": 25.733614,
+    "source": "address"
   }
 }
