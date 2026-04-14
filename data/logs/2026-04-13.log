@@ -1,7 +1,20 @@
 === 2026-04-13 ===
 
-New stations: none.
-Removed stations: none.
+New stations (3):
+  + Circle K — Pramogų g. 4, Truikių k., Plungės r. sav.
+    Coords: 55.93875, 21.88004
+    95: 1.819 €/L  |  Dyzelinas: 2.199 €/L  |  Dujos: 0.959 €/L
+  + Circle K — Plungės g. 32, Rietavas, Rietavo sav.
+    Coords: 55.73507, 21.92405
+    95: 1.799 €/L  |  Dyzelinas: 2.297 €/L  |  Dujos: 0.969 €/L
+  + Circle K — J.Basanavičiaus g. 103, Kėdainiai, Kėdainių r. sav.
+    Coords: 55.27423, 23.94497
+    95: 1.764 €/L  |  Dyzelinas: 2.199 €/L  |  Dujos: 0.949 €/L
+
+Removed stations (3):
+  - VVARFF (Circle K) — Pramogų g. 4, Truikių k.
+  - Plungės lagūna (Circle K) — Plungės g. 32, Rietavas
+  - S.Savicko įmonė (Circle K) — J.Basanavičiaus g. 103, Kėdainiai
 Price changes: none.
 
-Unchanged: 736 station(s).
+Unchanged: 733 station(s).

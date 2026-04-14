@@ -1,6 +1,6 @@
 {
   "date": "2026-04-13",
-  "fetched_at": "2026-04-13T15:40+00:00",
+  "fetched_at": "2026-04-14T07:58+00:00",
   "stations": [
     {
       "company": "Alauša",
@@ -7053,7 +7053,7 @@
       "lpg": 0.89
     },
     {
-      "company": "VVARFF (Circle K)",
+      "company": "Circle K",
       "municipality": "Plungės r. sav.",
       "address": "Pramogų g. 4, Truikių k.",
       "lat": 55.9387488,
@@ -7113,7 +7113,7 @@
       "lpg": 0.89
     },
     {
-      "company": "Plungės lagūna (Circle K)",
+      "company": "Circle K",
       "municipality": "Rietavo sav.",
       "address": "Plungės g. 32, Rietavas",
       "lat": 55.7350721,
@@ -7293,7 +7293,7 @@
       "lpg": 0.9
     },
     {
-      "company": "S.Savicko įmonė (Circle K)",
+      "company": "Circle K",
       "municipality": "Kėdainių r. sav.",
       "address": "J.Basanavičiaus g. 103, Kėdainiai",
       "lat": 55.2742329,
