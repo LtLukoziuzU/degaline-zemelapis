@@ -1,6 +1,6 @@
 {
   "date": "2026-04-14",
-  "fetched_at": "2026-04-14T09:45+00:00",
+  "fetched_at": "2026-04-14T10:53+00:00",
   "stations": [
     {
       "company": "Alauša",
@@ -5606,8 +5606,8 @@
       "company": "Autograndas",
       "municipality": "Visagino sav.",
       "address": "Taikos pr. 47",
-      "lat": 55.6971651,
-      "lng": 21.1508632,
+      "lat": 55.5905813,
+      "lng": 26.4632742,
       "p95": 1.743,
       "diesel": 2.121,
       "lpg": null
