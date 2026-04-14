@@ -218,6 +218,56 @@ A developer-only page for manually verifying station geocoordinates.
 - **`setActiveFuel(type)`** introduced as the single function for all fuel-type changes — updates `activeFuel`, persists to localStorage, syncs button active states, refreshes price tooltips, dispatches `fuelchange` custom event. All prior duplicate sync code (URL restore, panel buttons) replaced with calls to this function.
 - **Radius panel decluttered** — fuel type row (`Kuras:` label + pills) removed; reposition pin-drop button removed from panel header (toolbar button already serves this purpose). Panel now shows only radius slider and circle-toggle checkbox.
 
+### Step 26 — Deploy pipeline bug fix + Circle K franchisee normalisation
+
+**Bug: GitHub Pages never redeployed after scheduled pipeline runs**
+
+- Root cause: `deploy` job condition checked `needs.update-data.outputs.data_changed == 'true'`, but `update-data` had no `outputs:` block and the commit step never wrote to `$GITHUB_OUTPUT`. Output was always empty → deploy always skipped after scheduled runs. Pages only redeployed on `push` events (where `update-data` is `skipped`, satisfying the other branch of the condition).
+- Fix in `.github/workflows/update.yml`: added `outputs: data_changed` to the `update-data` job; added `id: commit` to the commit step; emit `data_changed=true/false` to `$GITHUB_OUTPUT` based on whether `git diff --staged --quiet` found changes.
+- Symptom: site showed `Naujausi duomenys gauti: 2026-04-10 13:15` even after a pipeline run that sent a change-notification email (12 new stations, 1 removed on 2026-04-13).
+
+**Circle K franchisee normalisation**
+
+- ENA xlsx listed one new station as `S.Savicko įmonė (Circle K)` — a franchisee string. Pipeline emitted it verbatim, so it would appear as a grey small-operator pin instead of using the Circle K colour/logo.
+- Added `COMPANY_ALIASES` dict to `pipeline.py` (constants section). Substring match: any company name containing a key is replaced with the alias value. First entry: `'(Circle K)' → 'Circle K'`. Applied at xlsx parse time so the raw ENA string never reaches `stations.json`.
+
+### Design decisions
+
+- Substring match (not exact) for `COMPANY_ALIASES` — franchisee names follow pattern `Franchisee (Brand)`, so matching the parenthetical is robust to future operators with different names.
+- `next(..., raw_company)` as fallback — one-liner, no branch, leaves unmatched names untouched.
+
+### Known rough edges
+
+- `COMPANY_ALIASES` is a silent transform — the change log/email will show `Circle K` for a station ENA lists under a different name. If the raw ENA name is ever needed for auditing, the mismatch could confuse.
+- AS 24 Lietuva at Europos g. 17, Salaperaugio k. co-locates with Alauša at the exact same address with different diesel prices (2.209 vs 2.159). Intentional — AS 24 is a fleet card network with separate pricing. Two pins will stack at identical coords.
+
+### Full project review (post Step 26)
+
+Reviewed all project files (index.html, dev.html, pipeline.py, server.py, check_pins.py, process_logos.py, make_circleextend.py, update.yml). Three fixes applied:
+
+- **pipeline.py:** removed dead `today` variable (leftover from Step 13 early-exit removal) and removed unused `data_changed=true` output from `compare_and_log()` — only the commit step's `data_changed` is consumed by the workflow; having both was confusing.
+- **dev.html:** replaced `toB64()` spread operator (`String.fromCodePoint(...bytes)`) with chunked approach (`Array.from`) — the spread would hit stack overflow at ~750 verification entries.
+
+dev.html color/center/maps drift noted but not fixed (deliberately low-priority temporary tool). index.html single-file architecture (~1390 lines) noted as approaching the threshold but not worth splitting yet — no build step is a genuine feature.
+
+### Data audit (2026-04-14)
+
+Cross-checked local `stations.json`, GitHub `stations.json`, and a fresh pipeline run against the live ENA SharePoint file. All three sources agree on station count (736) and prices.
+
+**Two email notifications explained:**
+- **2026-04-13** — 3 Circle K franchisee renames (VVARFF, Plungės lagūna, S.Savicko įmonė → Circle K). Same physical stations, same coords, same prices. `COMPANY_ALIASES` from Step 26 handled these correctly.
+- **2026-04-14** — 3 station address/name changes (Baltic Petroleum address reformatted, Nostrada → Nostrada (RV Transport), Autograndas Taikos pr. 48 → 47) + 592 price changes across all companies.
+
+**Autograndas geocache fix:**
+- ENA renamed the address from "Taikos pr. 48" to "Taikos pr. 47" (Visaginas). The old entry had `source: "manual"` coords (55.591, 26.463 — correctly in Visaginas). The new address was auto-geocoded by Photon to 55.697, 21.151 — a "Taikos pr. 47" in Klaipėda, 300 km away on the wrong side of the country.
+- Fix: set "Taikos pr. 47" geocache entry to the same manual Visaginas coords as the old "Taikos pr. 48", with `source: "manual"`. Updated both `geocache.json` and `stations.json`.
+
+**Floating point precision (pre-existing, cosmetic):**
+- ~100 Baltic Petroleum and Orlen prices have float artifacts (e.g. `1.7389999999999999` instead of `1.739`). All display correctly with 3-decimal formatting in the UI. Root cause is xlsx cell value parsing in openpyxl — not new today.
+
+**Summary row parsed as station (pre-existing, harmless):**
+- xlsx footer row "Duomenys: 54 įmonės, 736 degalinės" is parsed as a station row. Geocoding fails (no valid address), so it never reaches `stations.json`. Pipeline logs the failure but continues.
+
 ---
 
 ## Pending
@@ -228,8 +278,13 @@ A developer-only page for manually verifying station geocoordinates.
 
 - **Mobile panel height / scrollable results:** Results are currently capped at 3 to avoid the panel growing too tall. To show more (top 5, 10, or all in radius), the panel needs a max-height constraint (~50% viewport) and `#rp-results` made `overflow-y: scroll`, otherwise results would push off-screen on mobile.
 
-- **SharePoint layout — check week of 2026-04-14:** ENA switched from direct URLs to SharePoint links (~2026-04-10). Scraping uses `/:x:/` to target Excel files and takes the **first** match — the "Naujausios degalų kainos" banner above the table, which has explicitly pointed to the newest file since day one. The table below it also duplicates the newest link as its last column. Unknown whether next week the page restructures (new table block, banner disappears, etc.) in a way that breaks `matches[0]` = newest. Verify pipeline downloads the correct date on Monday 2026-04-14.
+- **SharePoint layout — verified 2026-04-14:** ENA SharePoint scraping confirmed working on Monday 2026-04-14. `/:x:/` regex + `matches[0]` correctly downloaded the current day's file. No page restructuring observed.
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.
 - **Node.js 20 deprecation warning** in the deploy job — caused by `actions/upload-pages-artifact@v4` using `actions/upload-artifact@v7` internally. Cannot be fixed from our side; upstream will update before September 2026.
+- **index.html single-file split plan:** Currently ~1390 lines. No action needed yet. When it grows:
+  - **~2500 lines:** Extract JS into `app.js` (plain `<script src>`, no bundler). Gets proper editor symbol nav and jump-to-definition.
+  - **~3000+ lines or 3+ independent UI panels:** Extract CSS into `style.css` too. CSS specificity conflicts become real at that scale.
+  - **Never:** Don't introduce a bundler or framework. `index.html` + `style.css` + `app.js` via plain tags keeps zero-build-step deployment.
+  - The real trigger is when you're scrolling past 3+ unrelated sections to edit two related things — that's when the single file costs time instead of saving it.

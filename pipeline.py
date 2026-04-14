@@ -407,7 +407,6 @@ def compare_and_log(prev: dict, output: dict):
     github_output = os.environ.get('GITHUB_OUTPUT')
     if github_output:
         with open(github_output, 'a') as f:
-            f.write('data_changed=true\n')
             f.write(f'has_changes={str(has_changes).lower()}\n')
             f.write(f'new_count={len(new_stations)}\n')
             f.write(f'removed_count={len(removed_stations)}\n')
@@ -444,8 +443,6 @@ def main():
     DATA.mkdir(exist_ok=True)
 
     print('=== Degaline pipeline ===')
-
-    today = date.today().isoformat()
 
     date_str = download_xlsx()
 

@@ -371,7 +371,7 @@
   // ─── UTF-8 safe base64 ────────────────────────────────────────────────────
   function toB64(str) {
     const bytes = new TextEncoder().encode(str);
-    return btoa(String.fromCodePoint(...bytes));
+    return btoa(Array.from(bytes, b => String.fromCharCode(b)).join(''));
   }
   function fromB64(b64) {
     const bin   = atob(b64.replace(/\n/g, ''));
