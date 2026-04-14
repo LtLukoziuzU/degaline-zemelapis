@@ -3683,5 +3683,20 @@
     "lat": 55.8575363,
     "lng": 25.733614,
     "source": "address"
+  },
+  "Gudžionių k., Plento g. 24": {
+    "lat": 55.0939818,
+    "lng": 24.2986922,
+    "source": "address"
+  },
+  "Taikos pr. 47": {
+    "lat": 55.6971651,
+    "lng": 21.1508632,
+    "source": "address"
+  },
+  "Duomenys: 54 įmonės, 736 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
