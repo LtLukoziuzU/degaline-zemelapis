@@ -3698,5 +3698,15 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Prienų g.7, Igliaukos k.": {
+    "lat": 54.5578185,
+    "lng": 23.6563063,
+    "source": "address"
+  },
+  "Duomenys: 55 įmonės, 737 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
