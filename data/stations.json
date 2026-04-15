@@ -1,6 +1,6 @@
 {
   "date": "2026-04-15",
-  "fetched_at": "2026-04-15T11:07+00:00",
+  "fetched_at": "2026-04-15T12:06+00:00",
   "stations": [
     {
       "company": "Alauša",
@@ -358,8 +358,8 @@
       "address": "Vilnius, Antakalnio g. 128",
       "lat": 54.7222342,
       "lng": 25.3171326,
-      "p95": 1.799,
-      "diesel": 2.165,
+      "p95": 1.729,
+      "diesel": 2.159,
       "lpg": 0.929
     },
     {
