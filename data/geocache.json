@@ -3708,5 +3708,15 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Pramonės g. 6, Tauragė": {
+    "lat": 55.2382714,
+    "lng": 22.297675,
+    "source": "address"
+  },
+  "Duomenys: 56 įmonės, 738 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
