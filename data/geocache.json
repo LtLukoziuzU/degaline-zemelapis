@@ -3718,5 +3718,15 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Šiaulių g.12, Radviliškis": {
+    "lat": 55.8154505,
+    "lng": 23.5436826,
+    "source": "address"
+  },
+  "Duomenys: 56 įmonės, 739 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
