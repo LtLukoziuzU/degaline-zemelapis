@@ -3728,5 +3728,10 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Pasienio g. 10, Škilinpamūšio k.": {
+    "lat": 56.2724649,
+    "lng": 24.3677344,
+    "source": "address"
   }
 }
