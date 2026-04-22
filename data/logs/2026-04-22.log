@@ -1,0 +1,1473 @@
+=== 2026-04-22 ===
+
+New stations: none.
+Removed stations: none.
+
+Price changes (522):
+  ~ Alauša — Palijoniškio g. 1, Utena
+      95 benzinas: 1.724 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.929 €/L → 0.924 €/L
+  ~ Alauša — Kosmoso g. 3, Visaginas
+      95 benzinas: 1.699 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.899 €/L → 0.839 €/L
+  ~ Alauša — Palemono g. 171, Kaunas
+      95 benzinas: 1.719 €/L → 1.689 €/L
+      Dyzelinas: 1.999 €/L → 1.989 €/L
+  ~ Alauša — Kalvarijų g. 204G, Vilnius
+      95 benzinas: 1.694 €/L → 1.639 €/L
+      Dyzelinas: 1.994 €/L → 1.899 €/L
+  ~ Alauša — Kirtimų g. 23A, Vilnius
+      95 benzinas: 1.769 €/L → 1.639 €/L
+      Dyzelinas: 2.034 €/L → 1.899 €/L
+      Dujos: 0.939 €/L → 0.839 €/L
+  ~ Alauša — Pelesos g. 1/2, Vilnius
+      95 benzinas: 1.759 €/L → 1.699 €/L
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+      Dujos: 0.929 €/L → 0.899 €/L
+  ~ Alauša — Kauno g. 37, Ukmergė
+      95 benzinas: 1.714 €/L → 1.639 €/L
+      Dyzelinas: 1.994 €/L → 1.899 €/L
+  ~ Alauša — Plento g. 17, Daugailiai
+      95 benzinas: 1.724 €/L → 1.688 €/L
+      Dyzelinas: 1.999 €/L → 1.988 €/L
+      Dujos: 0.949 €/L → 0.924 €/L
+  ~ Alauša — Plento g. 2B, Kairiai
+      95 benzinas: 1.699 €/L → 1.689 €/L
+      Dyzelinas: 1.999 €/L → 1.989 €/L
+  ~ Alauša — Vilniaus g. 8, Grigiškės
+      95 benzinas: 1.699 €/L → 1.689 €/L
+      Dyzelinas: 2.019 €/L → 1.989 €/L
+      Dujos: 0.929 €/L → 0.899 €/L
+  ~ Alauša — Plytinės g. 2, Puskelnių k.
+      95 benzinas: 1.679 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.939 €/L
+  ~ Alauša — Stoties g. 49, Marijampolė
+      95 benzinas: 1.679 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.939 €/L → 0.934 €/L
+  ~ Alauša — Paširvio g. 1, Paširvinčio k.
+      95 benzinas: 1.634 €/L → 1.639 €/L
+      Dyzelinas: 1.954 €/L → 1.899 €/L
+      Dujos: 0.944 €/L → 0.839 €/L
+  ~ Alauša — Šakių g. 51, Kudirkos Naumiestis
+      95 benzinas: 1.699 €/L → 1.674 €/L
+  ~ Alauša — Skraičionių g. 1, Skraičionių k.
+      95 benzinas: 1.739 €/L → 1.699 €/L
+      Dyzelinas: 2.069 €/L → 1.999 €/L
+  ~ Alauša — Švenčionių g. 29A, Ignalina
+      95 benzinas: 1.759 €/L → 1.639 €/L
+      Dyzelinas: 2.059 €/L → 1.899 €/L
+      Dujos: 0.899 €/L → 0.839 €/L
+  ~ Alauša — Šiaurės g. 39, Vilnius
+      95 benzinas: 1.699 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.899 €/L → 0.849 €/L
+  ~ Alauša — Sporto g. 50A, Marijampolė
+      95 benzinas: 1.679 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+  ~ Alauša — J. Basanavičiaus g. 1C, Utena
+      95 benzinas: 1.724 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+  ~ Alauša — Šv. Stepono g. 44, Vilnius
+      95 benzinas: 1.699 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+  ~ Alauša — Buivydiškių g. 5, Vilnius
+      95 benzinas: 1.739 €/L → 1.639 €/L
+      Dyzelinas: 1.998 €/L → 1.899 €/L
+  ~ Alauša — Santaikos g. 2A, Santaikos k.
+      95 benzinas: 1.699 €/L → 1.639 €/L
+      Dyzelinas: 2.034 €/L → 1.899 €/L
+  ~ Alauša — Laisvės pr. 125A, Vilnius
+      95 benzinas: 1.739 €/L → 1.639 €/L
+      Dyzelinas: 1.998 €/L → 1.899 €/L
+  ~ Alauša — Dariaus ir Girėno g. 36, Obeliai
+      95 benzinas: 1.709 €/L → 1.639 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+  ~ Alauša — A. Vienuolio g. 32A, Anykščiai
+      95 benzinas: 1.684 €/L → 1.639 €/L
+      Dyzelinas: 1.974 €/L → 1.899 €/L
+      Dujos: 0.864 €/L → 0.839 €/L
+  ~ Apsaga — Vilniaus g.16, Šiauliai
+      Dyzelinas: 2.009 €/L → 1.969 €/L
+  ~ Apsaga — Pramonės g. 3A, Šiauliai
+      Dyzelinas: 2.029 €/L → 1.979 €/L
+  ~ Apsaga — Pramonės g. 28, Šiauliai
+      Dyzelinas: 2.029 €/L → 1.979 €/L
+  ~ Apsaga — Nuklono g. 4, Šiauliai
+      Dyzelinas: 2.029 €/L → 1.979 €/L
+  ~ Apsaga — Tilžės g. 223, Šiauliai
+      Dyzelinas: 2.029 €/L → 1.979 €/L
+  ~ Apsaga — V. Bielskio g. 47A, Šiauliai
+      Dyzelinas: 2.020 €/L → 1.970 €/L
+  ~ Apsaga — Šiaulių g.12, Radviliškis
+      95 benzinas: 1.769 €/L → 1.765 €/L
+      Dyzelinas: 2.119 €/L → 2.079 €/L
+  ~ Apsaga — Beržų g. 19, Baisogalos k.
+      Dyzelinas: 2.119 €/L → 2.099 €/L
+  ~ Apsaga — Radikių k.
+      95 benzinas: 1.729 €/L → 1.709 €/L
+      Dyzelinas: 2.049 €/L → 1.969 €/L
+      Dujos: 0.939 €/L → 0.909 €/L
+  ~ Baltic Petroleum — Vilnius, Antakalnio g. 128
+      Dujos: 0.929 €/L → 0.899 €/L
+  ~ Baltic Petroleum — Gudžionių k., Plento g. 24
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.039 €/L
+      Dujos: 0.929 €/L → 0.919 €/L
+  ~ Baltic Petroleum — Vilnius, Gerosios Vilties g. 33
+      95 benzinas: 1.759 €/L → 1.719 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Baltic Petroleum — Vilnius, Savanorių pr. 121
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+  ~ Baltic Petroleum — Kaunas, Raudondvario pl. 82
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.959 €/L
+  ~ Baltic Petroleum — Kaunas, Jonavos g. 60A
+      Dyzelinas: 1.969 €/L → 1.939 €/L
+  ~ Baltic Petroleum — Jaučiakių k.
+      95 benzinas: 1.779 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Baltic Petroleum — Klaipėda, Šilutės pl. 1
+      95 benzinas: 1.699 €/L → 1.639 €/L
+      Dyzelinas: 2.009 €/L → 1.949 €/L
+  ~ Baltic Petroleum — Palanga, Klaipėdos pl. 44
+      95 benzinas: 1.729 €/L → 1.709 €/L
+      Dyzelinas: 2.019 €/L → 1.979 €/L
+  ~ Baltic Petroleum — Šilutė, Klaipėdos g. 4A
+      Dyzelinas: 1.999 €/L → 1.919 €/L
+  ~ Baltic Petroleum — Neringa, Nidos-Smiltynės pl. 6
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+  ~ Baltic Petroleum — Alytus, Santaikos g. 33
+      95 benzinas: 1.699 €/L → 1.659 €/L
+      Dyzelinas: 2.039 €/L → 1.979 €/L
+  ~ Baltic Petroleum — Druskininkai, Gardino g. 79
+      95 benzinas: 1.769 €/L → 1.749 €/L
+      Dyzelinas: 2.089 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Lazdijai, Turistų g. 88
+      95 benzinas: 1.669 €/L → 1.699 €/L
+      Dyzelinas: 2.019 €/L → 2.009 €/L
+      Dujos: 0.949 €/L → 0.929 €/L
+  ~ Baltic Petroleum — Telšiai, Šiaulių pl. 12
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Joniškis, Vilniaus g. 72
+      95 benzinas: 1.679 €/L → 1.644 €/L
+      Dyzelinas: 1.999 €/L → 1.904 €/L
+  ~ Baltic Petroleum — Radviliškis, Miško g. 64
+      95 benzinas: 1.709 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 2.009 €/L
+  ~ Baltic Petroleum — Panevėžys, Velžio kelias 74
+      95 benzinas: 1.719 €/L → 1.689 €/L
+      Dyzelinas: 2.019 €/L → 1.979 €/L
+  ~ Baltic Petroleum — Utena, Basanavičiaus g. 1B
+      95 benzinas: 1.729 €/L → 1.649 €/L
+      Dyzelinas: 2.009 €/L → 1.909 €/L
+  ~ Baltic Petroleum — Raseiniai, Vilniaus g. 30
+      Dyzelinas: 1.999 €/L → 1.949 €/L
+  ~ Baltic Petroleum — Jurbarkas, Muitinės g. 22A
+      Dyzelinas: 2.040 €/L → 2.020 €/L
+  ~ Baltic Petroleum — Kėdainiai, J. Basanavičiaus g. 95B
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.089 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Ukmergė, Kauno g. 49
+      95 benzinas: 1.719 €/L → 1.649 €/L
+      Dyzelinas: 1.999 €/L → 1.909 €/L
+  ~ Baltic Petroleum — Valantiškio k.
+      95 benzinas: 1.749 €/L → 1.729 €/L
+      Dyzelinas: 2.079 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Šakiai, Sodų g. 1
+      Dyzelinas: 2.049 €/L → 2.029 €/L
+  ~ Baltic Petroleum — Skuodas, Vytauto g. 22
+      95 benzinas: 1.699 €/L → 1.659 €/L
+      Dyzelinas: 1.999 €/L → 1.919 €/L
+  ~ Baltic Petroleum — Vilnius  Kalvarijų g. 161A
+      95 benzinas: 1.669 €/L → 1.649 €/L
+      Dyzelinas: 1.999 €/L → 1.909 €/L
+  ~ Baltic Petroleum — Trakai, Vilniaus g. 33
+      95 benzinas: 1.789 €/L → 1.759 €/L
+      Dyzelinas: 2.109 €/L → 2.039 €/L
+  ~ Baltic Petroleum — Molėtai, Vilniaus g.104
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.099 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Kaunas, Minkovskių g. 132
+      Dyzelinas: 2.069 €/L → 2.049 €/L
+  ~ Baltic Petroleum — Varėna, Čiurlionio g. 63
+      95 benzinas: 1.779 €/L → 1.739 €/L
+  ~ Baltic Petroleum — Klaipėda, Tilžės g. 90
+      95 benzinas: 1.709 €/L → 1.639 €/L
+      Dyzelinas: 1.989 €/L → 1.949 €/L
+  ~ Baltic Petroleum — Vilnius, Metalo g. 4B
+      Dyzelinas: 2.019 €/L → 2.009 €/L
+  ~ Baltic Petroleum — Šalčininkai, Vilniaus g. 5A
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Baltic Petroleum — Širvintos, Musninkų g. 21
+      95 benzinas: 1.659 €/L → 1.649 €/L
+      Dyzelinas: 1.959 €/L → 1.909 €/L
+  ~ Baltic Petroleum — N. Akmenė, V. Kudirkos g. 21A
+      Dyzelinas: 2.060 €/L → 2.040 €/L
+  ~ Baltic Petroleum — Vilkaraisčio k.
+      Dyzelinas: 1.990 €/L → 1.970 €/L
+  ~ Baltic Petroleum — Panevėžys, Smėlynės g. 169
+      95 benzinas: 1.719 €/L → 1.689 €/L
+      Dyzelinas: 2.019 €/L → 1.949 €/L
+  ~ Baltic Petroleum — Pakruojis, Statybininkų g. 28
+      Dyzelinas: 1.959 €/L → 1.919 €/L
+      Dujos: 0.900 €/L → 0.890 €/L
+  ~ Baltic Petroleum — Šilalė, Rytinio Kelio g. 2
+      Dyzelinas: 1.959 €/L → 1.919 €/L
+      Dujos: 0.899 €/L → 0.879 €/L
+  ~ Baltic Petroleum — Pietarių k. Kauno g. 164
+      95 benzinas: 1.689 €/L → 1.649 €/L
+      Dyzelinas: 1.999 €/L → 1.909 €/L
+  ~ Baltic Petroleum — Vilnius, Molėtų pl. 27A
+      95 benzinas: 1.649 €/L → 1.669 €/L
+      Dyzelinas: 2.029 €/L → 1.964 €/L
+  ~ Baltic Petroleum — Vilnius, S. Batoro g. 15
+      Dyzelinas: 2.029 €/L → 1.979 €/L
+  ~ Baltic Petroleum — Užubalių k. Senasis Ukmergės kelias 4
+      Dyzelinas: 1.999 €/L → 1.979 €/L
+  ~ Baltic Petroleum — Vilnius, Rinktinės g. 59
+      95 benzinas: 1.719 €/L → 1.689 €/L
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+  ~ Baltic Petroleum — Marijampolė, Vasaros g. 15
+      95 benzinas: 1.689 €/L → 1.649 €/L
+      Dyzelinas: 1.999 €/L → 1.909 €/L
+  ~ Baltic Petroleum — Ožtakių k., Dariaus ir Girėno g. 77
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.129 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Pandėlio k., Elektrinės g. 1
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Baltic Petroleum — Užuovėjos k.
+      Dyzelinas: 2.059 €/L → 2.019 €/L
+  ~ Baltic Petroleum — Pagirių k., Marijampolės g. 1
+      95 benzinas: 1.699 €/L → 1.669 €/L
+      Dyzelinas: 1.999 €/L → 1.949 €/L
+  ~ Baltic Petroleum — Spanėnų k., Plento g. 46
+      95 benzinas: 1.789 €/L → 1.769 €/L
+      Dujos: 0.940 €/L → 0.950 €/L
+  ~ Baltic Petroleum — Priekulė, Klaipėdos g. 61
+      Dyzelinas: 2.090 €/L → 2.080 €/L
+  ~ Baltic Petroleum — Kalnujų k. 1
+      Dyzelinas: 2.059 €/L → 2.029 €/L
+  ~ Baltic Petroleum — Klaipėda, Liepų g. 79A
+      95 benzinas: 1.669 €/L → 1.659 €/L
+      Dyzelinas: 1.989 €/L → 1.949 €/L
+  ~ Baltic Petroleum — Mažeikiai, M. Daukšos g. 17
+      Dyzelinas: 1.999 €/L → 1.979 €/L
+  ~ Baltic Petroleum — Druskininkai, Leipalingio g. 26
+      95 benzinas: 1.769 €/L → 1.749 €/L
+      Dyzelinas: 2.089 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Merkinė, Vilniaus g. 87
+      95 benzinas: 1.759 €/L → 1.749 €/L
+      Dyzelinas: 2.089 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Jonava, Žemaitės g. 1
+      95 benzinas: 1.789 €/L → 1.769 €/L
+  ~ Baltic Petroleum — Senoji Varėna, Vilniaus g. 6A
+      95 benzinas: 1.779 €/L → 1.739 €/L
+  ~ Baltic Petroleum — Griškabūdis
+      95 benzinas: 1.689 €/L → 1.679 €/L
+      Dyzelinas: 2.049 €/L → 2.029 €/L
+  ~ Baltic Petroleum — Vilnius, Brazdžionio g. 2
+      Dyzelinas: 1.999 €/L → 1.939 €/L
+  ~ Baltic Petroleum — Likiškėlių k.
+      95 benzinas: 1.689 €/L → 1.669 €/L
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Baltic Petroleum — Šiauliai, Kupiškio g. 4
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 1.969 €/L → 1.929 €/L
+      Dujos: 0.930 €/L → 0.910 €/L
+  ~ Baltic Petroleum — Grigaičiai, Pavilnės g.
+      95 benzinas: 1.689 €/L → 1.679 €/L
+      Dyzelinas: 2.029 €/L → 1.969 €/L
+  ~ Baltic Petroleum — Ringaudų k., Gėlių g. 1A
+      95 benzinas: 1.689 €/L → 1.679 €/L
+      Dyzelinas: 2.029 €/L → 1.969 €/L
+  ~ Baltic Petroleum — Visalaukio g. 2
+      95 benzinas: 1.689 €/L → 1.679 €/L
+      Dyzelinas: 2.029 €/L → 1.969 €/L
+  ~ Baltic Petroleum — Noriūnų k., Parko g. 3A
+      Dyzelinas: 1.989 €/L → 1.979 €/L
+  ~ Baltic Petroleum — Klišių k., Pievų g. 2
+      Dyzelinas: 2.040 €/L → 2.020 €/L
+  ~ Baltic Petroleum — Bučių k.
+      Dyzelinas: 2.060 €/L → 2.040 €/L
+  ~ Baltic Petroleum — Taurų k., Tilžės pl. 36
+      Dyzelinas: 1.939 €/L → 1.919 €/L
+      Dujos: 0.940 €/L → 0.920 €/L
+  ~ Baltic Petroleum — Girkalnio k., Žemaičių g. 39
+      95 benzinas: 1.719 €/L → 1.689 €/L
+      Dyzelinas: 2.059 €/L → 2.039 €/L
+  ~ Baltic Petroleum — Vilnius, Zujūnų g. 2A
+      95 benzinas: 1.689 €/L → 1.669 €/L
+      Dyzelinas: 2.019 €/L → 1.969 €/L
+  ~ Baltic Petroleum — Plateliai,  Ž. Kalvarijos g. 1A
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Baltic Petroleum — Marijampolė, P. Armino g. 69
+      95 benzinas: 1.689 €/L → 1.649 €/L
+      Dyzelinas: 1.999 €/L → 1.909 €/L
+  ~ Baltic Petroleum — Radviliškis, Šiaulių g. 1A
+      95 benzinas: 1.709 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 2.009 €/L
+  ~ Baltic Petroleum — Leipalingis, Merkinės g. 37
+      Dyzelinas: 2.089 €/L → 2.069 €/L
+  ~ Baltic Petroleum — Palanga, Ganyklų g. 28C
+      95 benzinas: 1.709 €/L → 1.689 €/L
+      Dyzelinas: 1.999 €/L → 1.949 €/L
+  ~ Baltic Petroleum — Aukštikalnio k., Mūšos g. 19
+      95 benzinas: 1.630 €/L → 1.650 €/L
+  ~ Baltic Petroleum — Anykščiai, Mindaugo g. 23
+      95 benzinas: 1.669 €/L → 1.649 €/L
+      Dyzelinas: 1.949 €/L → 1.909 €/L
+  ~ Baltic Petroleum — Gargždai, Dariaus ir Girėno g. 10
+      95 benzinas: 1.689 €/L → 1.669 €/L
+      Dyzelinas: 1.979 €/L → 1.939 €/L
+  ~ Borusta — Vilniaus g. 2a, Aukštadvaris
+      95 benzinas: 1.720 €/L → 1.700 €/L
+      Dyzelinas: 2.030 €/L → 1.900 €/L
+  ~ Borusta — Piliakalnio g. 3, Stakliškės
+      95 benzinas: 1.709 €/L → 1.699 €/L
+      Dyzelinas: 1.979 €/L → 1.879 €/L
+  ~ Borusta — Prienų g. 14, Birštonas
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Circle K — Baltupio g. 10, Vilnius
+      95 benzinas: 1.769 €/L → 1.734 €/L
+      Dyzelinas: 2.079 €/L → 2.054 €/L
+  ~ Circle K — A. P. Kavoliuko g. 32A, Vilnius
+      95 benzinas: 1.819 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Circle K — Sporto g. 16A, Vilnius
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — Ukmergės g. 231, Vilnius
+      95 benzinas: 1.819 €/L → 1.799 €/L
+  ~ Circle K — Kareivių g. 13, Vilnius
+      95 benzinas: 1.819 €/L → 1.799 €/L
+      Dujos: 0.959 €/L → 0.939 €/L
+  ~ Circle K — A. Goštauto g. 13, Vilnius
+      95 benzinas: 1.819 €/L → 1.779 €/L
+      Dyzelinas: 2.089 €/L → 2.079 €/L
+  ~ Circle K — Laisvės pr. 43C, Vilnius
+      95 benzinas: 1.819 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Circle K — J. Tiškevičiaus g. 24, Vilnius
+      95 benzinas: 1.809 €/L → 1.774 €/L
+      Dyzelinas: 2.099 €/L → 2.074 €/L
+  ~ Circle K — Eišiškių pl. 11, Vilnius
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — Pramonės pr. 18, Kaunas
+      95 benzinas: 1.819 €/L → 1.774 €/L
+      Dyzelinas: 2.099 €/L → 2.084 €/L
+  ~ Circle K — Baltijos g. 1, Mastaičių k.
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+  ~ Circle K — Raudondvario pl. 107A, Kaunas
+      95 benzinas: 1.819 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.094 €/L
+  ~ Circle K — R. Kalantos g. 159, Kaunas
+      95 benzinas: 1.819 €/L → 1.784 €/L
+      Dyzelinas: 2.099 €/L → 2.074 €/L
+  ~ Circle K — Naujoji g. 120, Alytus
+      95 benzinas: 1.779 €/L → 1.740 €/L
+      Dyzelinas: 2.080 €/L → 2.059 €/L
+  ~ Circle K — Veiverių g. 49A, Kaunas
+      95 benzinas: 1.809 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Circle K — Dubijos g. 20A, Šiauliai
+      95 benzinas: 1.789 €/L → 1.769 €/L
+      Dyzelinas: 2.069 €/L → 1.989 €/L
+  ~ Circle K — Talino g. 2B, Vilnius
+      95 benzinas: 1.819 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.039 €/L
+  ~ Circle K — Pramonės g. 17a, Šiauliai
+      95 benzinas: 1.809 €/L → 1.769 €/L
+      Dyzelinas: 2.089 €/L → 2.039 €/L
+  ~ Circle K — Sabališkių g. 1F, Elektrėnai
+      95 benzinas: 1.819 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+      Dujos: 0.949 €/L → 0.969 €/L
+  ~ Circle K — J. Basanavičiaus g. 108a, Utena
+      95 benzinas: 1.799 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.039 €/L
+  ~ Circle K — Baltijos Kelio g. 33, Ūtos k.
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.079 €/L → 2.034 €/L
+  ~ Circle K — Kretingos g. 56, Palanga
+      95 benzinas: 1.819 €/L → 1.799 €/L
+      Dyzelinas: 2.099 €/L → 2.069 €/L
+  ~ Circle K — Minijos g. 90, Klaipėda
+      95 benzinas: 1.779 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.029 €/L
+  ~ Circle K — Taikos pr. 61B, Klaipėda
+      95 benzinas: 1.779 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.029 €/L
+  ~ Circle K — H. Manto g. 96, Klaipėda
+      95 benzinas: 1.809 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — Kauno g. 130, Marijampolė
+      95 benzinas: 1.789 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.049 €/L
+  ~ Circle K — Rūtų g. 2B, Alytus
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Circle K — M. K. Čiurlionio g. 113, Druskininkai
+      Dujos: 0.989 €/L → 0.969 €/L
+  ~ Circle K — J. Basanavičiaus g. 63, Panevėžys
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Circle K — Parko g. 7A, Panevėžys
+      95 benzinas: 1.789 €/L → 1.724 €/L
+      Dyzelinas: 2.079 €/L → 2.019 €/L
+  ~ Circle K — Jono Dailidės g. 10, Marijampolė
+      95 benzinas: 1.759 €/L → 1.739 €/L
+      Dyzelinas: 2.079 €/L → 2.029 €/L
+  ~ Circle K — J. Basanavičiaus g. 40a, Kėdainiai
+      95 benzinas: 1.819 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — Ežero g. 7, Kurėnų k.
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+  ~ Circle K — Cintjoniškių g. 15, Šilutė
+      Dyzelinas: 2.095 €/L → 2.085 €/L
+  ~ Circle K — Savanorių g. 5, Varėna
+      95 benzinas: 1.759 €/L → 1.749 €/L
+      Dujos: 0.999 €/L → 0.989 €/L
+  ~ Circle K — Žemaitijos g. 57, Mažeikiai
+      95 benzinas: 1.769 €/L → 1.749 €/L
+      Dyzelinas: 2.089 €/L → 2.019 €/L
+  ~ Circle K — Vasario 16-osios g. 33, Jonava
+      95 benzinas: 1.804 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+      Dujos: 1.019 €/L → 0.989 €/L
+  ~ Circle K — Geležinio Vilko g. 39, Vilnius
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.089 €/L → 2.079 €/L
+  ~ Circle K — Prūsų g. 26 A, Vilnius
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — Gedimino g. 42B, Radviliškis
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+      Dujos: 0.970 €/L → 0.950 €/L
+  ~ Circle K — Gedimino g. 47, Tauragė
+      95 benzinas: 1.809 €/L → 1.749 €/L
+      Dyzelinas: 2.109 €/L → 2.029 €/L
+  ~ Circle K — Panevėžio aplinkl. 20, Šilagalio k.
+      95 benzinas: 1.779 €/L → 1.729 €/L
+      Dyzelinas: 2.079 €/L → 2.034 €/L
+  ~ Circle K — Vakarinis aplinkkelis 10, Kaunas
+      95 benzinas: 1.774 €/L → 1.734 €/L
+      Dyzelinas: 2.054 €/L → 2.019 €/L
+  ~ Circle K — Žemaičių pl. 19, Kaunas
+      95 benzinas: 1.789 €/L → 1.724 €/L
+      Dyzelinas: 2.059 €/L → 2.014 €/L
+  ~ Circle K — Dvaro g. 3, Košių II k.
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+      Dujos: 0.959 €/L → 0.989 €/L
+  ~ Circle K — Geležinio Vilko g. 24, Vilnius
+      95 benzinas: 1.789 €/L → 1.739 €/L
+      Dyzelinas: 2.099 €/L → 2.034 €/L
+  ~ Circle K — Taikos pr. 52A, Kaunas
+      95 benzinas: 1.819 €/L → 1.794 €/L
+      Dyzelinas: 2.099 €/L → 2.084 €/L
+  ~ Circle K — Kilučių g. 93, Biržai
+      95 benzinas: 1.754 €/L → 1.759 €/L
+  ~ Circle K — Karaliaus Mindaugo pr. 34A, Kaunas
+      95 benzinas: 1.829 €/L → 1.809 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Circle K — Didžiulio g. 5, Dėdeliškių k.
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+  ~ Circle K — J. Basanavičiaus g. 3, Utena
+      95 benzinas: 1.789 €/L → 1.729 €/L
+      Dyzelinas: 2.084 €/L → 1.989 €/L
+  ~ Circle K — Nekrūnų k. 1
+      95 benzinas: 1.749 €/L → 1.779 €/L
+      Dujos: 0.999 €/L → 0.979 €/L
+  ~ Circle K — Taikos pr. 112A, Klaipėda
+      95 benzinas: 1.749 €/L → 1.745 €/L
+      Dyzelinas: 2.079 €/L → 2.035 €/L
+  ~ Circle K — Vilniaus pl. 1A, Klaipėda
+      95 benzinas: 1.779 €/L → 1.749 €/L
+      Dyzelinas: 2.094 €/L → 2.019 €/L
+  ~ Circle K — Pikelių k. 1
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+      Dujos: 0.959 €/L → 0.989 €/L
+  ~ Circle K — Europos g. 13a, Salaperaugio k.
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+  ~ Circle K — Muitinės g. 5B, Brazavo k.
+      Dyzelinas: 2.129 €/L → 2.099 €/L
+  ~ Circle K — Vilniaus g. 62, Šiauliai
+      95 benzinas: 1.759 €/L → 1.739 €/L
+      Dyzelinas: 2.039 €/L → 1.959 €/L
+  ~ Circle K — R. Kalantos g. 68, Kaunas
+      95 benzinas: 1.789 €/L → 1.754 €/L
+      Dyzelinas: 2.069 €/L → 2.044 €/L
+  ~ Circle K — Varnių g. 46, Kaunas
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.059 €/L → 2.029 €/L
+  ~ Circle K — Oslo g. 12, Vilnius
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.049 €/L
+  ~ Circle K — Dariaus ir Girėno g. 83A, Tauragė
+      95 benzinas: 1.749 €/L → 1.719 €/L
+      Dyzelinas: 2.049 €/L → 1.999 €/L
+  ~ Circle K — Islandijos pl. 32, Kaunas
+      95 benzinas: 1.799 €/L → 1.734 €/L
+      Dyzelinas: 2.069 €/L → 2.024 €/L
+  ~ Circle K — Savanorių pr. 118, Vilnius
+      95 benzinas: 1.784 €/L → 1.769 €/L
+      Dyzelinas: 2.089 €/L → 2.049 €/L
+  ~ Circle K — P. Žadeikos g. 1a, Vilnius
+      95 benzinas: 1.809 €/L → 1.764 €/L
+      Dyzelinas: 2.099 €/L → 2.084 €/L
+  ~ Circle K — Savanorių pr. 119A, Vilnius
+      95 benzinas: 1.784 €/L → 1.769 €/L
+      Dyzelinas: 2.089 €/L → 2.049 €/L
+  ~ Circle K — Kareivių g. 3, Vilnius
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.089 €/L → 2.059 €/L
+  ~ Circle K — Geležinio Vilko g. 4, Vilnius
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.089 €/L → 2.079 €/L
+  ~ Circle K — Gariūnų g. 45, Vilnius
+      95 benzinas: 1.809 €/L → 1.769 €/L
+      Dyzelinas: 2.089 €/L → 2.059 €/L
+  ~ Circle K — Savanorių pr. 404B, Kaunas
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.089 €/L → 2.029 €/L
+  ~ Circle K — Tvirtovės alėja 33a, Kaunas
+      95 benzinas: 1.819 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.069 €/L
+  ~ Circle K — Sukilėlių pr. 120, Kaunas
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — K. Baršausko g. 57, Kaunas
+      95 benzinas: 1.799 €/L → 1.784 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — Jonavos g. 38, Kaunas
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.049 €/L
+  ~ Circle K — Tilžės g. 25, Šiauliai
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.029 €/L
+  ~ Circle K — Tilžės g. 56A, Klaipėda
+      95 benzinas: 1.739 €/L → 1.689 €/L
+      Dyzelinas: 2.069 €/L → 1.989 €/L
+      Dujos: 0.939 €/L → 0.929 €/L
+  ~ Circle K — Jūrininkų pr. 31, Klaipėda
+      95 benzinas: 1.759 €/L → 1.729 €/L
+      Dyzelinas: 2.099 €/L → 2.040 €/L
+  ~ Circle K — Sausio 15-osios g. 2, Klaipėda
+      95 benzinas: 1.759 €/L → 1.709 €/L
+      Dyzelinas: 2.089 €/L → 2.009 €/L
+  ~ Circle K — Klaipėdos g. 92A, Panevėžys
+      95 benzinas: 1.769 €/L → 1.704 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Circle K — Molėtų g. 15, Didžiosios Riešės k.
+      95 benzinas: 1.779 €/L → 1.729 €/L
+      Dyzelinas: 2.089 €/L → 2.024 €/L
+  ~ Eniris — Puttvinskio g. 29, Kelmė
+      Dyzelinas: 1.959 €/L → 1.909 €/L
+  ~ Eniris — Dariaus ir Girėno g. 31, Plungė
+      Dyzelinas: 2.090 €/L → 2.050 €/L
+  ~ Eniris — Telšių g. 2 b, Rainių k.
+      95 benzinas: 1.780 €/L → 1.760 €/L
+  ~ Eniris — Platelių g. 1 a, Laivių k.
+      95 benzinas: 1.760 €/L → 1.740 €/L
+  ~ Eniris — Rytinio Kelio g. 2a, Šilalė
+      Dujos: 0.910 €/L → 0.890 €/L
+  ~ Eniris — Mažeikių g. 1, Telšiai
+      Dyzelinas: 2.090 €/L → 2.070 €/L
+  ~ Eniris — Minijos g. 1, Aleksandravo k.
+      95 benzinas: 1.770 €/L → 1.760 €/L
+      Dyzelinas: 2.090 €/L → 2.060 €/L
+  ~ Eniris — Laižuvos g. 82 d, Mažeikiai,
+      95 benzinas: 1.689 €/L → 1.639 €/L
+      Dyzelinas: 1.969 €/L → 1.899 €/L
+  ~ Eniris — Žemaitės g. 52, Užventis
+      95 benzinas: 1.710 €/L → 1.690 €/L
+      Dyzelinas: 1.960 €/L → 1.900 €/L
+  ~ Eniris — Kalnuotės 1 k.
+      95 benzinas: 1.639 €/L → 1.679 €/L
+      Dyzelinas: 1.989 €/L → 1.999 €/L
+  ~ Naftrus — Pievų g. 17, Slabados k.
+      Dyzelinas: 1.970 €/L → 1.920 €/L
+  ~ Naftrus — Topolių g. 1, Degučių k.
+      Dyzelinas: 1.950 €/L → 1.920 €/L
+  ~ Naftrus — Vilniaus g. 3B, Raseiniai
+      95 benzinas: 1.660 €/L → 1.650 €/L
+      Dyzelinas: 1.999 €/L → 1.949 €/L
+  ~ Narjanta — Sausalaukės k. 2
+      Dyzelinas: 2.129 €/L → 2.029 €/L
+  ~ Narjanta — S. Nėries g. 35, Vabalninkas
+      95 benzinas: 1.759 €/L → 1.729 €/L
+  ~ Neste Lietuva — Servečės g. 2, Vilnius
+      95 benzinas: 1.749 €/L → 1.719 €/L
+      Dyzelinas: 2.069 €/L → 2.009 €/L
+  ~ Neste Lietuva — Ukmergės g. 296, Vilnius
+      95 benzinas: 1.769 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 1.999 €/L
+  ~ Neste Lietuva — Talino g. 2C, Vilnius
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Erfurto g. 41, Vilnius
+      95 benzinas: 1.769 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 1.999 €/L
+  ~ Neste Lietuva — Geležinio Vilko g. 63, Vilnius
+      95 benzinas: 1.759 €/L → 1.714 €/L
+      Dyzelinas: 2.069 €/L → 1.989 €/L
+  ~ Neste Lietuva — S. Stanevičiaus g. 3, Vilnius
+      95 benzinas: 1.759 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Žirmūnų g. 68B, Vilnius
+      95 benzinas: 1.749 €/L → 1.729 €/L
+      Dyzelinas: 2.069 €/L → 2.029 €/L
+  ~ Neste Lietuva — Rygos g. 2, Vilnius
+      95 benzinas: 1.769 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 1.999 €/L
+  ~ Neste Lietuva — Savanorių pr. 220A, Vilnius
+      Dyzelinas: 2.059 €/L → 2.029 €/L
+  ~ Neste Lietuva — Parodų g. 1A, Vilnius
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.019 €/L
+  ~ Neste Lietuva — Kauno g. 26, Vilnius
+      95 benzinas: 1.774 €/L → 1.734 €/L
+      Dyzelinas: 2.064 €/L → 2.004 €/L
+  ~ Neste Lietuva — Savanorių pr. 187, Vilnius
+      Dyzelinas: 2.059 €/L → 2.029 €/L
+  ~ Neste Lietuva — Kedrų g. 2, Vilnius
+      95 benzinas: 1.779 €/L → 1.754 €/L
+      Dyzelinas: 2.079 €/L → 2.014 €/L
+  ~ Neste Lietuva — Molėtų pl. 8, Vilnius
+      95 benzinas: 1.749 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 1.979 €/L
+  ~ Neste Lietuva — P. Lukšio g. 22, Vilnius
+      95 benzinas: 1.739 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 2.019 €/L
+  ~ Neste Lietuva — Žirmūnų g. 54C, Vilnius
+      95 benzinas: 1.749 €/L → 1.729 €/L
+      Dyzelinas: 2.064 €/L → 2.024 €/L
+  ~ Neste Lietuva — Subačiaus g. 64, Vilnius
+      95 benzinas: 1.774 €/L → 1.739 €/L
+      Dyzelinas: 2.074 €/L → 2.039 €/L
+  ~ Neste Lietuva — Dariaus ir Girėno g. 17, Vilnius
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.069 €/L → 2.019 €/L
+  ~ Neste Lietuva — Architektų g. 130, Vilnius
+      95 benzinas: 1.779 €/L → 1.754 €/L
+      Dyzelinas: 2.079 €/L → 2.014 €/L
+  ~ Neste Lietuva — Justiniškių g. 14B, Vilnius
+      95 benzinas: 1.764 €/L → 1.729 €/L
+      Dyzelinas: 2.064 €/L → 1.999 €/L
+  ~ Neste Lietuva — Geležinio Vilko g. 37A, Vilnius
+      95 benzinas: 1.769 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 2.029 €/L
+  ~ Neste Lietuva — Pilaitės pr. 27, Vilnius
+      95 benzinas: 1.729 €/L → 1.699 €/L
+      Dyzelinas: 2.049 €/L → 1.989 €/L
+  ~ Neste Lietuva — Žirnių g. 17, Vilnius
+      95 benzinas: 1.769 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 2.029 €/L
+  ~ Neste Lietuva — J. Tiškevičiaus g. 19, Vilnius
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.034 €/L → 2.019 €/L
+  ~ Neste Lietuva — Eišiškių pl. 82, Vilnius
+      95 benzinas: 1.774 €/L → 1.749 €/L
+      Dyzelinas: 2.079 €/L → 2.009 €/L
+  ~ Neste Lietuva — Gariūnų g. 55, Vilnius
+      95 benzinas: 1.779 €/L → 1.749 €/L
+      Dyzelinas: 2.069 €/L → 2.009 €/L
+  ~ Neste Lietuva — Panerių g. 42, Vilnius
+      95 benzinas: 1.764 €/L → 1.724 €/L
+      Dyzelinas: 2.044 €/L → 1.984 €/L
+  ~ Neste Lietuva — Geležinio Vilko g. 41, Vilnius
+      95 benzinas: 1.769 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 2.029 €/L
+  ~ Neste Lietuva — Pramonės pr. 6A, Kaunas
+      95 benzinas: 1.744 €/L → 1.734 €/L
+      Dyzelinas: 2.054 €/L → 2.019 €/L
+  ~ Neste Lietuva — Jonavos g. 110, Kaunas
+      95 benzinas: 1.739 €/L → 1.699 €/L
+      Dyzelinas: 2.029 €/L → 1.989 €/L
+  ~ Neste Lietuva — Veiverių g. 132D, Kaunas
+      95 benzinas: 1.764 €/L → 1.749 €/L
+      Dyzelinas: 2.059 €/L → 2.029 €/L
+  ~ Neste Lietuva — Žemaičių pl. 26, Kaunas
+      95 benzinas: 1.754 €/L → 1.704 €/L
+      Dyzelinas: 2.039 €/L → 1.994 €/L
+  ~ Neste Lietuva — R. Kalantos g. 27, Kaunas
+      95 benzinas: 1.754 €/L → 1.739 €/L
+      Dyzelinas: 2.044 €/L → 2.019 €/L
+  ~ Neste Lietuva — Ateities pl. 50B, Kaunas
+      95 benzinas: 1.754 €/L → 1.694 €/L
+      Dyzelinas: 2.034 €/L → 1.984 €/L
+  ~ Neste Lietuva — Taikos pr. 80A, Kaunas
+      95 benzinas: 1.764 €/L → 1.739 €/L
+      Dyzelinas: 2.054 €/L → 2.019 €/L
+  ~ Neste Lietuva — Birželio 23-iosios g. 23A, Kaunas
+      95 benzinas: 1.769 €/L → 1.729 €/L
+      Dyzelinas: 2.059 €/L → 2.019 €/L
+  ~ Neste Lietuva — Islandijos pl. 191E, Kaunas
+      95 benzinas: 1.749 €/L → 1.719 €/L
+      Dyzelinas: 2.049 €/L → 1.999 €/L
+  ~ Neste Lietuva — Raudondvario pl. 103, Kaunas
+      95 benzinas: 1.749 €/L → 1.699 €/L
+      Dyzelinas: 2.049 €/L → 1.999 €/L
+  ~ Neste Lietuva — Kuršių g. 1, Kaunas
+      95 benzinas: 1.759 €/L → 1.699 €/L
+      Dyzelinas: 2.039 €/L → 1.989 €/L
+  ~ Neste Lietuva — Vijoklių g. 1C, Ramučių k.
+      95 benzinas: 1.749 €/L → 1.719 €/L
+      Dyzelinas: 2.049 €/L → 2.004 €/L
+  ~ Neste Lietuva — Tunelio g. 26, Kaunas
+      95 benzinas: 1.754 €/L → 1.719 €/L
+      Dyzelinas: 2.049 €/L → 1.999 €/L
+  ~ Neste Lietuva — Vakarų g. 14, Kumpių k.
+      95 benzinas: 1.754 €/L → 1.714 €/L
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Neste Lietuva — Savanorių pr. 441C, Kaunas
+      95 benzinas: 1.739 €/L → 1.709 €/L
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Neste Lietuva — Vakarinis aplinkkelis 18, Kaunas
+      95 benzinas: 1.754 €/L → 1.714 €/L
+      Dyzelinas: 2.034 €/L → 1.999 €/L
+  ~ Neste Lietuva — Europos pr. 43, Kaunas
+      95 benzinas: 1.759 €/L → 1.739 €/L
+      Dyzelinas: 2.054 €/L → 2.039 €/L
+  ~ Neste Lietuva — Plieno g. 1, Klaipėda
+      95 benzinas: 1.729 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 1.979 €/L
+  ~ Neste Lietuva — Šilutės pl. 30, Klaipėda
+      Dyzelinas: 2.044 €/L → 1.969 €/L
+  ~ Neste Lietuva — Taikos pr. 60, Klaipėda
+      95 benzinas: 1.729 €/L → 1.689 €/L
+      Dyzelinas: 2.049 €/L → 1.979 €/L
+  ~ Neste Lietuva — Minijos g. 119, Klaipėda
+      95 benzinas: 1.739 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 1.989 €/L
+  ~ Neste Lietuva — Artojo g. 2, Klaipėda
+      Dyzelinas: 2.039 €/L → 1.969 €/L
+  ~ Neste Lietuva — Smiltelės g. 17, Klaipėda
+      95 benzinas: 1.729 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 1.979 €/L
+  ~ Neste Lietuva — Šilutės pl. 5C, Klaipėda
+      95 benzinas: 1.719 €/L → 1.669 €/L
+      Dyzelinas: 2.039 €/L → 1.969 €/L
+  ~ Neste Lietuva — Vilniaus pl. 9, Jakų k.
+      95 benzinas: 1.759 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 2.009 €/L
+  ~ Neste Lietuva — Sendvario g. 2, Sudmantų k.
+      95 benzinas: 1.749 €/L → 1.729 €/L
+      Dyzelinas: 2.049 €/L → 1.999 €/L
+  ~ Neste Lietuva — Gegužių g. 28, Šiauliai
+      95 benzinas: 1.759 €/L → 1.729 €/L
+      Dyzelinas: 2.039 €/L → 1.959 €/L
+  ~ Neste Lietuva — Tilžės g. 72, Šiauliai
+      95 benzinas: 1.764 €/L → 1.729 €/L
+      Dyzelinas: 2.044 €/L → 1.989 €/L
+  ~ Neste Lietuva — Dubijos g. 18A, Šiauliai
+      95 benzinas: 1.759 €/L → 1.719 €/L
+      Dyzelinas: 2.039 €/L → 1.959 €/L
+  ~ Neste Lietuva — Klaipėdos g. 81, Panevėžys
+      95 benzinas: 1.729 €/L → 1.659 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Ramygalos g. 145B, Panevėžys
+      95 benzinas: 1.759 €/L → 1.699 €/L
+      Dyzelinas: 2.054 €/L → 1.989 €/L
+  ~ Neste Lietuva — Klaipėdos g. 66,  Panevėžys
+      95 benzinas: 1.774 €/L → 1.704 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Ąžuolpamūšio g. 1A, Raubonių k..
+      95 benzinas: 1.759 €/L → 1.729 €/L
+      Dyzelinas: 2.059 €/L → 1.989 €/L
+  ~ Neste Lietuva — Margirio g. 1B, Panevėžys
+      95 benzinas: 1.774 €/L → 1.699 €/L
+      Dyzelinas: 2.054 €/L → 1.994 €/L
+  ~ Neste Lietuva — Klaipėdos g. 144B, Panevėžys
+      95 benzinas: 1.779 €/L → 1.709 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Panevėžio aplinkl. 7, Šilagalio k.
+      95 benzinas: 1.759 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Panevėžio aplinkl. 22, Šilagalio k.
+      95 benzinas: 1.749 €/L → 1.689 €/L
+      Dyzelinas: 2.049 €/L → 1.989 €/L
+  ~ Neste Lietuva — Santaikos g. 34A, Alytus
+      95 benzinas: 1.769 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 2.019 €/L
+  ~ Neste Lietuva — Ūdrijos g. 31, Alytus
+      95 benzinas: 1.769 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 2.029 €/L
+  ~ Neste Lietuva — Stoties g. 4C, Marijampolė
+      95 benzinas: 1.759 €/L → 1.729 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Vilkaviškio g. 61D, Marijampolė
+      95 benzinas: 1.754 €/L → 1.724 €/L
+      Dyzelinas: 2.054 €/L → 1.994 €/L
+  ~ Neste Lietuva — Europos g. 1, Salaperaugio k.
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.029 €/L
+  ~ Neste Lietuva — Europos g. 6, N.Valios k.
+      Dyzelinas: 2.079 €/L → 2.029 €/L
+  ~ Neste Lietuva — M. Daukšos g. 29, Mažeikiai
+      95 benzinas: 1.759 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Katyčių k., Šilalės r.
+      95 benzinas: 1.749 €/L → 1.709 €/L
+      Dyzelinas: 2.074 €/L → 2.029 €/L
+  ~ Neste Lietuva — J. Basanavičiaus g. 91E, Kėdainiai
+      95 benzinas: 1.724 €/L → 1.719 €/L
+      Dyzelinas: 2.069 €/L → 2.019 €/L
+  ~ Neste Lietuva — Kauno g. 45B, Ukmergė
+      95 benzinas: 1.759 €/L → 1.719 €/L
+      Dyzelinas: 2.049 €/L → 1.999 €/L
+  ~ Neste Lietuva — J. Basanavičiaus g. 129, Utena
+      95 benzinas: 1.759 €/L → 1.729 €/L
+      Dyzelinas: 2.059 €/L → 1.999 €/L
+  ~ Neste Lietuva — Kupiškio g. 12, Utena
+      95 benzinas: 1.754 €/L → 1.724 €/L
+      Dyzelinas: 2.054 €/L → 2.014 €/L
+  ~ Neste Lietuva — Aplinkkelio g. 165, Molėtai
+      95 benzinas: 1.759 €/L → 1.719 €/L
+      Dyzelinas: 2.079 €/L → 1.999 €/L
+  ~ Neste Lietuva — Vilniaus g. 94, Pabradė
+      95 benzinas: 1.749 €/L → 1.729 €/L
+      Dyzelinas: 2.059 €/L → 2.019 €/L
+  ~ Neste Lietuva — Plento g. 7, Gudžionių k.
+      95 benzinas: 1.774 €/L → 1.749 €/L
+      Dyzelinas: 2.079 €/L → 2.019 €/L
+  ~ Neste Lietuva — Versmės g. 2, Radviliškis
+      95 benzinas: 1.779 €/L → 1.749 €/L
+      Dyzelinas: 2.039 €/L → 2.029 €/L
+  ~ Neste Lietuva — Pušyno g. 11, Ylių k.
+      95 benzinas: 1.769 €/L → 1.729 €/L
+      Dyzelinas: 2.079 €/L → 2.049 €/L
+  ~ Neste Lietuva — Dariaus ir Girėno g. 130A, Tauragė
+      95 benzinas: 1.749 €/L → 1.699 €/L
+      Dyzelinas: 2.049 €/L → 1.979 €/L
+  ~ Neste Lietuva — Sabališkių g. 1U, Elektrėnai
+      95 benzinas: 1.779 €/L → 1.749 €/L
+      Dyzelinas: 2.049 €/L → 2.029 €/L
+  ~ Neste Lietuva — Šiaulių pl. 1A, Gaudikaičių k.
+      95 benzinas: 1.774 €/L → 1.739 €/L
+      Dyzelinas: 2.079 €/L → 2.029 €/L
+  ~ Orlen — Kauno g. 73, Alytus
+      95 benzinas: 1.689 €/L → 1.659 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.869 €/L → 0.839 €/L
+  ~ Orlen — ​Žilvičių g. 1 A, Kakliniškių k.
+      95 benzinas: 1.729 €/L → 1.719 €/L
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Orlen — Alytaus g. 2, ​Verbyliškių k.
+      95 benzinas: 1.719 €/L → 1.699 €/L
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Orlen — Žiežmarių k.
+      95 benzinas: 1.729 €/L → 1.719 €/L
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Orlen — Biruliškių k.
+      95 benzinas: 1.699 €/L → 1.659 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+  ~ Orlen — Beržų g. 2N, Ringaudai
+      Dyzelinas: 2.029 €/L → 1.999 €/L
+  ~ Orlen — Kalvarijos g. 138, Kaunas
+      Dyzelinas: 2.029 €/L → 1.999 €/L
+      Dujos: 0.889 €/L → 0.869 €/L
+  ~ Orlen — Pramonės pr. 37, Kaunas
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Orlen — Varnių g. 50, Kaunas
+      95 benzinas: 1.699 €/L → 1.669 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Orlen — Veiverių g. 148 B, Kaunas
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Orlen — Minijos g. 44, Klaipėda
+      Dyzelinas: 2.019 €/L → 1.959 €/L
+  ~ Orlen — Šilutės pl. 26 A, Klaipėda
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.859 €/L → 0.839 €/L
+  ~ Orlen — Šilutės pl. 94, Klaipėda
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Orlen — Vilniaus pl. 13, Jakų k.
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Orlen — Aleksandravo k.
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.869 €/L → 0.839 €/L
+  ~ Orlen — ​Skuodo g. 14, Mažeikiai
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+      Dujos: 0.869 €/L → 0.839 €/L
+  ~ Orlen — Žemaitijos g. 42, Mažeikiai
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Orlen — Vilimiškės k.
+      Dyzelinas: 2.029 €/L → 1.999 €/L
+  ~ Orlen — Klaipėdos g. 162 D, Panevėžys
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Orlen — Senamiesčio g. 115, Panevėžys
+      95 benzinas: 1.689 €/L → 1.659 €/L
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+      Dujos: 0.869 €/L → 0.839 €/L
+  ~ Orlen — Šiaulių g. 50, Nausodės k.
+      95 benzinas: 1.719 €/L → 1.699 €/L
+      Dyzelinas: 2.079 €/L → 1.999 €/L
+  ~ Orlen — Serbentų g. 82, Šiauliai
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Orlen — Gedimino g. 46, Tauragė
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.019 €/L → 1.899 €/L
+  ~ Orlen — ​Plungės g. 33 D, Telšiai
+      95 benzinas: 1.699 €/L → 1.669 €/L
+      Dyzelinas: 2.019 €/L → 1.939 €/L
+  ~ Orlen — Juodasis kl. 32, Vilnius
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Orlen — O. ​Milašiaus g. 31, Vilnius
+      Dyzelinas: 2.039 €/L → 1.899 €/L
+  ~ Orlen — Ukmergės g. 319, Vilnius
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+  ~ Orlen — Žirmūnų g. 1T, Vilnius
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+  ~ Viada — Daugų k., Neveiglo g. 25
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Alytus, Naujoji g. 27
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Alytus, Ulonų g. 33B
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Anykščiai, A. Vienuolio g. 34
+      Dyzelinas: 2.059 €/L → 2.049 €/L
+      Dujos: 0.899 €/L → 0.939 €/L
+  ~ Viada — Anykščiai, Piliakalnio g. 9
+      Dyzelinas: 2.059 €/L → 2.049 €/L
+      Dujos: 0.899 €/L → 0.939 €/L
+  ~ Viada — Biržai, Parodos g. 2
+      95 benzinas: 1.799 €/L → 1.759 €/L
+  ~ Viada — Biržai, Pasvalio g. 1B
+      95 benzinas: 1.799 €/L → 1.759 €/L
+  ~ Viada — Elektrėnai, Elektrinės g. 6
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Joniškis, Vilniaus g. 51
+      95 benzinas: 1.799 €/L → 1.769 €/L
+  ~ Viada — Kaunas, A. Juozapavičiaus pr. 90
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Kaunas, Ateities pl. 37A
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Kaunas, Baltijos g. 90B
+      95 benzinas: 1.799 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 2.029 €/L
+  ~ Viada — Kaunas, K. Baršausko g. 64
+      95 benzinas: 1.799 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Kaunas, Karaliaus Mindaugo pr. 54
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Kaunas, Miežėnų g. 18
+      95 benzinas: 1.799 €/L → 1.739 €/L
+      Dyzelinas: 2.069 €/L → 2.029 €/L
+  ~ Viada — Kaunas, P. Lukšio g. 66A
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.069 €/L
+  ~ Viada — Kaunas, Raudondvario pl. 288
+      95 benzinas: 1.799 €/L → 1.779 €/L
+  ~ Viada — Kaunas, Statybininkų g. 3A
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Kaunas, T. Masiulio g. 22B
+      95 benzinas: 1.799 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Kaunas, Veiverių g. 117
+      95 benzinas: 1.799 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Kaunas, Veiverių g. 124B
+      95 benzinas: 1.799 €/L → 1.789 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Klaipėda, Liepojos g. 242
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Klaipėda, Nemuno g. 139
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Klaipėda, Priestočio g. 28
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Klaipėda, Šilutės pl. 52
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Klaipėda, Taikos pr. 70A-1
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Gargždai, Vilniaus pl. 65
+      95 benzinas: 1.799 €/L → 1.789 €/L
+  ~ Viada — Sudmantų k., Vilniaus pl. 6
+      95 benzinas: 1.799 €/L → 1.789 €/L
+  ~ Viada — Kerelių k. 1A
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Kupiškis, Pergalės g. 15
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Lazdijai, Turistų g. 32
+      95 benzinas: 1.799 €/L → 1.749 €/L
+  ~ Viada — Marijampolė, Geležinkelio g. 5
+      95 benzinas: 1.789 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.049 €/L
+  ~ Viada — Marijampolė, J. Ambrazevičiaus-Brazaičio g. 2
+      95 benzinas: 1.789 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.049 €/L
+  ~ Viada — Mažeikiai, Montuotojų g. 2A
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.029 €/L
+      Dujos: 0.929 €/L → 0.939 €/L
+  ~ Viada — Mažeikiai, Žemaitijos g. 75
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.029 €/L
+      Dujos: 0.929 €/L → 0.939 €/L
+  ~ Viada — Molėtai, Vilniaus g. 101
+      95 benzinas: 1.799 €/L → 1.789 €/L
+  ~ Viada — Gojaus k., Utenos g. 16
+      95 benzinas: 1.799 €/L → 1.789 €/L
+  ~ Viada — Šilagalio k., Panevėžio aplinkl. 5
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.079 €/L → 2.039 €/L
+  ~ Viada — Panevėžys, J. Janonio g. 28A
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Panevėžys, Navadolio g. 31
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Panevėžys, Pušaloto g. 193A
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Panevėžys, Ramygalos g. 155
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Panevėžys, Ramygalos g. 186G
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Panevėžys, Venslaviškio g. 16
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Pasvalys, Vilniaus g. 50
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Šiauliai, Dubijos g. 1C
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.069 €/L → 2.049 €/L
+  ~ Viada — Šiauliai, Gegužių g. 26
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.049 €/L
+  ~ Viada — Šiauliai, J. Basanavičiaus g. 122A
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.049 €/L
+  ~ Viada — Šiauliai, Tilžės g. 274
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.049 €/L
+  ~ Viada — Šiauliai, Užmiesčio g. 2
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Šilutė, Tilžės g. 59
+      95 benzinas: 1.799 €/L → 1.769 €/L
+  ~ Viada — Širvintos, Plento g. 4
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Tauragė, Dariaus ir Girėno g. 138A
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.029 €/L
+  ~ Viada — Tauragė, Pramonės g. 1
+      95 benzinas: 1.799 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.029 €/L
+  ~ Viada — Telšiai, Pramonės g. 2A
+      95 benzinas: 1.799 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Ukmergė, Žiedo g. 15
+      95 benzinas: 1.779 €/L → 1.759 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Utena, Metalo g. 8
+      95 benzinas: 1.799 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Utena, Pramonės g. 23
+      95 benzinas: 1.799 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Gedimino k., Vyturio g. 2
+      95 benzinas: 1.799 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Vilnius, Ateities g. 17B
+      95 benzinas: 1.769 €/L → 1.739 €/L
+      Dyzelinas: 2.079 €/L → 2.059 €/L
+  ~ Viada — Vilnius, Dariaus ir Girėno g. 30A
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Vilnius, Gariūnų g. 16A
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.089 €/L → 2.069 €/L
+  ~ Viada — Vilnius, Justiniškių g. 12
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Vilnius, Kirtimų g. 29
+      95 benzinas: 1.799 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Vilnius, Liepkalnio g. 128A
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Vilnius, Naugarduko g. 74
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Vilnius, Olandų g. 57
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Vilnius, Ozo g. 12
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Viada — Vilnius, Pilaitės pr. 13
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Vilnius, Pilaitės pr. 28
+      95 benzinas: 1.799 €/L → 1.779 €/L
+      Dyzelinas: 2.099 €/L → 2.089 €/L
+  ~ Viada — Vilnius, Saltoniškių g. 12
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.089 €/L → 2.079 €/L
+  ~ Viada — Vilnius, Sodų g. 22
+      95 benzinas: 1.799 €/L → 1.769 €/L
+      Dyzelinas: 2.099 €/L → 2.049 €/L
+  ~ Viada — Vilnius, Verkių g. 52
+      95 benzinas: 1.779 €/L → 1.739 €/L
+      Dyzelinas: 2.089 €/L → 2.059 €/L
+  ~ Viada — Vilnius, Vilkpėdės g. 2
+      95 benzinas: 1.779 €/L → 1.769 €/L
+      Dyzelinas: 2.089 €/L → 2.049 €/L
+  ~ Viada — Visaginas, Statybininkų g. 1
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Viada — Visaginas, Taikos pr. 23B
+      95 benzinas: 1.799 €/L → 1.759 €/L
+      Dyzelinas: 2.099 €/L → 2.059 €/L
+  ~ Autograndas — Taikos pr. 47
+      95 benzinas: 1.698 €/L → 1.654 €/L
+      Dyzelinas: 1.998 €/L → 1.987 €/L
+  ~ Utentra — Utena, Pramonės g. 16
+      Dyzelinas: 1.939 €/L → 1.899 €/L
+  ~ Skulas — Likiškėlių k., Kalninės g. 5
+      95 benzinas: 1.670 €/L → 1.660 €/L
+      Dyzelinas: 2.010 €/L → 2.000 €/L
+  ~ Skulas — Vilnius, J.Kazlausko g. 34
+      Dyzelinas: 2.029 €/L → 1.999 €/L
+  ~ Velseka — Panevėžio g. 5, Kupiškis
+      95 benzinas: 1.659 €/L → 1.635 €/L
+      Dyzelinas: 1.989 €/L → 1.975 €/L
+  ~ Prie Luksto — Telšiai, Masčio g. 21
+      95 benzinas: 1.795 €/L → 1.765 €/L
+      Dyzelinas: 2.095 €/L → 2.085 €/L
+  ~ Boost Petrol — Ginkūnų k., Aušros g. 26
+      95 benzinas: 1.749 €/L → 1.799 €/L
+      Dyzelinas: 2.059 €/L → 2.099 €/L
+      Dujos: 0.949 €/L → 0.959 €/L
+  ~ Boost Petrol — Kęstučio g. 1B, Kelmė
+      95 benzinas: 1.759 €/L → 1.799 €/L
+      Dyzelinas: 2.059 €/L → 2.099 €/L
+      Dujos: 0.949 €/L → 0.959 €/L
+  ~ Boost Petrol — Kuršukų k., Plento g. 1
+      95 benzinas: 1.769 €/L → 1.799 €/L
+  ~ Boost Petrol — Marvelės g. 132, Kaunas
+      95 benzinas: 1.769 €/L → 1.799 €/L
+      Dyzelinas: 2.089 €/L → 2.099 €/L
+      Dujos: 0.950 €/L → 0.960 €/L
+  ~ Boost Petrol — Dubijos g. 36
+      95 benzinas: 1.769 €/L → 1.799 €/L
+  ~ Boost Petrol — Zarasų g. 9, Utena
+      95 benzinas: 1.749 €/L → 1.759 €/L
+      Dujos: 0.909 €/L → 0.919 €/L
+  ~ Stateta — Kantališkių k.
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Ukmergės g. 246, Vilnius
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Alytaus k.
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Kauno g.1, Miklusėnai
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Kaniukų k.
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Gustaičių k.
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Erdvės g. 78, Ramučių k.
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Žemdirbių g. 15, Paliūniškio k.
+      95 benzinas: 1.647 €/L → 1.671 €/L
+      Dyzelinas: 1.981 €/L → 1.999 €/L
+  ~ Stateta — Panevėžio g. 9, Kupiškis
+      95 benzinas: 1.647 €/L → 1.671 €/L
+      Dyzelinas: 1.981 €/L → 1.999 €/L
+  ~ Stateta — Turgaus g. 4, Kreivukė
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Minijos g. 90, Klaipėda
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Stateta — Palangos g. 66, Utena
+      95 benzinas: 1.651 €/L → 1.671 €/L
+      Dyzelinas: 1.987 €/L → 1.999 €/L
+  ~ Emsi — Žemaičių g. 34, Ariogala
+      95 benzinas: 1.699 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 2.069 €/L
+      Dujos: 0.929 €/L → 0.939 €/L
+  ~ Emsi — Jaunimo g.2a, Biržai
+      95 benzinas: 1.679 €/L → 1.699 €/L
+  ~ Emsi — Draugystės g.8B, Kaunas
+      95 benzinas: 1.669 €/L → 1.699 €/L
+      Dyzelinas: 2.019 €/L → 2.029 €/L
+  ~ Emsi — Vilnius, Spyglių g. 2
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+      Dujos: 0.939 €/L → 0.929 €/L
+  ~ Emsi — Ilgakiemio k., Kauno g.25
+      Dyzelinas: 2.039 €/L → 2.019 €/L
+  ~ Emsi — Vasario 16-osios g.70, Jonava
+      95 benzinas: 1.689 €/L → 1.719 €/L
+      Dyzelinas: 2.019 €/L → 2.039 €/L
+  ~ Emsi — Durpyno 63, Jonušų k.
+      Dyzelinas: 2.039 €/L → 2.029 €/L
+  ~ Emsi — Juodgirio k.1,
+      95 benzinas: 1.699 €/L → 1.719 €/L
+      Dyzelinas: 2.059 €/L → 2.069 €/L
+      Dujos: 0.929 €/L → 0.939 €/L
+  ~ Emsi — Medelyno g.126 Kalotės k.
+      Dyzelinas: 2.000 €/L → 1.990 €/L
+      Dujos: 0.920 €/L → 0.890 €/L
+  ~ Emsi — Kareivių g. 4, Vilnius
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+  ~ Emsi — Jonavos g. 292B, Kaunas
+      95 benzinas: 1.659 €/L → 1.669 €/L
+      Dyzelinas: 1.969 €/L → 1.959 €/L
+  ~ Emsi — Kirtimų g. 33, Vilnius
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+  ~ Emsi — Laisvės pr. 80B, Vilnius
+      95 benzinas: 1.679 €/L → 1.699 €/L
+  ~ Emsi — Lazdijų sen., Janaslavo k.11
+      95 benzinas: 1.679 €/L → 1.669 €/L
+  ~ Emsi — Sodų g.3A, Lentvaris
+      Dyzelinas: 2.030 €/L → 1.990 €/L
+  ~ Emsi — Liepkalnio g.112A, Vilnius
+      95 benzinas: 1.679 €/L → 1.699 €/L
+  ~ Emsi — Liuksemburgo aklg. 27, Kaunas
+      95 benzinas: 1.669 €/L → 1.679 €/L
+  ~ Emsi — Mokyklos g. 26, Maišiagalos mstl.
+      95 benzinas: 1.679 €/L → 1.699 €/L
+  ~ Emsi — Masiulio g.16C, Kaunas
+      95 benzinas: 1.679 €/L → 1.699 €/L
+  ~ Emsi — Marijampolės g. 58, Mastaičių k.
+      Dyzelinas: 2.059 €/L → 2.019 €/L
+  ~ Emsi — Medininkų k., Pasieniečių g.10
+      Dyzelinas: 2.109 €/L → 2.139 €/L
+  ~ Emsi — Minijos g.154A, Klaipėda
+      95 benzinas: 1.670 €/L → 1.660 €/L
+      Dyzelinas: 1.970 €/L → 1.950 €/L
+  ~ Emsi — Savanorių pr.402A, Kaunas
+      95 benzinas: 1.699 €/L → 1.719 €/L
+      Dyzelinas: 2.009 €/L → 2.019 €/L
+  ~ Emsi — Nemuno g.79A, Panevėžys
+      Dyzelinas: 1.999 €/L → 1.969 €/L
+  ~ Emsi — Pasvalys, Taikos g.24
+      95 benzinas: 1.699 €/L → 1.669 €/L
+      Dyzelinas: 1.999 €/L → 1.979 €/L
+      Dujos: 0.920 €/L → 0.910 €/L
+  ~ Emsi — Paukštininkų g.4a, Kaišiadorys
+      95 benzinas: 1.689 €/L → 1.699 €/L
+      Dujos: 0.910 €/L → 0.920 €/L
+  ~ Emsi — Pajautos g. 31, Vilnius (Pilaitė)
+      95 benzinas: 1.639 €/L → 1.689 €/L
+      Dyzelinas: 1.969 €/L → 1.999 €/L
+  ~ Emsi — Miško g.62, Radviliškis
+      95 benzinas: 1.709 €/L → 1.699 €/L
+      Dyzelinas: 2.059 €/L → 2.019 €/L
+      Dujos: 0.910 €/L → 0.890 €/L
+  ~ Emsi — Ramygalos g.186A, Panevėžys
+      95 benzinas: 1.669 €/L → 1.689 €/L
+      Dyzelinas: 1.999 €/L → 1.989 €/L
+  ~ Emsi — Raščių k. 1A
+      95 benzinas: 1.679 €/L → 1.699 €/L
+      Dyzelinas: 2.029 €/L → 2.039 €/L
+  ~ Emsi — Sausių g.2 Sausių k..
+      Dyzelinas: 1.990 €/L → 1.970 €/L
+  ~ Emsi — Savanorių 225, Vilnius
+      Dyzelinas: 2.019 €/L → 1.999 €/L
+  ~ Emsi — Sereikonių k., Baltijos kelio g.2
+      Dyzelinas: 2.009 €/L → 1.999 €/L
+  ~ Emsi — Sembos g.5, Šiauliai
+      Dyzelinas: 1.999 €/L → 2.019 €/L
+      Dujos: 0.880 €/L → 0.910 €/L
+  ~ Emsi — Šilagalio k., Panevėžio aplinkl.12
+      95 benzinas: 1.669 €/L → 1.699 €/L
+  ~ Emsi — Gluosnių g.4A, Šilutė
+      Dyzelinas: 2.010 €/L → 2.000 €/L
+      Dujos: 0.930 €/L → 0.910 €/L
+  ~ Emsi — Taikos pr.124, Klaipėda
+      Dyzelinas: 1.960 €/L → 1.950 €/L
+  ~ Emsi — Gunkliškių g.2F, Vilnius
+      Dyzelinas: 2.039 €/L → 1.999 €/L
+  ~ Emsi — Žemaitkiemis, Stasio Krasausko g. 21
+      95 benzinas: 1.679 €/L → 1.699 €/L
+      Dyzelinas: 2.029 €/L → 2.039 €/L
+  ~ Saurida — Naujoji Akmenė V. Kudirkos 18A
+      95 benzinas: 1.720 €/L → 1.700 €/L
+      Dyzelinas: 2.080 €/L → 2.020 €/L
+  ~ Saurida — Akmenės I kaimas Plento g. 1
+      95 benzinas: 1.720 €/L → 1.700 €/L
+      Dyzelinas: 2.100 €/L → 2.020 €/L
+  ~ Saurida — Pašakarnių km. Pašakarnių g. 1
+      95 benzinas: 1.720 €/L → 1.700 €/L
+      Dyzelinas: 2.100 €/L → 2.040 €/L
+  ~ Saurida — Šiauliai Vilniaus g. 373A
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.030 €/L → 1.970 €/L
+  ~ Saurida — Šiauliai Pramonės g. 7C
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.030 €/L → 1.970 €/L
+  ~ Saurida — Radviliškis Gedimino g. 50C
+      95 benzinas: 1.700 €/L → 1.680 €/L
+      Dyzelinas: 2.050 €/L → 1.990 €/L
+  ~ Saurida — Velžių km .Radviliškio plentas 2
+      95 benzinas: 1.700 €/L → 1.680 €/L
+      Dyzelinas: 2.050 €/L → 1.990 €/L
+  ~ Saurida — Skuodas Vytauto g. 20
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.080 €/L → 2.020 €/L
+  ~ Saurida — Klaipėda Jūrininkų pr. 29
+      Dyzelinas: 2.030 €/L → 1.940 €/L
+  ~ Saurida — Šilalė Rytinio kelio g. 19
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.060 €/L → 2.000 €/L
+  ~ Saurida — Pašvenčio km.
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.070 €/L → 2.010 €/L
+  ~ Saurida — Kušliškių km. Suvalkijos g. 15
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Marijampolė Statybininkų g. 8
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Alytus Miškininkų g. 7
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Alytus Pramonės g. 5
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Panarvės km.
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.040 €/L → 1.980 €/L
+  ~ Saurida — Ignacavos km. Kauno pl. 18
+      95 benzinas: 1.680 €/L → 1.660 €/L
+      Dyzelinas: 2.050 €/L → 1.990 €/L
+  ~ Saurida — Domeikava Muitinės g. 2
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.060 €/L → 2.000 €/L
+  ~ Saurida — Kaunas Garažų g. 20
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 1.980 €/L → 1.940 €/L
+  ~ Saurida — Babtai Vandžiogalos g. 3
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 1.990 €/L → 1.930 €/L
+  ~ Saurida — Rumšiškės Lekavičiaus g. 71
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Lėkėčių km. Šakių g. 3
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.080 €/L → 2.020 €/L
+  ~ Saurida — Mauručiai Liepų g. 20
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Ukmergė Kareivinių g. 64
+      95 benzinas: 1.670 €/L → 1.650 €/L
+      Dyzelinas: 2.000 €/L → 1.940 €/L
+  ~ Saurida — Ukmergė Vilniaus g. 122
+      95 benzinas: 1.670 €/L → 1.650 €/L
+      Dyzelinas: 2.000 €/L → 1.940 €/L
+  ~ Saurida — Pageležių km.
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.080 €/L → 2.020 €/L
+  ~ Saurida — Čekoniškių km
+      95 benzinas: 1.680 €/L → 1.660 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Zujūnai Buivydiškių g. 1A
+      95 benzinas: 1.680 €/L → 1.660 €/L
+      Dyzelinas: 2.040 €/L → 1.970 €/L
+  ~ Saurida — Visaginas Kosmoso g. 1
+      95 benzinas: 1.690 €/L → 1.670 €/L
+      Dyzelinas: 2.020 €/L → 1.960 €/L
+  ~ Saurida — Vilnius, Jankiškių g. 43a
+      95 benzinas: 1.680 €/L → 1.660 €/L
+      Dyzelinas: 2.000 €/L → 1.940 €/L
+  ~ Pynauja — Dvaro g.1, Papynaujo k.,Kvėdarna
+      95 benzinas: 1.740 €/L → 1.730 €/L
+      Dyzelinas: 2.210 €/L → 2.040 €/L
+  ~ GM Circle K — Kauno g. 68, Girėnų k.
+      Dyzelinas: 2.147 €/L → 2.087 €/L
+      Dujos: 0.997 €/L → 0.987 €/L
+  ~ GM Circle K — Muitinės g. 34A, Jurbarkas
+      Dyzelinas: 2.147 €/L → 2.087 €/L
+  ~ Gazimpeksas — Tverai, Rietavo g. 32
+      95 benzinas: 1.710 €/L → 1.690 €/L
+  ~ Antivis — Tytuvėnai, Žemaitės g.14
+      95 benzinas: 1.760 €/L → 1.780 €/L
+  ~ Degta — Vievis, Kauno g. 55A
+      95 benzinas: 1.769 €/L → 1.799 €/L
+  ~ Degta — Anykščiai, Vienuolio g. 34A
+      95 benzinas: 1.639 €/L → 1.699 €/L
+      Dyzelinas: 1.939 €/L → 1.999 €/L
+      Dujos: 0.839 €/L → 0.879 €/L
+  ~ Degta — Rokiškis, Respublikos g.113B,
+      95 benzinas: 1.709 €/L → 1.739 €/L
+  ~ Junasa — Žemaitės g. 131c
+      Dyzelinas: 1.969 €/L → 1.899 €/L
+  ~ Junasa — Bačiūnų g. 12a
+      Dyzelinas: 1.969 €/L → 1.899 €/L
+  ~ Junasa — M. Katiliškio g. 50, Gruzdžiai
+      Dyzelinas: 1.999 €/L → 1.899 €/L
+  ~ Regusa — Medelyno g. 4A, Jūrės k.
+      Dyzelinas: 2.020 €/L → 1.990 €/L
+  ~ Regusa — Sodo g. 11, Gavaltuvos k.
+      Dyzelinas: 2.050 €/L → 2.010 €/L
+  ~ Regusa — J. Basanavičiaus g. 45A, Kybartai
+      Dyzelinas: 2.040 €/L → 2.030 €/L
+      Dujos: 0.920 €/L → 0.910 €/L
+  ~ Regusa — S. Daukanto g. 19D, Kazlų Rūda
+      Dyzelinas: 2.020 €/L → 1.990 €/L
+  ~ Regusa — Marijampolės pl. 20, Kaunas
+      Dyzelinas: 1.990 €/L → 1.970 €/L
+  ~ Propano ir butano dujų centras — Švenčionių 35, Ignalina
+      95 benzinas: 1.789 €/L → 1.700 €/L
+      Dyzelinas: 2.099 €/L → 1.970 €/L
+      Dujos: 0.970 €/L → 0.840 €/L
+  ~ Propano ir butano dujų centras — Aukštaičių g. 2a, Cirkliškio k.
+      95 benzinas: 1.760 €/L → 1.700 €/L
+      Dyzelinas: 2.070 €/L → 1.970 €/L
+      Dujos: 0.950 €/L → 0.850 €/L
+  ~ Eu Verslas — Viekšnių g. 24, Mažeikiai
+      95 benzinas: 1.689 €/L → 1.639 €/L
+      Dyzelinas: 1.989 €/L → 1.899 €/L
+  ~ Eu Verslas — Telšių g. 127, Jovaišiškės k.
+      95 benzinas: 1.679 €/L → 1.639 €/L
+      Dyzelinas: 2.009 €/L → 1.899 €/L
+  ~ Eu Verslas — Rietavo g. 107, Pakerų k.
+      95 benzinas: 1.699 €/L → 1.679 €/L
+      Dyzelinas: 2.069 €/L → 2.009 €/L
+  ~ Šventosios investicijos — Elijos g.26 Palanga (Šventoji)
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ Circle K — J.Basanavičiaus g. 103, Kėdainiai
+      95 benzinas: 1.819 €/L → 1.749 €/L
+      Dyzelinas: 2.099 €/L → 2.079 €/L
+  ~ S.Savicko įmonė — Šėtos g. 120 , Kėdainiai
+      95 benzinas: 1.799 €/L → 1.719 €/L
+      Dyzelinas: 2.079 €/L → 2.049 €/L
+  ~ S.Savicko įmonė — Dariaus ir Girėno 23 A, Kėdainiai
+      95 benzinas: 1.799 €/L → 1.719 €/L
+      Dyzelinas: 2.079 €/L → 2.049 €/L
+  ~ S.Savicko įmonė — Gedimino g. 50 , Kėdainiai
+      95 benzinas: 1.799 €/L → 1.719 €/L
+      Dyzelinas: 2.079 €/L → 2.049 €/L
+  ~ S.Savicko įmonė — Vandžiogalos g 29,Saviečių k.
+      95 benzinas: 1.799 €/L → 1.719 €/L
+      Dyzelinas: 2.079 €/L → 2.049 €/L
+  ~ Lašų ŽŪB — Vytėnų vs 9, Vytėnai
+      95 benzinas: 1.720 €/L → 1.770 €/L
+      Dyzelinas: 2.060 €/L → 2.070 €/L
+
+Unchanged: 217 station(s).
