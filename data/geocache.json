@@ -3733,5 +3733,10 @@
     "lat": 56.2724649,
     "lng": 24.3677344,
     "source": "address"
+  },
+  "Duomenys: 55 įmonės, 738 degalinės (viena įmonė, valdanti 1-ą degalinę, prekiaujančią tik dyzelinu, duomenų nepateikė)": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
