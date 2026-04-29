@@ -3743,5 +3743,20 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Ramučių g.43": {
+    "lat": 55.3588294,
+    "lng": 21.5033999,
+    "source": "address"
+  },
+  "Raudondvario pl.234,Kaunas": {
+    "lat": 54.9207602,
+    "lng": 23.8243106,
+    "source": "address"
+  },
+  "Kalvių g. 4, Šventininkų k.": {
+    "lat": 54.7260902,
+    "lng": 24.2363611,
+    "source": "address"
   }
 }
