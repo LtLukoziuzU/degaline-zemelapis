@@ -1,6 +1,6 @@
 {
   "date": "2026-04-30",
-  "fetched_at": "2026-04-30T08:32+00:00",
+  "fetched_at": "2026-04-30T10:29+00:00",
   "stations": [
     {
       "company": "Alauša",
@@ -7416,8 +7416,8 @@
       "company": "Raimondo Balsio IĮ",
       "municipality": "Kelmės r. sav.",
       "address": "Ramučių k., Luokės 2",
-      "lat": 56.321963,
-      "lng": 22.8563002,
+      "lat": 55.8303286,
+      "lng": 22.8534343,
       "p95": 1.76,
       "diesel": 1.95,
       "lpg": 0.9
@@ -7466,8 +7466,8 @@
       "company": "Bonsa",
       "municipality": "Tauragės r. sav.",
       "address": "Vaidatonių k. 1",
-      "lat": 55.3712778,
-      "lng": 23.9742222,
+      "lat": 55.4691796,
+      "lng": 22.6792258,
       "p95": 1.7,
       "diesel": 1.89,
       "lpg": 0.9
@@ -7496,8 +7496,8 @@
       "company": "Vlantana",
       "municipality": "Klaipėdos r. sav.",
       "address": "Dvaro g. 1, Gobergiškės k.",
-      "lat": 55.7174788,
-      "lng": 21.3159933,
+      "lat": 55.7188896,
+      "lng": 21.2937025,
       "p95": 1.74,
       "diesel": 1.96,
       "lpg": null
