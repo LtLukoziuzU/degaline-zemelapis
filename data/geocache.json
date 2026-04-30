@@ -3758,5 +3758,65 @@
     "lat": 54.7260902,
     "lng": 24.2363611,
     "source": "address"
+  },
+  "Molėtų g. 94, Utena": {
+    "lat": 55.4829587,
+    "lng": 25.5710264,
+    "source": "address"
+  },
+  "Ramučių k., Luokės 2": {
+    "lat": 56.321963,
+    "lng": 22.8563002,
+    "source": "address"
+  },
+  "Panevėžio 7c, Rokiškis": {
+    "lat": 55.9430601,
+    "lng": 25.5856573,
+    "source": "address"
+  },
+  "Laukų g. 2C.,Tirkšlių m.": {
+    "lat": 56.2582023,
+    "lng": 22.3094665,
+    "source": "address"
+  },
+  "Pagirių k., Durpių g.45": {
+    "lat": 54.5691646,
+    "lng": 25.1878104,
+    "source": "address"
+  },
+  "Tilžės pl. 46, Taurai": {
+    "lat": 55.2423262,
+    "lng": 22.2497412,
+    "source": "address"
+  },
+  "Vaidatonių k. 1": {
+    "lat": 55.3712778,
+    "lng": 23.9742222,
+    "source": "address"
+  },
+  "Kauno g. 2A, Ručiūnų k.": {
+    "lat": 55.1378212,
+    "lng": 24.1933962,
+    "source": "address"
+  },
+  "Dariaus ir Girėmo g. 31, Ukmergė": {
+    "lat": 55.2407245,
+    "lng": 24.7873484,
+    "source": "address"
+  },
+  "Dvaro g. 1, Gobergiškės k.": {
+    "lat": 55.7174788,
+    "lng": 21.3159933,
+    "source": "address"
+  },
+  "Vytauto g. 2D, Vilkaviškis": {
+    "lat": 54.6433403,
+    "lng": 23.0530856,
+    "source": "address"
+  },
+  "Duomenys: 68 įmonės, 752 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
