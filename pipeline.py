@@ -55,10 +55,10 @@ def _xlsx_urls(d: date):
 def _scrape_sharepoint_urls() -> list[str]:
     """
     Scrape the ENA listing page for xlsx SharePoint links (/:x:/ = Excel file type).
-    Returns a deduplicated candidate list to try in order:
-      [0] first match = "Naujausios degalų kainos" banner above the table (primary)
-      [1] last match  = rightmost table column (fallback, same URL on normal days)
-    Returns [] on any failure or if no links found.
+    Returns ALL candidate URLs in page order (deduplicated). Picking the right one
+    is download_xlsx()'s job — it downloads each, reads the internal date, and
+    selects the newest. Earlier versions guessed [first, last]; that broke when
+    ENA added more links and the "last" one was a stale archive.
     """
     try:
         req = urllib.request.Request(
@@ -76,14 +76,13 @@ def _scrape_sharepoint_urls() -> list[str]:
         if not raw:
             print('ENA page scraped but no SharePoint xlsx links found.')
             return []
-        # Unescape HTML entities, deduplicate while preserving order
         seen, candidates = set(), []
-        for url in [raw[0], raw[-1]]:
+        for url in raw:
             url = url.replace('&amp;', '&')
             if url not in seen:
                 seen.add(url)
                 candidates.append(url)
-        print(f'Found {len(candidates)} SharePoint candidate(s): {candidates}')
+        print(f'Found {len(candidates)} SharePoint candidate(s).')
         return candidates
     except Exception as e:
         print(f'ENA page scrape failed: {e}')
@@ -115,12 +114,16 @@ def _date_from_xlsx() -> str | None:
 def download_xlsx() -> str:
     """
     Download today's xlsx.
-    First tries scraping the ENA listing page for a SharePoint link (/:x:/ = Excel).
-    Falls back to the old direct URL pattern if scraping yields nothing.
-    Saves to data/latest.xlsx and returns the file date as ISO string.
+    Tries every SharePoint candidate from the ENA page, reads each one's
+    internal date, and picks the newest (auth-walled HTML responses are
+    skipped via the zip-magic check). Falls back to the direct URL pattern
+    if no SharePoint candidate yields a readable xlsx.
+    Saves the winning file to data/latest.xlsx and returns its date.
     Raises RuntimeError if all attempts fail.
     """
-    # 1. Try SharePoint via ENA page scrape (primary = banner link, fallback = last table column)
+    best_date: str | None = None
+    best_bytes: bytes | None = None
+
     for sp_url in _scrape_sharepoint_urls():
         sep = '&' if '?' in sp_url else '?'
         download_url = sp_url + sep + 'download=1'
@@ -133,16 +136,27 @@ def download_xlsx() -> str:
                 'Referer': 'https://www.ena.lt/degalu-kainos-degalinese/',
             })
             with opener.open(req, timeout=60) as resp:
-                XLSX_PATH.write_bytes(resp.read())
-            date_str = _date_from_xlsx()
-            if date_str:
-                print(f'Downloaded via SharePoint ({date_str})')
-                return date_str
-            print('SharePoint download succeeded but date unreadable — trying next candidate.')
+                data = resp.read()
+            if data[:2] != b'PK':
+                print('  Not an xlsx (likely auth-walled HTML) — skipping.')
+                continue
+            XLSX_PATH.write_bytes(data)
+            d = _date_from_xlsx()
+            if not d:
+                print('  Date unreadable — skipping.')
+                continue
+            print(f'  → date {d}')
+            if best_date is None or d > best_date:
+                best_date, best_bytes = d, data
         except Exception as e:
             print(f'SharePoint download failed ({sp_url}): {e}')
 
-    # 2. Fall back to old direct URL pattern
+    if best_date and best_bytes:
+        XLSX_PATH.write_bytes(best_bytes)
+        print(f'Selected newest SharePoint candidate: {best_date}')
+        return best_date
+
+    # Fall back to old direct URL pattern
     today = date.today()
     for days_back in range(5):
         d = today - timedelta(days=days_back)
@@ -444,7 +458,23 @@ def main():
 
     print('=== Degaline pipeline ===')
 
+    prev_date: str | None = None
+    if STATIONS_PATH.exists():
+        try:
+            prev_date = json.loads(STATIONS_PATH.read_text(encoding='utf-8')).get('date')
+        except Exception as e:
+            print(f'Could not read previous stations.json date: {e}')
+
     date_str = download_xlsx()
+
+    if prev_date and date_str < prev_date:
+        # ENA occasionally serves stale shareable links; refuse to overwrite
+        # newer data with older. No GitHub Actions outputs → no email, no commit.
+        print(
+            f'⚠ Downloaded xlsx date {date_str} is older than current '
+            f'stations.json date {prev_date} — refusing to overwrite. Exiting.'
+        )
+        return
 
     print(f'Parsing {XLSX_PATH.name}...')
     stations = parse_xlsx(date_str)

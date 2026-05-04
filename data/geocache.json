@@ -3818,5 +3818,15 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Sedos g. 16, Mažeikiai": {
+    "lat": 56.3052828,
+    "lng": 22.3424876,
+    "source": "address"
+  },
+  "Duomenys: 66 įmonės, 750 degalinių": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
