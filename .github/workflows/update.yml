@@ -7,9 +7,6 @@ on:
   push:
     branches: [main]        # deploy on every push to main
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   update-data:
     if: github.event_name != 'push'
@@ -96,7 +93,7 @@ jobs:
           sed -i "s/__DATA_TIME__/$DATA_TIME/g" index.html
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: .
 

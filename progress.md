@@ -311,7 +311,7 @@ This handles the documented failure mode (re-run after partial success) and any 
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.
-- **Node.js 20 deprecation warning** in the deploy job — caused by `actions/upload-pages-artifact@v4` using `actions/upload-artifact@v7` internally. Cannot be fixed from our side; upstream will update before September 2026.
+- **Node.js 20 deprecation warning** — fixed 2026-05-06 by bumping `actions/upload-pages-artifact@v4` → `@v5` (released 2026-04-10), which pins its internal `actions/upload-artifact` to v7+ (node24). Removed the `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24` workaround env var at the same time.
 - **index.html single-file split plan:** Currently ~1390 lines. No action needed yet. When it grows:
   - **~2500 lines:** Extract JS into `app.js` (plain `<script src>`, no bundler). Gets proper editor symbol nav and jump-to-definition.
   - **~3000+ lines or 3+ independent UI panels:** Extract CSS into `style.css` too. CSS specificity conflicts become real at that scale.
