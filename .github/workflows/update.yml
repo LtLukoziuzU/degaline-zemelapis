@@ -54,6 +54,12 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+            echo "origin/main has advanced beyond our checkout; another run already pushed today's data. Skipping."
+            echo "data_changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
           git add data/stations.json data/geocache.json data/history/ data/logs/
           if git diff --staged --quiet; then
             echo "No data changes — skipping commit."

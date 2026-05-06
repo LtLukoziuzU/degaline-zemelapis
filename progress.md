@@ -268,6 +268,35 @@ Cross-checked local `stations.json`, GitHub `stations.json`, and a fresh pipelin
 **Summary row parsed as station (pre-existing, harmless):**
 - xlsx footer row "Duomenys: 54 įmonės, 736 degalinės" is parsed as a station row. Geocoding fails (no valid address), so it never reaches `stations.json`. Pipeline logs the failure but continues.
 
+### Pipeline scrape fix + date regression guard (2026-05-04)
+
+**Bug: pipeline silently regressed `stations.json` from 2026-04-30 to 2026-04-15 data and emailed about it (subject tagged "2026-04-15").**
+
+- Root cause #1 — **stale link selection.** The ENA page now exposes 5 SharePoint xlsx links inside an expandable "Pranešimai apie degalų kainas" spoiler block (latest report, latest data, all-data, plus older archives). `_scrape_sharepoint_urls` was hard-coded to try only `raw[0]` and `raw[-1]`. `[0]` is the auth-walled internal banner (`DK-YYYY-MM-DD.xlsx?d=...&csf=1` → Microsoft login redirect, fails). `[-1]` happens to be a stale archive link still pointing at the 2026-04-15 file. The correct "Naujausios degalų kainos" link is at index `[1]`, but it was being thrown away by the dedup-to-first-and-last logic. Worked back when ENA's page only had 2 links; broke when they restructured.
+- Root cause #2 — **no regression guard.** Pipeline accepted whatever date came back from the xlsx and overwrote `stations.json` even when the new date was older than the existing one.
+
+**Fixes:**
+
+- `_scrape_sharepoint_urls` now returns all unique candidates from the page in order. `download_xlsx` tries every one, skips auth-walled HTML responses (no `PK` zip magic), reads each xlsx's internal date, and picks the **newest**. Auth-walled banner failure is now harmless — it's just one of many candidates.
+- `main()` reads `prev_date` from `stations.json` before downloading, and after `download_xlsx` returns, compares: if `new_date < prev_date`, prints a warning and returns. No `$GITHUB_OUTPUT` writes → no email, no commit, no deploy. Same-date is allowed (intra-day price corrections are legitimate).
+
+**Recovery on 2026-05-04:** reverted `data/stations.json` and `data/history/2026-04-15.json` to their pre-bug state via `git checkout 26bb470 -- ...`, then ran `python3 pipeline.py` locally. New logic picked up 2026-05-04 correctly: 1 new station (Tripletas, Sedos g. 16, Mažeikiai), 0 removed, 587 price changes. `data/logs/2026-04-15.log` was already byte-identical to its proper "no changes" content (today's second bad run had rewritten it back to that state), so no revert needed there.
+
+### Workflow re-run guard against `git push` rejection (2026-05-06)
+
+**Bug: re-running the workflow after a partial-success run fails at `git push`.**
+
+- Sequence: scheduled run's `update-data` job succeeded and pushed today's data commit; `deploy` job then failed because GitHub couldn't acquire a hosted runner ("The job was not acquired by Runner of type hosted even after multiple attempts" — GitHub-side infra). User clicked re-run; GH re-executed `update-data` along with `deploy`. The re-run was still checked out at the original trigger SHA, regenerated the same data, made a new commit on top of that SHA, and `git push` was rejected because origin/main had already advanced to attempt 1's commit.
+- Root cause: commit step had no guard against origin moving between checkout and push. `git push` with no fetch/rebase fails the entire job on any divergence.
+
+**Fix in `.github/workflows/update.yml`:**
+
+- Added `git fetch origin main` before the commit/push logic.
+- If `HEAD != origin/main`, exit the step cleanly with `data_changed=true` so the `deploy` job still runs against the already-pushed data on origin/main.
+- Falls through to the existing add/diff/commit/push logic only when origin hasn't moved.
+
+This handles the documented failure mode (re-run after partial success) and any other case where origin advances between checkout and push (e.g. user pushing a code change while a scheduled run is queued). Does not handle the narrow window where two runs race the actual `git push` call within milliseconds — not realistically possible at 15-min cron spacing.
+
 ---
 
 ## Pending
@@ -278,7 +307,7 @@ Cross-checked local `stations.json`, GitHub `stations.json`, and a fresh pipelin
 
 - **Mobile panel height / scrollable results:** Results are currently capped at 3 to avoid the panel growing too tall. To show more (top 5, 10, or all in radius), the panel needs a max-height constraint (~50% viewport) and `#rp-results` made `overflow-y: scroll`, otherwise results would push off-screen on mobile.
 
-- **SharePoint layout — verified 2026-04-14:** ENA SharePoint scraping confirmed working on Monday 2026-04-14. `/:x:/` regex + `matches[0]` correctly downloaded the current day's file. No page restructuring observed.
+- **SharePoint layout — restructured 2026-05-04:** ENA page now exposes 5 SharePoint xlsx links (banner is auth-walled; multiple opaque shareable links for latest report, latest data, all-data, and archives). Pipeline now scrapes all of them and picks the candidate with the newest internal date. Earlier `[first, last]` heuristic broke when archive links were added — see "Pipeline scrape fix + date regression guard (2026-05-04)" above.
 - **xlsx format may change** — parser is flexible on header row position but assumes wide 7-column format.
 - **Light/dark mode refinement:** Tile filter applied (Step 15). Popup contrast addressed via CSS variables. Cluster colours unchanged by design.
 - **Geocache key normalisation:** Keys are now stripped of surrounding whitespace. If ENA ever changes address strings in the xlsx, affected stations will be re-geocoded automatically on the next pipeline run.
