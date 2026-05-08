@@ -1,6 +1,6 @@
 {
   "date": "2026-05-07",
-  "fetched_at": "2026-05-07T15:31+00:00",
+  "fetched_at": "2026-05-08T07:50+00:00",
   "stations": [
     {
       "company": "Alauša",
@@ -6615,9 +6615,9 @@
     {
       "company": "Saurida",
       "municipality": "Skuodo r. sav.",
-      "address": "Skuodas Vytauto g. 20",
-      "lat": 56.260844492234234,
-      "lng": 21.53006005568681,
+      "address": "Skuodas, Vytauto g. 20",
+      "lat": 56.2613884,
+      "lng": 21.5299065,
       "p95": 1.77,
       "diesel": 1.94,
       "lpg": 0.86

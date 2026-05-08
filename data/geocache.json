@@ -3843,5 +3843,10 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Skuodas, Vytauto g. 20": {
+    "lat": 56.2613884,
+    "lng": 21.5299065,
+    "source": "address"
   }
 }
