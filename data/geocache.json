@@ -3848,5 +3848,70 @@
     "lat": 56.2613884,
     "lng": 21.5299065,
     "source": "address"
+  },
+  "Bažnyčios 7., Pavilnučio k.": {
+    "lat": 55.5085278,
+    "lng": 21.6003889,
+    "source": "address"
+  },
+  "Islandijos pl. 191D, Kaunas": {
+    "lat": 54.931586,
+    "lng": 23.9512203,
+    "source": "address"
+  },
+  "Basanavičiaus g. 91E, Kėdainiai": {
+    "lat": 55.2781085,
+    "lng": 23.959972,
+    "source": "address"
+  },
+  "Linkuvos g. 77, Kaunas": {
+    "lat": 54.9142998,
+    "lng": 23.8877048,
+    "source": "address"
+  },
+  "Senkelio g. 13, Trakai": {
+    "lat": 54.6306226,
+    "lng": 24.9221192,
+    "source": "address"
+  },
+  "Kėdainių g. 44 Šingalių k.": {
+    "lat": 55.2495742,
+    "lng": 23.8518655,
+    "source": "address"
+  },
+  "Turgaus g. 3, Joniškis": {
+    "lat": 56.2289344,
+    "lng": 23.6100885,
+    "source": "address"
+  },
+  "Miškininkų g. 14, Pelėdnagiai": {
+    "lat": 55.2525072,
+    "lng": 23.9679701,
+    "source": "address"
+  },
+  "Telšių g. 66, LT-88238, Luokė": {
+    "lat": 55.9013437,
+    "lng": 22.5062918,
+    "source": "address"
+  },
+  "Miško g.6, Kena": {
+    "lat": 54.6460569,
+    "lng": 25.6251383,
+    "source": "address"
+  },
+  "Ramygalos g 55, Šėta": {
+    "lat": 55.2903578,
+    "lng": 24.2529976,
+    "source": "address"
+  },
+  "Kretingos 51, Kartena": {
+    "lat": 55.9169838,
+    "lng": 21.4675181,
+    "source": "address"
+  },
+  "Duomenys: 77 įmonės, 766 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
