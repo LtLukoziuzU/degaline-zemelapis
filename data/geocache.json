@@ -3913,5 +3913,15 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Pamiškės g. 1, Osijos k.": {
+    "lat": 54.9281769,
+    "lng": 24.9360227,
+    "source": "address"
+  },
+  "Duomenys: 73 įmonės, 762 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
