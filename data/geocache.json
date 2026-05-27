@@ -3953,5 +3953,20 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Ramučių g.43,  Barzdūnų k.": {
+    "lat": 55.3588294,
+    "lng": 21.5033999,
+    "source": "address"
+  },
+  "Kazlavo k.": {
+    "lat": 54.6821562,
+    "lng": 25.2698101,
+    "source": "address"
+  },
+  "Duomenys: 71 įmonė, 723 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
