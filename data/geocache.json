@@ -3993,5 +3993,15 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Rietavo g. 32, Tverai": {
+    "lat": 55.7362443,
+    "lng": 22.1383099,
+    "source": "address"
+  },
+  "Duomenys: 72 įmonės, 752 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
