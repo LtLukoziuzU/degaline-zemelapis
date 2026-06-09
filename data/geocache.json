@@ -4008,5 +4008,15 @@
     "lat": null,
     "lng": null,
     "source": "failed"
+  },
+  "Pasiekų k., Europos g. 12": {
+    "lat": 54.3223535,
+    "lng": 23.1452198,
+    "source": "address"
+  },
+  "Duomenys: 70 įmonės, 722 degalinės": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
   }
 }
