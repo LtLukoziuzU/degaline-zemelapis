@@ -1,6 +1,6 @@
 # Lietuvos degalų kainų žemėlapis
 
-## Išbandyk: https://ltlukoziuzu.github.io/degaline-zemelapis/
+## Po eilinį kartą pasikeitusio LEA būdo formatuot duomenis ir pakeist lentelės struktūrą, sustabdžiau svetainę - vis tiek tie, ką minty turėjau darant šį projektą, jo nenaudoja :D
 
 ## AI Disclaimer'is
 Taip, nors ir nelabai norom, bet šis projektas yra pilnai sukonstruotas su Claude Code CLI. Web'o žinios pas mane ganėtinai minimalios (per paskutinius 12 metų tik su Unity (C#) lengvai programuota, daugiau tik ką pastebiu iš savo patirties kaip manual QA), lengvus edit'us galiu daryt, bet ne sukonstruot viską nuo nulio. Vienintelė didesnė išimtis - šis readme failas. Paprašiau, kad tik duotų initial layout'ą, bet toliau viskas parašyta ranka.
